@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <link rel="stylesheet" href="cart.css" />
+    <script src="cart.js" type="module" defer></script>
+  </head>
+  <body>
+    <div class="top-bar">
+      <h1>장바구니</h1>
+      <ul class="status-bar">
+        <li>01 장바구니</li>
+        &nbsp;>&nbsp;
+        <li>02 주문결제</li>
+        &nbsp;>&nbsp;
+        <li>03 결제완료</li>
+      </ul>
+    </div>
+    <main class="cart-main">
+      <div class="cart-in">
+        <h2 class="title">엘리스배송</h2>
+        <!-- 아이템 추가 -->
+        <div class="shipping-cost">
+          <div class="price">
+            <span>상품금액</span>
+            <strong>10,000원</strong>
+            <!--금액 변화해야함 -->
+          </div>
+          <div class="shipping">
+            <span>배송비</span>
+            <strong>무료</strong>
+          </div>
+          <div class="total">
+            <span>주문금액</span>
+            <strong>10,000원</strong>
+            <!--금액 변화해야함 -->
+          </div>
+        </div>
+        <footer>
+          <div class="footer-price">
+            <span>상품금액</span>
+            <strong>10,000원</strong>
+            <!--금액 변화해야함 -->
+          </div>
+          <div class="footer-shipping">
+            <span>배송비</span>
+            <strong>무료</strong>
+            <!--금액 변화해야함 -->
+          </div>
+          <div class="footer-total">
+            <span>결제금액</span>
+            <strong>10,000원</strong>
+            <!--금액 변화해야함 -->
+            <button class="purchase">구매하기</button>
+          </div>
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>

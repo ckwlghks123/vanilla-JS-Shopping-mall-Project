@@ -6,20 +6,31 @@ const OrderSchema = new Schema(
       type: Schema.Types.ObjectId,
       required: true,
       ref: "user",
+    }, 
+    // product: {
+    //   type: Schema.Types.ObjectId,
+    //   requred: true,
+    //   ref: "product",
+    // },
+    receiver: {
+      type: String,
+      required: true,
     },
-    product: {
-      type: Schema.Types.ObjectId,
-      requred: true,
-      ref: "product",
+    phone: {
+      type: String,
+      required: true,
     },
     address: {
       type: String,
       required: true,
     },
-    amount: {
-      type: Number,
-      required: true,
-    },
+    request: {
+      type: String,
+    }
+    // amount: {
+    //   type: Number,
+    //   required: true,
+    // },
     process: {
       type: String,
       enum: ["WAIT", "INPROGRESS", "COMPLETED"],
@@ -31,5 +42,9 @@ const OrderSchema = new Schema(
     timestamps: true,
   }
 );
+
+const orderInfoSchema = new Schema({
+
+})
 
 export { OrderSchema };

@@ -1,0 +1,8 @@
+.top-bar {
+  display: flex;
+}
+
+.status-bar {
+  display: flex;
+  list-style: none;
+}
