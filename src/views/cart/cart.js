@@ -1,12 +1,12 @@
 import * as Api from "../api.js";
 
 const $cartMain = document.querySelector(".cart-main");
-const $shipCost = document.querySelector(".shipping-cost");
+const $cartIn = document.querySelector(".cart-in");
 
 const token = getStorage("token");
 
 function getStorage(name) {
-  let item = {};
+  let item = null;
   try {
     item = JSON.parse(localStorage.getItem(name));
   } catch (e) {
@@ -16,10 +16,25 @@ function getStorage(name) {
   return item;
 }
 
-function genTemplate(type, data) {
-  function genItems(items) {
-    return items.map(
-      ({ name, amount, price, images }) => `<div class="product">
+function nonTemplate() {
+  $cartMain.innerHTML = `
+  <div class="cart-none">
+    <img src="" alt="카트이미지" class="cart-image" />
+    <span>장바구니에 담긴 상품이 없습니다.</span>
+  </div>
+  `;
+}
+
+function genTemplate({ list }) {
+  const productPrice = list.reduce(
+    (acc, item) => acc + item.price * item.amount,
+    0
+  );
+  const shipFee = productPrice < 30000 ? 3000 : 0;
+  const total = (productPrice + shipFee).toLocaleString();
+  const items = list.map(
+    ({ name, amount, price, images }) => `
+      <div class="product">
         <div class="product-section">
           <img src=${images} alt="" class="product-image" />
           <div class="product-name">${name}</div>
@@ -30,47 +45,75 @@ function genTemplate(type, data) {
           <div class="amount">${amount}</div>
           <button class="decrease">+</button>
         </div>
-        <div class="total-price">${price.toLocaleString()}원</div>
+        <div class="total-price">${(price * amount).toLocaleString()}원</div>
         <div class="section-button">
           <button class="delete">삭제</button>
           <button class="later">나중에 사기</button>
         </div>
       </div>`
-    );
-  }
+  );
 
-  const items = genItems(data.items);
-
-  if (type === "none") {
-    $cartMain.innerHTML = `
-    <div class="cart-none">
-      <img src="" alt="카트이미지" class="cart-image" />
-      <span>장바구니에 담긴 상품이 없습니다.</span>
+  const costTemplate = `        
+  <div class="shipping-cost">
+    <div class="price">
+      <span>상품금액</span>
+      <strong>${productPrice.toLocaleString()}원</strong>
     </div>
-    `;
-  } else if (type === "in") {
-    $shipCost.insertAdjacentHTML("beforebegin", items);
-  }
+    <div class="shipping">
+      <span>배송비(30,000원 이상 무료)</span>
+      <strong>${shipFee === 3000 ? "3,000원" : "무료"}</strong>
+    </div>
+    <div class="total">
+      <span>주문금액</span>
+      <strong>${total}원</strong>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-price">
+      <span>총 상품금액</span>
+      <strong>${productPrice.toLocaleString()}원</strong>
+    </div>
+    <div class="footer-shipping">
+      <span>총 배송비</span>
+      <strong>+${shipFee === 3000 ? "3,000원" : "무료"}</strong>
+    </div>
+    <div class="footer-total">
+      <span>결제금액</span>
+      <strong>${total}원</strong>
+      <button class="purchase">구매하기</button>
+    </div>
+  </footer>`;
+
+  $cartIn.insertAdjacentHTML("beforeend", items);
+  $cartIn.insertAdjacentHTML("beforeend", costTemplate);
 }
 
-async function memberCart() {
+async function memberCart(type) {
   const memType = {
     nonMem() {
       return getStorage("cart");
     },
     mem() {
       return fetch("./test.json").then((res) => res.json());
+      // 정식 요청할때 Api.js 사용
     },
   };
 
-  const data = await memType["nonMem"]();
+  let data = await memType[type]();
 
-  if (Object.keys(data).length === 0) {
-    genTemplate("none");
+  function setState(newState) {
+    data = newState;
+    genTemplate(data);
+  }
+
+  if (!data) {
+    nonTemplate();
     return;
   }
 
-  genTemplate("in", data);
+  genTemplate(data);
+
+  $cartMain.addEventListener("click", (e) => {});
 }
 
-memberCart();
+token ? memberCart("mem") : memberCart("nonMem");

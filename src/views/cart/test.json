@@ -3,7 +3,7 @@
   "phone": "010-1111-2222",
   "address": "강남구",
   "request": "",
-  "items": [
+  "list": [
     { "name": "사료", "amount": 3, "price": 4400, "images": "" },
     { "name": "참치", "amount": 1, "price": 10400, "images": "" }
   ]
