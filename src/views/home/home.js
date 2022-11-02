@@ -19,6 +19,7 @@ async function addAllElements() {
   insertTextToGreeting();
   insertLogoutLi();
   insertAdminLi();
+  insertMyPageLi();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -84,6 +85,8 @@ function loginLogoutHandler(event) {
     document.location.href = "/login";
   } else if (event.target.parentNode.id === "navbar__register") {
     document.location.href = "/register";
+  } else if (event.target.parentNode.id === "navbar__mypage") {
+    document.location.href = "/mypage";
   }
 }
 
@@ -93,6 +96,14 @@ function insertAdminLi() {
     document.querySelector("#navbar__admin").style.removeProperty("display");
   } else if (localStorage.getItem("isAdmin") === "false") {
     document.querySelector("#navbar__admin").style.display = "none";
+  }
+}
+
+function insertMyPageLi() {
+  if (localStorage.getItem("token")) {
+    document.querySelector("#navbar__mypage").style.removeProperty("display");
+  } else {
+    document.querySelector("#navbar__mypage").style.style.display = "none";
   }
 }
 
