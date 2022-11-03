@@ -48,9 +48,21 @@ userRouter.post(
 
     // 로그인 진행 (로그인 성공 시 jwt 토큰을 프론트에 보내 줌)
     const userToken = await userService.getUserToken({ email, password });
+    // 로그인한 사용자가 admin 유저인지 확인하기위해 유저를 받아옴
+    const user = await userService.getUserByEmail(email);
 
-    // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
-    res.status(200).json(userToken);
+    // jwt 토큰과 user를 프론트에 보냄 (jwt 토큰은, 문자열임)
+    res.status(200).json({ userToken, user });
+  })
+);
+
+userRouter.get(
+  "/me",
+  loginRequired,
+  asyncHandler(async function (req, res, next) {
+    const userId = req.currentUserId;
+    const user = await userService.getUser(userId);
+    res.status(201).json(user);
   })
 );
 
@@ -59,6 +71,7 @@ userRouter.post(
 userRouter.get(
   "/userlist",
   loginRequired,
+  adminRequired,
   asyncHandler(async function (req, res, next) {
     // 전체 사용자 목록을 얻음
     const users = await userService.getUsers();
@@ -69,7 +82,7 @@ userRouter.get(
 );
 
 userRouter.patch(
-  "/user/:userId",
+  "/user",
   loginRequired,
   asyncHandler(async function (req, res, next) {
     // content-type 을 application/json 로 프론트에서
@@ -81,7 +94,7 @@ userRouter.patch(
     }
 
     // params로부터 id를 가져옴
-    const userId = req.params.userId;
+    const userId = req.currentUserId;
 
     // body data 로부터 업데이트할 사용자 정보를 추출함.
     const { fullName, password, address } = req.body;
@@ -118,6 +131,7 @@ userRouter.patch(
 userRouter.get(
   "/user/:userId",
   loginRequired,
+  adminRequired,
   asyncHandler(async function (req, res, next) {
     const { userId } = req.params;
     const user = await userService.getUser(userId);
@@ -131,8 +145,18 @@ userRouter.delete(
   adminRequired,
   asyncHandler(async function (req, res, next) {
     const { userId } = req.params;
-    const user = await userService.deleteUser(userId);
-    res.json(user);
+    const result = await userService.deleteUser(userId);
+    res.status(201).json(result);
+  })
+);
+
+// for email 중복체크. DB에서 이메일로 유저를 가져와 프론트에 보내 줌d
+userRouter.get(
+  "/email/:email",
+  asyncHandler(async function (req, res, next) {
+    const { email } = req.params;
+    const user = await userService.getUserByEmail(email);
+    res.status(200).json(user);
   })
 );
 

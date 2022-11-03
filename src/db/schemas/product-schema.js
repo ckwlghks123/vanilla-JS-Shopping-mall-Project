@@ -7,24 +7,20 @@ const ProductSchema = new Schema(
       required: true,
     },
     price: {
-      type: String,
+      type: Number,
       requred: true,
-    },
-    amount: {
-      type: String,
-      required: true,
     },
     category: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "category",
     },
-    images: {
-      type: [String],
-      required: true,
-    },
     description: {
       type: String,
+      required: true,
+    },
+    images: {
+      type: [String],
       required: true,
     },
     // 리뷰 추가하면 populate 해야할듯

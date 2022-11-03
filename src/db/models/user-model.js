@@ -4,7 +4,6 @@ import { UserSchema } from "../schemas/user-schema";
 const User = model("users", UserSchema);
 
 export class UserModel {
-  // email, id 따로 두는 이유?
   async findByEmail(email) {
     const user = await User.findOne({ email });
     return user;
@@ -21,7 +20,7 @@ export class UserModel {
   }
 
   async findAll() {
-    const users = await User.find({});
+    const users = await User.find({}).sort({ createdAt: -1 });
     return users;
   }
 

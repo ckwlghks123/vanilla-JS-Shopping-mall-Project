@@ -1,17 +1,28 @@
 import { Schema } from "mongoose";
 
+const OrderElementSchema = new Schema({
+  product: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "products",
+  },
+  amount: {
+    type: Number,
+    required: true,
+  },
+});
+
 const OrderSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: "user",
-    }, 
-    // product: {
-    //   type: Schema.Types.ObjectId,
-    //   requred: true,
-    //   ref: "product",
-    // },
+      ref: "users",
+    },
+    list: {
+      type: [OrderElementSchema],
+      required: true,
+    },
     receiver: {
       type: String,
       required: true,
@@ -24,27 +35,22 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
-    request: {
+    requirement: {
       type: String,
-    }
-    // amount: {
-    //   type: Number,
-    //   required: true,
-    // },
+      required: false,
+      default: "",
+    },
     process: {
       type: String,
-      enum: ["WAIT", "INPROGRESS", "COMPLETED"],
-      required: true,
+      enum: ["WAIT", "INPROGRESS", "COMPLETED", "CANCEL"],
+      required: false,
+      default: "WAIT",
     },
   },
   {
-    collection: "order",
+    collection: "orders",
     timestamps: true,
   }
 );
-
-const orderInfoSchema = new Schema({
-
-})
 
 export { OrderSchema };

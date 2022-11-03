@@ -146,6 +146,12 @@ class UserService {
 
     return user;
   }
+
+  // 이메일로 유저 받아오기
+  async getUserByEmail(email) {
+    const user = await this.userModel.findByEmail(email);
+    return user;
+  }
 }
 
 const userService = new UserService(userModel);
