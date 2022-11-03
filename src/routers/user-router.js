@@ -150,13 +150,57 @@ userRouter.delete(
   })
 );
 
-// for email 중복체크. DB에서 이메일로 유저를 가져와 프론트에 보내 줌d
+// for email 중복체크. DB에서 이메일로 유저를 가져와 프론트에 보내 줌
 userRouter.get(
   "/email/:email",
   asyncHandler(async function (req, res, next) {
     const { email } = req.params;
     const user = await userService.getUserByEmail(email);
     res.status(200).json(user);
+  })
+);
+
+/**
+ * @author: 김상현
+ * @detail: mypage 이름 변경을 위한 임시 patch API임.
+ */
+userRouter.patch(
+  "/user/fullName",
+  loginRequired,
+  asyncHandler(async function (req, res, next) {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+    const { fullName, email } = req.body;
+    const updatedUserInfo = await userService.setUserFullname(email, fullName);
+
+    res.status(200).json(updatedUserInfo);
+  })
+);
+
+/**
+ * @author: 김상현
+ * @detail: mypage 비밀번호 변경을 위한 임시 patch API임.
+ */
+userRouter.patch(
+  "/user/password",
+  loginRequired,
+  asyncHandler(async function (req, res, next) {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+    const { currentPassword, newPassword, email } = req.body;
+    const updatedUserInfo = await userService.setUserPassword(
+      email,
+      newPassword,
+      currentPassword
+    );
+
+    res.status(200).json(updatedUserInfo);
   })
 );
 
