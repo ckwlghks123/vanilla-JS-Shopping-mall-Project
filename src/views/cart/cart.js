@@ -18,7 +18,10 @@ let timer;
 function getStorage(name) {
   let item = null;
   try {
-    item = JSON.parse(localStorage.getItem(name));
+    item =
+      name === "cart"
+        ? JSON.parse(localStorage.getItem(name))
+        : localStorage.getItem(name);
   } catch (e) {
     console.warn(e);
   }
@@ -93,9 +96,8 @@ async function memberCart(type) {
       return getStorage("cart");
     },
     mem() {
-      return fetch("./test.json").then((res) => res.json());
-      // return Api.get("localhost:8989", "api/cart");
-      // 정식 요청할때 Api.js 사용
+      // return fetch("./test.json").then((res) => res.json());
+      return Api.get(`http://localhost:${process.env.PORT}`, "api/cart");
     },
   };
 
@@ -134,12 +136,12 @@ async function memberCart(type) {
         totalPrice(data);
 
         debounce(() => {
-          // Api.post('http://localhost:8989/api/cart', {
-          //   productId: id,
-          //   amount: numAdd,
-          // })
-
-          // 로컬 스토리지 저장 구현해야함
+          token
+            ? Api.post(`http://localhost:${process.env.PORT}/api/cart`, {
+                productId: id,
+                amount: numAdd,
+              })
+            : setStorage(data);
 
           console.log("증가");
         });
@@ -160,12 +162,12 @@ async function memberCart(type) {
         totalPrice(data);
 
         debounce(() => {
-          // Api.post('http://localhost:8989/api/cart', {
-          //   productId: id,
-          //   amount: numSub,
-          // })
-
-          // 로컬 스토리지 저장 구현해야함
+          token
+            ? Api.post(`http://localhost:${process.env.PORT}/api/cart`, {
+                productId: id,
+                amount: numSub,
+              })
+            : setStorage(data);
 
           console.log("감소");
         });
@@ -178,11 +180,11 @@ async function memberCart(type) {
 
         totalPrice(data);
 
-        // Api.del("http://localhost:8989", "api/cart", {
-        //   productId: id,
-        // });
-
-        // 로컬 스토리지 삭제 구현해야함
+        token
+          ? Api.del(`http://localhost:${process.env.PORT}`, "api/cart", {
+              productId: id,
+            })
+          : setStorage(data);
 
         console.log("삭제되었습니다");
         break;
@@ -213,6 +215,10 @@ function getData(data, id, num) {
 
 function getProductPrice(data, num) {
   return `${(data.product.price * num).toLocaleString()}원`;
+}
+
+function setStorage(data) {
+  localStorage.setItem("cart", JSON.stringify(data));
 }
 
 token ? memberCart("mem") : memberCart("nonMem");

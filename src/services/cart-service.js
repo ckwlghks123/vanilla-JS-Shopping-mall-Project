@@ -11,7 +11,9 @@ class CartService {
   }
 
   async getCartByUserId(userId) {
+    console.log(userId);
     const cart = await this.cartModel.findByUserId(userId);
+
     return cart;
   }
 

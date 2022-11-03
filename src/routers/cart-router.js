@@ -11,6 +11,7 @@ cartRouter.get(
   asyncHandler(async function (req, res, next) {
     const userId = req.currentUserId;
     const cart = await cartService.getCartByUserId(userId);
+
     res.status(201).json(cart);
   })
 );
