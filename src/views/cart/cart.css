@@ -6,3 +6,7 @@
   display: flex;
   list-style: none;
 }
+
+.cart-in {
+  display: none;
+}
