@@ -206,6 +206,26 @@ class UserService {
     });
     return updatedUser;
   }
+
+  /**
+   * @author: 김상현
+   * @detail: 이메일로 유저를 확인하고 주소를 바꾸는 임시 메서드.
+   */
+  async setUserAddress(email, address) {
+    // 우선 해당 eamil의 유저가 db에 있는지 확인
+    const user = await this.userModel.findByEmail(email);
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+    }
+    // 업데이트 진행
+    const updatedUser = await this.userModel.updateAddressByEmail({
+      email,
+      update: address,
+    });
+    return updatedUser;
+  }
 }
 
 const userService = new UserService(userModel);

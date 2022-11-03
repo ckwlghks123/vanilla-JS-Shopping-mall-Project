@@ -204,4 +204,24 @@ userRouter.patch(
   })
 );
 
+/**
+ * @author: 김상현
+ * @detail: mypage 주소 변경을 위한 임시 patch API임.
+ */
+userRouter.patch(
+  "/user/address",
+  loginRequired,
+  asyncHandler(async function (req, res, next) {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+    const { address, email } = req.body;
+    const updatedUserInfo = await userService.setUserAddress(email, address);
+
+    res.status(200).json(updatedUserInfo);
+  })
+);
+
 export { userRouter };

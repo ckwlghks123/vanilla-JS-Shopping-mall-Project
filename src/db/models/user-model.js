@@ -54,6 +54,17 @@ export class UserModel {
     return updatedUser;
   }
 
+  // 이메일로 확인 후 주소 업데이트 하는 임시 메서드
+  // author: 김상현
+  async updateAddressByEmail({ email, update }) {
+    const filter = { email };
+    const option = { returnOriginal: false };
+    update = { address: update };
+
+    const updatedUser = await User.findOneAndUpdate(filter, update, option);
+    return updatedUser;
+  }
+
   async deleteById(userId) {
     const result = await User.deleteOne({ _id: userId });
     return result;
