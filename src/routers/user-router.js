@@ -224,4 +224,25 @@ userRouter.patch(
   })
 );
 
+/**
+ * @author: 김상현
+ * @detail: mypage 회원탈퇴를 위한 delete API
+ */
+userRouter.delete(
+  "/user",
+  loginRequired,
+  asyncHandler(async function (req, res, next) {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+    const { password } = req.body;
+    const userId = req.currentUserId;
+    const deletedUserInfo = await userService.deleteUser(userId, password);
+
+    res.status(200).json(deletedUserInfo);
+  })
+);
+
 export { userRouter };

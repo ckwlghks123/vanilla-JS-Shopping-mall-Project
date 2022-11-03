@@ -14,7 +14,7 @@ const userEmail = document.querySelector("#user-email");
 const userPasswordButton = document.querySelector("#user-password-button");
 const userAddress = document.querySelector("#user-address");
 const userAddressButton = document.querySelector("#user-address-button");
-const userWithdrawButton = document.querySelector("#user-widthdraw-button");
+const userWithdrawButton = document.querySelector("#user-withdraw-button");
 
 addAllElements();
 addAllEvents();
@@ -32,6 +32,7 @@ function addAllEvents() {
   userNameButton.addEventListener("click", changeNameHandler);
   userPasswordButton.addEventListener("click", changePasswordHandler);
   userAddressButton.addEventListener("click", changeAddressHandler);
+  userWithdrawButton.addEventListener("click", withdrawUserHandler);
 }
 
 // admin 유저일 경우 이름 위에 관리자 표시
@@ -128,5 +129,25 @@ async function changeAddressHandler(e) {
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
+}
+
+async function withdrawUserHandler(e) {
+  const isWithdraw = confirm("정말 회원 탈퇴를 하시겠습니까?");
+  if (isWithdraw) {
+    const password = prompt("회원탈퇴를 하려면 비밀번호를 입력하세요");
+    try {
+      const data = { password };
+      const user = await Api.delete("/api/user", "", data);
+      alert("회원탈퇴가 완료되었습니다.");
+      localStorage.removeItem("token");
+      localStorage.removeItem("isAdmin");
+      document.location.href = "/";
+    } catch (err) {
+      console.error(err.stack);
+      alert(
+        `문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`
+      );
+    }
   }
 }

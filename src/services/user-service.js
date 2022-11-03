@@ -95,7 +95,27 @@ class UserService {
     return user;
   }
 
-  async deleteUser(userId) {
+  // 유저를 삭제할때 비밀번호 일치여부 추가
+  // 수정자: 김상현
+  async deleteUser(userId, currentPassword) {
+    const user = await this.userModel.findById(userId);
+
+    if (!user) {
+      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+    }
+
+    const correctPasswordHash = user.password;
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      correctPasswordHash
+    );
+
+    if (!isPasswordCorrect) {
+      throw new Error(
+        "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
+      );
+    }
+
     const result = await this.userModel.deleteById(userId);
     return result;
   }
