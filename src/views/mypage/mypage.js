@@ -1,5 +1,6 @@
 /**
  * @author: 김상현
+ * @date: 2022-11-04
  * @detail: 마이페이지를 위한 js파일입니다.
  */
 
@@ -21,10 +22,7 @@ addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
-  insertIsAdmin();
-  insertUserName();
-  insertUserEmail();
-  insertUserAddress();
+  insertUserInfo();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -35,42 +33,40 @@ function addAllEvents() {
   userWithdrawButton.addEventListener("click", withdrawUserHandler);
 }
 
-// admin 유저일 경우 이름 위에 관리자 표시
-function insertIsAdmin() {
-  if (localStorage.getItem("isAdmin") === "true") {
+// 유저 정보(isAdmin, 이름, 이메일, 주소) 조회 및 화면에 표시
+async function insertUserInfo() {
+  try {
+    const userInfo = await Api.get("/api/me");
+    const { isAdmin, fullName, email, address } = userInfo;
+
+    insertIsAdmin(isAdmin);
+    insertUserName(fullName);
+    insertUserEmail(email);
+    insertUserAddress(address);
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
+}
+
+function insertIsAdmin(isAdmin) {
+  if (isAdmin) {
     userAdmin.style.removeProperty("display");
-  } else if (localStorage.getItem("isAdmin") === "false") {
+  } else {
     userAdmin.style.display = "none";
   }
 }
 
-async function insertUserName() {
-  try {
-    const email = localStorage.getItem("email");
-    const user = await Api.get(`/api/email/${email}`);
-    const { fullName } = user;
-    userName.innerText = fullName;
-  } catch (err) {
-    console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
+function insertUserName(fullName) {
+  userName.innerText = fullName;
 }
 
-async function insertUserEmail() {
-  const email = localStorage.getItem("email");
+async function insertUserEmail(email) {
   userEmail.innerText = email;
 }
 
-async function insertUserAddress() {
-  try {
-    const email = localStorage.getItem("email");
-    const user = await Api.get(`/api/email/${email}`);
-    const { address } = user;
-    userAddress.innerText = address;
-  } catch (err) {
-    console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
+function insertUserAddress(address) {
+  userAddress.innerText = address;
 }
 
 // 유저 이름 변경
