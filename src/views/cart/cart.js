@@ -96,7 +96,6 @@ async function memberCart(type) {
       return getStorage("cart");
     },
     mem() {
-      // return fetch("./test.json").then((res) => res.json());
       return Api.get(`http://localhost:${process.env.PORT}`, "api/cart");
     },
   };
