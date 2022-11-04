@@ -9,8 +9,11 @@ import * as Api from "../api.js";
 
 const $cartMain = document.querySelector(".cart-main");
 const $cartIn = document.querySelector(".cart-in");
+const $cartNone = document.querySelector(".cart-none");
 const $title = document.querySelector(".title");
 const $list = document.querySelector(".product-list");
+
+const PORT = 3000;
 
 let timer;
 const token = getStorage("token");
@@ -30,12 +33,8 @@ function getStorage(name) {
 
 // 데이터가 비었을때 빈 장바구니 템플릿 생성하는 함수
 function emptyCart() {
-  $cartMain.innerHTML = `
-  <div class="cart-none">
-    <img src="" alt="카트이미지" class="cart-image" />
-    <span>장바구니에 담긴 상품이 없습니다.</span>
-  </div>
-  `;
+  $cartIn.classList.add("hidden");
+  $cartNone.classList.remove("hidden");
 }
 
 // 데이터를 인자로 받아서 총 주문금액을 갱신하는 함수
@@ -96,12 +95,13 @@ async function memberCart(type) {
       return getStorage("cart");
     },
     mem() {
-      return Api.get(`http://localhost:${process.env.PORT}`, "api/cart");
+      return Api.get(`http://localhost:${PORT}`, "api/cart");
     },
   };
 
   let data = (await memType[type]())?.list;
 
+  console.log(data);
   if (!data) {
     emptyCart();
     return;
@@ -110,7 +110,7 @@ async function memberCart(type) {
   genProduct(data);
   totalPrice(data);
 
-  $cartIn.style.display = "block";
+  $cartIn.classList.remove("hidden");
 
   $cartMain.addEventListener("click", ({ target }) => {
     const parent = target.parentNode.parentNode;
@@ -136,7 +136,7 @@ async function memberCart(type) {
 
         debounce(() => {
           token
-            ? Api.post(`http://localhost:${process.env.PORT}/api/cart`, {
+            ? Api.post(`http://localhost:${PORT}/api/cart`, {
                 productId: id,
                 amount: numAdd,
               })
@@ -162,7 +162,7 @@ async function memberCart(type) {
 
         debounce(() => {
           token
-            ? Api.post(`http://localhost:${process.env.PORT}/api/cart`, {
+            ? Api.post(`http://localhost:${PORT}/api/cart`, {
                 productId: id,
                 amount: numSub,
               })
@@ -180,7 +180,7 @@ async function memberCart(type) {
         totalPrice(data);
 
         token
-          ? Api.del(`http://localhost:${process.env.PORT}`, "api/cart", {
+          ? Api.delete(`http://localhost:${PORT}`, "api/cart", {
               productId: id,
             })
           : setStorage(data);
