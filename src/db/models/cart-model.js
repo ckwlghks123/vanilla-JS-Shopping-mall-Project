@@ -23,7 +23,6 @@ export class CartModel {
         },
       })
       .sort({ createdAt: -1 });
-
     return cart;
   }
 
