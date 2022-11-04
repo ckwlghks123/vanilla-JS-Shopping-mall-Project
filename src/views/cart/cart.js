@@ -101,7 +101,6 @@ async function memberCart(type) {
 
   let data = (await memType[type]())?.list;
 
-  console.log(data);
   if (!data) {
     emptyCart();
     return;
