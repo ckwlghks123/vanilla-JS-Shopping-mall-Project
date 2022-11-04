@@ -28,12 +28,12 @@ app.use(viewsRouter);
 
 app.use('/api', userRouter);
 app.use('/api/products', productRouter);
-//app.use("/api/productlist", productlistRouter);
+app.use("/api/productlist", productlistRouter);
 app.use('/api/categories', categoryRouter);
-//app.use("/api/categorylist", categorylistRouter);
-//app.use("/api/order", orderRouter);
-//app.use("/api/orderlist", orderlistRouter);
-//app.use("/api/cart", cartRouter);
+app.use("/api/categorylist", categorylistRouter);
+app.use("/api/order", orderRouter);
+app.use("/api/orderlist", orderlistRouter);
+app.use("/api/cart", cartRouter);
 
 app.use(function (req, res, next) {
     res.status(404).json({ result: 'error', reason: 'page not found' });
