@@ -97,6 +97,7 @@ class UserService {
 
   // 유저를 삭제할때 비밀번호 일치여부 추가
   // 수정자: 김상현
+  // 날짜: 2022-11-03
   async deleteUser(userId, currentPassword) {
     const user = await this.userModel.findById(userId);
 
@@ -171,80 +172,6 @@ class UserService {
   async getUserByEmail(email) {
     const user = await this.userModel.findByEmail(email);
     return user;
-  }
-
-  /**
-   * @author: 김상현
-   * @detail: 이메일로 유저를 확인하고 이름을 바꾸는 임시 메서드.
-   */
-  async setUserFullname(email, fullName) {
-    // 우선 해당 eamil의 유저가 db에 있는지 확인
-    const user = await this.userModel.findByEmail(email);
-
-    // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!user) {
-      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
-    }
-
-    // 업데이트 진행
-    const updatedUser = await this.userModel.updateNameByEmail({
-      email,
-      update: fullName,
-    });
-    return updatedUser;
-  }
-
-  /**
-   * @author: 김상현
-   * @detail: 이메일로 유저를 확인하고 비밀번호를 바꾸는 임시 메서드.
-   */
-  async setUserPassword(email, newPassword, currentPassword) {
-    // 우선 해당 eamil의 유저가 db에 있는지 확인
-    const user = await this.userModel.findByEmail(email);
-
-    // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!user) {
-      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
-    }
-
-    // 비밀번호 일치 체크하고 맞으면 업데이트 진행
-    const correctPasswordHash = user.password;
-    const isPasswordCorrect = await bcrypt.compare(
-      currentPassword,
-      correctPasswordHash
-    );
-    if (!isPasswordCorrect) {
-      throw new Error(
-        "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
-      );
-    }
-    const newPasswordHash = await bcrypt.hash(newPassword, 10);
-
-    const updatedUser = await this.userModel.updatePasswordByEmail({
-      email,
-      update: newPasswordHash,
-    });
-    return updatedUser;
-  }
-
-  /**
-   * @author: 김상현
-   * @detail: 이메일로 유저를 확인하고 주소를 바꾸는 임시 메서드.
-   */
-  async setUserAddress(email, address) {
-    // 우선 해당 eamil의 유저가 db에 있는지 확인
-    const user = await this.userModel.findByEmail(email);
-
-    // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!user) {
-      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
-    }
-    // 업데이트 진행
-    const updatedUser = await this.userModel.updateAddressByEmail({
-      email,
-      update: address,
-    });
-    return updatedUser;
   }
 }
 

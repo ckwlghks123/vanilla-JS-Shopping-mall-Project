@@ -98,11 +98,14 @@ async function changeNameHandler(e) {
 // 유저 패스워드 변경
 async function changePasswordHandler(e) {
   try {
-    const currentPassword = prompt("현재 비밀번호를 입력하세요.");
-    const password = prompt("새로운 비밀번호를 입력하세요.");
-    const data = { currentPassword, password };
-    const user = await Api.patch("/api/user", "", data);
-    alert("비밀번호가 성공적으로 변경되었습니다.");
+    const isConfirm = confirm("정말 비밀번호를 변경하시겠습니까?");
+    if (isConfirm) {
+      const currentPassword = prompt("현재 비밀번호를 입력하세요.");
+      const password = prompt("새로운 비밀번호를 입력하세요.");
+      const data = { currentPassword, password };
+      const user = await Api.patch("/api/user", "", data);
+      alert("비밀번호가 성공적으로 변경되었습니다.");
+    }
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
