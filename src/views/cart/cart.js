@@ -12,8 +12,8 @@ const $cartIn = document.querySelector(".cart-in");
 const $title = document.querySelector(".title");
 const $list = document.querySelector(".product-list");
 
-const token = getStorage("token");
 let timer;
+const token = getStorage("token");
 
 function getStorage(name) {
   let item = null;
@@ -153,9 +153,9 @@ async function memberCart(type) {
 
         if (numSub === 1) target.disabled = true;
 
-        $elem2.innerText = numSub;
-
         data = getData(data, id, numSub);
+
+        $elem2.innerText = numSub;
 
         $productTotal.innerText = getProductPrice(productData, numSub);
 
