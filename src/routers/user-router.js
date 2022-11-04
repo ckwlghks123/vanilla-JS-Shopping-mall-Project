@@ -97,7 +97,7 @@ userRouter.patch(
     const userId = req.currentUserId;
 
     // body data 로부터 업데이트할 사용자 정보를 추출함.
-    const { fullName, password, address } = req.body;
+    const { fullName, password, address, postCode } = req.body;
 
     // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함.
     const currentPassword = req.body.currentPassword;
@@ -115,6 +115,7 @@ userRouter.patch(
       ...(fullName && { fullName }),
       ...(password && { password }),
       ...(address && { address }),
+      ...(postCode && { postCode }),
     };
 
     // 사용자 정보를 업데이트함.
