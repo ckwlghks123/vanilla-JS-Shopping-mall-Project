@@ -85,7 +85,7 @@ async function changeNameHandler(e) {
   const currentPassword = prompt("이름을 변경하려면 비밀번호를 입력하세요.");
   try {
     const data = { fullName, currentPassword };
-    const user = await Api.patch("/api/user", "", data);
+    const user = await Api.patch("", "api/user", data);
     const updatedFullName = user.fullName;
     userName.innerText = updatedFullName;
     alert(`이름이 ${updatedFullName}으로 변경되었습니다.`);
@@ -103,7 +103,7 @@ async function changePasswordHandler(e) {
       const currentPassword = prompt("현재 비밀번호를 입력하세요.");
       const password = prompt("새로운 비밀번호를 입력하세요.");
       const data = { currentPassword, password };
-      const user = await Api.patch("/api/user", "", data);
+      const user = await Api.patch("", "api/user", data);
       alert("비밀번호가 성공적으로 변경되었습니다.");
     }
   } catch (err) {
@@ -127,7 +127,7 @@ async function changeAddressHandler(e) {
   const currentPassword = prompt("주소를 변경하려면 비밀번호를 입력하세요.");
   try {
     const data = { address, currentPassword, postCode };
-    const user = await Api.patch("/api/user", "", data);
+    const user = await Api.patch("", "api/user", data);
     const updatedAddress = user.address;
     const updatedPostCode = user.postCode;
     userAddress.innerText = updatedAddress;
@@ -147,7 +147,7 @@ async function withdrawUserHandler(e) {
     const password = prompt("회원탈퇴를 하려면 비밀번호를 입력하세요");
     try {
       const data = { password };
-      const user = await Api.delete("/api/user", "", data);
+      const user = await Api.delete("", "api/user", data);
       alert("회원탈퇴가 완료되었습니다.");
       localStorage.removeItem("token");
       localStorage.removeItem("isAdmin");
