@@ -80,11 +80,17 @@ async function handleSubmit(e) {
 
 async function handleEmailCheck(e) {
   e.preventDefault();
-  const email = emailInput.value;
-  const user = await Api.get(`/api/email/${email}`);
-  if (user) {
-    emailInput.value = "";
-    return alert("중복된 이메일입니다.");
+  try {
+    const email = emailInput.value;
+    const user = await Api.get(`/api/email/${email}`);
+    if (user) {
+      emailInput.value = "";
+      return alert("중복된 이메일입니다.");
+    }
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
+
   alert("사용 가능한 이메일입니다.");
 }

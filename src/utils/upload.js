@@ -1,38 +1,31 @@
-import multer from "multer";
-import path from "path";
+import multer from 'multer';
+import path from 'path';
+import { v4 } from 'uuid';
 
-const fileFilter = (req, file, cb) => {
-  // 확장자 필터링
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
-  ) {
-    cb(null, true); // 해당 mimetype만 받겠다는 의미
-  } else {
-    // 다른 mimetype은 저장되지 않음
-    req.fileValidationError = "jpg,jpeg,png,gif,webp 파일만 업로드 가능합니다.";
-    cb(null, false);
-  }
-};
-
-const upload = multer({
-  storage: multer.diskStorage({
-    //폴더위치 지정
-    destination: (req, file, done) => {
-      const imgPath = path.join(__dirname, "../views");
-      done(null, imgPath);
+const DIR = 'uploads/';
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, DIR);
     },
-    filename: (req, file, done) => {
-      const ext = path.extname(file.originalname);
-      // aaa.txt => aaa+&&+129371271654.txt
-      const fileName = path.basename(file.originalname, ext) + Date.now() + ext;
-      req.namelist = req.namelist ? [...req.namelist, fileName] : [fileName];
-      done(null, fileName);
+    filename: (req, file, cb) => {
+        file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8');
+        const ext = path.extname(file.originalname);
+        const basename = path.basename(file.originalname.split(' ').join('-'), ext);
+        const fileName = basename + '_' + new Date().getTime() + ext;
+        cb(null, v4() + '-' + fileName);
     },
-  }),
-  fileFilter: fileFilter,
-  limits: { fileSize: 30 * 1024 * 1024 },
 });
 
-module.exports = upload;
+const upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == 'image/png' || file.mimetype == 'image/jpg' || file.mimetype == 'image/jpeg') {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('png, jpg, jpeg 파일형식만 사용가능합니다'));
+        }
+    },
+});
+
+export { upload };
