@@ -1,34 +1,39 @@
-import { productModel } from "../db";
+import { productModel } from '../db';
 
+// 상품
 class ProductService {
-  constructor(productModel) {
-    this.productModel = productModel;
-  }
+    constructor(productModel) {
+        this.productModel = productModel;
+    }
+    //상품추가
+    async addProduct(productInfo) {
+        const createdNewProduct = await this.productModel.createProduct(productInfo);
+        return createdNewProduct;
+    }
 
-  async addProduct(productInfo) {
-    const createdNewProduct = await this.productModel.create(productInfo);
-    return createdNewProduct;
-  }
+    //상품 전체 리스트
+    async getProductlist() {
+        const products = await this.productModel.findAll();
+        return products;
+    }
 
-  async getProductlist() {
-    const products = await this.productModel.findAll();
-    return products;
-  }
+    // 특정 상품 선택
+    async getProductById(productId) {
+        const product = await this.productModel.findById(productId);
+        return product;
+    }
 
-  async getProductById(productId) {
-    const product = await this.productModel.findById(productId);
-    return product;
-  }
+    // 상품 수정
+    async setProduct(productId, toUpdate) {
+        const product = await this.productModel.update(productId, toUpdate);
+        return product;
+    }
 
-  async setProduct(productId, toUpdate) {
-    const product = await this.productModel.update(productId, toUpdate);
-    return product;
-  }
-
-  async deleteProduct(productId) {
-    const result = await this.productModel.deleteById(productId);
-    return result;
-  }
+    // 상품 삭제
+    async deleteProduct(productId) {
+        const result = await productModel.deleteById(productId);
+        return result;
+    }
 }
 
 const productService = new ProductService(productModel);

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="products.js" type="module" defer></script>
+        <title>상품 관리</title>
+    </head>
+    <body>
+        <div id="productBox">
+            <form style="display: flex; flex-direction: column">
+                <label>상품명</label>
+                <input type="text" id="product-name" name="productName" style="width: 200px" />
+                <label>가격</label>
+                <input type="number" id="product-price" name="price" style="width: 200px" />
+                <label>카테고리</label>
+                <select id="product-category" style="width: 200px">
+                    <option value="none">Select Category</option>
+                </select>
+                <label>설명</label>
+                <textarea id="product-description" name="description" style="width: 200px"></textarea>
+                <label>파일</label>
+                <input type="file" id="product-image" multiple />
+                <button id="file-reset-btn" style="width: 200px">파일 초기화</button>
+                <button id="product-create-btn" style="width: 200px">추가</button>
+            </form>
+        </div>
+    </body>
+</html>
