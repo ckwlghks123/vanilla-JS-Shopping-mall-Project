@@ -103,7 +103,7 @@ function insertMyPageLi() {
   if (localStorage.getItem("token")) {
     document.querySelector("#navbar__mypage").style.removeProperty("display");
   } else {
-    document.querySelector("#navbar__mypage").style.style.display = "none";
+    document.querySelector("#navbar__mypage").style.display = "none";
   }
 }
 
