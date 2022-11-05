@@ -64,7 +64,7 @@ function totalPrice(list) {
 }
 
 // 데이터를 인자로 받아서 상품 갯수만큼 템플릿 생성
-function genProduct(list) {
+function renderProductsList(list) {
   const items = list
     .map(
       ({ product: { _id, name, price, images }, amount }) => `
@@ -106,7 +106,7 @@ async function memberCart(type) {
     return;
   }
 
-  genProduct(data);
+  renderProductsList(data);
   totalPrice(data);
 
   $cartIn.classList.remove("hidden");
