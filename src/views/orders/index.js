@@ -34,11 +34,19 @@ let deleteBtnList = document.querySelectorAll("#deleteBtn");
 
 //get
 //데이터 갯수 만큼 노드 복제
-let idNum = 0;
+// let idNum = 0;
 let testdataLength = 0;
 const testDiv = document.querySelector("#template");
 
 async function loadOrderList() {
+  let idNum = 0;
+
+  //다시로드 앞에 먼저 제거해조야되나? -> 안해줘도 삭제됨
+  document.querySelectorAll(".copy").forEach(item=>{
+      document.querySelector("body").removeChild(item)
+  })
+  document.querySelector("#template").style.display = "block";
+
   const testdata = await Api.get("/api/orderlist");
   testdataLength = testdata.length;
   console.log("testsdata!", testdata.length, testdata);
@@ -65,16 +73,11 @@ async function loadOrderList() {
         select.selected = true;
       }
     });
-
-    if (item.process != "COMPLETED") {
+    if (item.process !== "COMPLETED") {
       newNode.querySelector("#deleteBtn").style.display = "none";
     }
-    // document.querySelector("#template").style.display = "none";
 
     //삭제버튼에 삭제기능 추가
-    // deleteBtnList.forEach(item=>{
-    //     item.addEventListener('click',deleteOrderList)
-    // })
     newNode.querySelector("#deleteBtn").addEventListener("click", (e) => {
       console.log("삭제시도", e.target.parentElement.parentElement);
       if (confirm("주문 내역을 삭제하시겠습니까?")) {
@@ -83,16 +86,39 @@ async function loadOrderList() {
         console.log("삭제함");
 
         //데이터에서도 삭제
-        deleteOrderList(); // 여기 하는중
+        deleteOrderList(item._id); // 여기 하는중
       }
 
-      // //다시로드 앞에 먼저 제거해조야댐
-      // document.querySelectorAll(".copy").forEach(item=>{
-      //     document.querySelector("body").removeChild(item)
-
-      // })
-      // loadOrderList();
     });
+
+    //변경버튼에 변경기능 추가
+    newNode.querySelector("#changeBtn").addEventListener("click",(e)=>{
+    console.log("변경시도", e.target.parentElement.parentElement);
+    let changeProcess = ""
+    //데이터에서 변경
+    e.target.parentElement.parentElement.  //
+      querySelectorAll(".process select option")
+      .forEach(option => 
+        {if(option.selected === true){
+          console.log("option",option.textContent)
+          switch(option.textContent){
+            case "배송대기":
+              changeProcess = "WAIT"
+              break;
+            case "배송중":
+              changeProcess = "INPROGRESS"
+              break;
+            case "배송완료":
+              changeProcess = "COMPLETED"
+              e.target.parentElement.parentElement.querySelector("#deleteBtn").style.display = "block";
+              break;
+          }
+          console.log("changeProcess", changeProcess)
+      }}) 
+    changeOrderList(item._id,changeProcess)
+
+    })
+
   });
 
   document.querySelector("#template").style.display = "none";
@@ -101,44 +127,58 @@ loadOrderList();
 
 //삭제 기능 - complete 일때만 삭제 버튼 보여야함
 //데이터 삭제
-async function deleteOrderList() {}
+async function deleteOrderList(data) {
+    const result = await Api.delete('/api/order', data);
+    console.log(result)
 
-//수정 기능
-let changeBtnList = document.querySelectorAll("#changeBtn");
-
-function reviseList(e) {
-  console.log("reviseList");
-
-  console.log(
-    e.target.parentElement.parentElement.querySelector(".user").textContent
-  );
-
-  testdata.map((item) => {
-    if (
-      item.user ===
-      e.target.parentElement.parentElement.querySelector(".user").textContent
-    ) {
-      console.log("이름 같음");
-      e.target.parentElement.parentElement
-        .querySelectorAll(".process select option")
-        .forEach((item2) => {
-          if (item2.selected === true) item.process = item2.value; //testdata 넣어주기
-
-          // 배송완료일 경우 삭제버튼 붙이기 -
-          if (item.process !== "COMPLETED") {
-            let deleteBtn2 = document.querySelectorAll("#template #deleteBtn");
-            e.target.parentElement.parentElement.querySelector(
-              "#deleteBtn"
-            ).style.display = "none";
-          } else {
-            e.target.parentElement.parentElement.querySelector(
-              "#deleteBtn"
-            ).style.display = "block";
-          }
-        });
-    }
-  });
 }
-changeBtnList.forEach((item) => {
-  item.addEventListener("click", reviseList);
-});
+//수정 기능
+async function changeOrderList(id,changeProcess){
+  const process = changeProcess;
+  const data = {process}
+  console.log("changeOrderList",changeProcess)
+  const order = await Api.patch("",`api/order/${id}`,data);
+  console.log("수정완료")
+
+
+}
+
+// //수정 기능
+// let changeBtnList = document.querySelectorAll("#changeBtn");
+
+// function reviseList(e) {
+//   console.log("reviseList");
+
+//   console.log(
+//     e.target.parentElement.parentElement.querySelector(".user").textContent
+//   );
+
+//   testdata.map((item) => {
+//     if (
+//       item.user ===
+//       e.target.parentElement.parentElement.querySelector(".user").textContent
+//     ) {
+//       console.log("이름 같음");
+//       e.target.parentElement.parentElement
+//         .querySelectorAll(".process select option")
+//         .forEach((item2) => {
+//           if (item2.selected === true) item.process = item2.value; //testdata 넣어주기
+
+//           // 배송완료일 경우 삭제버튼 붙이기 -
+//           if (item.process !== "COMPLETED") {
+//             let deleteBtn2 = document.querySelectorAll("#template #deleteBtn");
+//             e.target.parentElement.parentElement.querySelector(
+//               "#deleteBtn"
+//             ).style.display = "none";
+//           } else {
+//             e.target.parentElement.parentElement.querySelector(
+//               "#deleteBtn"
+//             ).style.display = "block";
+//           }
+//         });
+//     }
+//   });
+// }
+// changeBtnList.forEach((item) => {
+//   item.addEventListener("click", reviseList);
+// });
