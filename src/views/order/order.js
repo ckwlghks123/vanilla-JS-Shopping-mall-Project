@@ -43,16 +43,41 @@ function renderProductsList(products) {
   });
 }
 
+function updateTotalPrice(price) {
+  const $totalPrice = document.querySelector(".total-price");
+  const $productShip = document.querySelector(".product-ship");
+  const $totalShip = document.querySelector(".total-ship");
+  const $totalPayment = document.querySelector(".total-payment");
+  const shipment = price >= 30000 ? 0 : 3000;
+  const string = price >= 30000 ? "무료" : "3,000원";
+  const total = price + shipment;
+
+  $totalPrice.innerText = `${price.toLocaleString()}원`;
+  $productShip.innerText = `배송비 : ${string}`;
+  $totalShip.innerText = string;
+  $totalPayment.innerText = `${total.toLocaleString()}원`;
+
+  return total;
+}
+
 function getTotalPrice(data) {
-  return data.reduce((price, product) => price + amount * product.price);
+  return data.reduce(
+    (price, { amount, product }) => price + amount * product.price,
+    0
+  );
 }
 
 async function getData() {
   // let data = await Api.get("http://localhost:3000", "api/cart");
   let data = await Api.get(".", "test.json");
   console.log(data);
+
   renderProductsList(data.list);
-  console.log(getTotalPrice(data.list));
+
+  const price = getTotalPrice(data.list);
+  const total = updateTotalPrice(price);
+
+  console.log(total);
 }
 
 getData();
