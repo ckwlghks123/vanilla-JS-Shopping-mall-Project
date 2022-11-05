@@ -27,10 +27,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(viewsRouter);
 
 app.use("/api", userRouter);
-app.use("/api/product", productRouter);
-app.use("/api/productlist", productlistRouter);
-app.use("/api/category", categoryRouter);
-app.use("/api/categorylist", categorylistRouter);
+app.use("/api/products", productRouter);
+app.use("/api/categories", categoryRouter);
+// app.use("/api/productlist", productlistRouter);
+// app.use("/api/categorylist", categorylistRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/orderlist", orderlistRouter);
 app.use("/api/cart", cartRouter);

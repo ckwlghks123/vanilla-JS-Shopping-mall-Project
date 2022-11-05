@@ -97,7 +97,7 @@ userRouter.patch(
     const userId = req.currentUserId;
 
     // body data 로부터 업데이트할 사용자 정보를 추출함.
-    const { fullName, password, address } = req.body;
+    const { fullName, password, address, postCode } = req.body;
 
     // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함.
     const currentPassword = req.body.currentPassword;
@@ -115,6 +115,7 @@ userRouter.patch(
       ...(fullName && { fullName }),
       ...(password && { password }),
       ...(address && { address }),
+      ...(postCode && { postCode }),
     };
 
     // 사용자 정보를 업데이트함.
@@ -150,13 +151,34 @@ userRouter.delete(
   })
 );
 
-// for email 중복체크. DB에서 이메일로 유저를 가져와 프론트에 보내 줌d
+// for email 중복체크. DB에서 이메일로 유저를 가져와 프론트에 보내 줌
 userRouter.get(
   "/email/:email",
   asyncHandler(async function (req, res, next) {
     const { email } = req.params;
     const user = await userService.getUserByEmail(email);
     res.status(200).json(user);
+  })
+);
+
+/**
+ * @author: 김상현
+ * @detail: mypage 회원탈퇴를 위한 delete API
+ */
+userRouter.delete(
+  "/user",
+  loginRequired,
+  asyncHandler(async function (req, res, next) {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+    const { password } = req.body;
+    const userId = req.currentUserId;
+    const deletedUserInfo = await userService.deleteUser(userId, password);
+
+    res.status(200).json(deletedUserInfo);
   })
 );
 

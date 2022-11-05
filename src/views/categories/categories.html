@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="categories.js" type="module" defer></script>
+        <title>카테고리 관리</title>
+    </head>
+    <body>
+        <form>
+            <label>카테고리 명</label>
+            <input
+                type="text"
+                name="categoryName"
+                id="category-name"
+                placeholder="카테고리 명을 입력하세요"
+            />
+            <button id="category-add-btn">추가</button>
+        </form>
+        <div id="category-box" style="margin-bottom: 100px">
+            <ul id="category-lists"></ul>
+        </div>
+    </body>
+</html>
