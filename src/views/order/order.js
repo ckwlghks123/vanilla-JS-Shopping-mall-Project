@@ -43,13 +43,16 @@ function renderProductsList(products) {
   });
 }
 
-function getTotalPrice(data) {}
+function getTotalPrice(data) {
+  return data.reduce((price, product) => price + amount * product.price);
+}
 
 async function getData() {
   // let data = await Api.get("http://localhost:3000", "api/cart");
   let data = await Api.get(".", "test.json");
   console.log(data);
   renderProductsList(data.list);
+  console.log(getTotalPrice(data.list));
 }
 
 getData();
