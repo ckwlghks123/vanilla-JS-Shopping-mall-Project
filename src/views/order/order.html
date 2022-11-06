@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="order.css" />
     <script src="order.js" type="module" defer></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <title>Document</title>
   </head>
   <body>
@@ -39,22 +40,28 @@
               placeholder="휴대전화 번호를 입력하세요."
             />
           </div>
-          <div>
-            <div>
-              <label for="zip-code">배송지 주소</label>
-              <input
-                type="text"
-                id="zip-code"
-                placeholder="우편번호를 입력하세요."
-              />
-              <button>우편번호</button>
+          <div class="user-address">
+            <div class="zip-address-wrapper">
+              <div>
+                <label for="zip-code">배송지 주소</label>
+                <input
+                  type="text"
+                  id="zip-code"
+                  disabled
+                  placeholder="우편번호를 입력하세요."
+                />
+                <button>우편번호</button>
+              </div>
             </div>
-            <div>
-              <input
-                type="text"
-                id="address"
-                placeholder="주소를 입력하세요."
-              />
+            <div class="zip-address-wrapper">
+              <div>
+                <input
+                  type="text"
+                  id="address"
+                  disabled
+                  placeholder="주소를 입력하세요."
+                />
+              </div>
             </div>
             <div>
               <input
@@ -133,8 +140,9 @@
       <section class="payment"></section>
       <section>
         <p>위 주문 내용을 확인하였으며 결제에 동의합니다.</p>
-        <button>결제하기</button>
+        <button id="payment-btn">결제하기</button>
       </section>
     </div>
+    <div id="postcode" style="display: none"></div>
   </body>
 </html>
