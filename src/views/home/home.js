@@ -90,23 +90,31 @@ function insertLogoutLi() {
 // navbar Li 를 클릭시 각 연결된 페이지로 이동
 function loginLogoutHandler(event) {
   event.preventDefault();
-  if (event.target.parentNode.id === "navbar__logout") {
-    localStorage.removeItem("token");
-    localStorage.removeItem("isAdmin");
-    adminLi.style.display = "none";
-    document.location.href = "/";
-  } else if (event.target.parentNode.id === "navbar__login") {
-    document.location.href = "/login";
-  } else if (event.target.parentNode.id === "navbar__register") {
-    document.location.href = "/register";
-  } else if (event.target.parentNode.id === "navbar__mypage") {
-    document.location.href = "/mypage";
-  } else if (event.target.parentNode.id === "navbar__category") {
-    document.location.href = "/admin/categories";
-  } else if (event.target.parentNode.id === "navbar__product") {
-    document.location.href = "/admin/products";
-  } else if (event.target.parentNode.id === "navbar__order") {
-    document.location.href = "/admin/orders";
+  switch (event.target.parentNode.id) {
+    case "navbar__logout":
+      localStorage.removeItem("token");
+      localStorage.removeItem("isAdmin");
+      adminLi.style.display = "none";
+      document.location.href = "/";
+      break;
+    case "navbar__login":
+      document.location.href = "/login";
+      break;
+    case "navbar__register":
+      document.location.href = "/register";
+      break;
+    case "navbar__mypage":
+      document.location.href = "/mypage";
+      break;
+    case "navbar__category":
+      document.location.href = "/admin/categories";
+      break;
+    case "navbar__product":
+      document.location.href = "/admin/products";
+      break;
+    case "navbar__order":
+      document.location.href = "/admin/orders";
+      break;
   }
 }
 
