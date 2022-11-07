@@ -32,6 +32,11 @@ class CartService {
     const updatedCart = await this.cartModel.updateDelete(userId, cartInfo);
     return updatedCart;
   }
+
+  async getCartById(cartId) {
+    const cart = await this.cartModel.findDelete(cartId);
+    return cart;
+  }
 }
 
 const cartService = new CartService(cartModel);
