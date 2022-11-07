@@ -22,10 +22,13 @@
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
-
+    <!-- 구글 OAuth -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- 카카오 OAuth -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="login.css" />
-    <script src="login.js" type="module" defer></script>
+    <link rel="stylesheet" href="register-kakao.css" />
+    <script src="register-kakao.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -53,7 +56,7 @@
         <div id="navbarBasicExample" class="navbar-menu">
           <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
             <ul id="navbar">
-              <li><a href="/register">회원가입</a></li>
+              <li><a href="/login">로그인</a></li>
               <li>
                 <a href="/cart" aria-current="page">
                   <span class="icon">
@@ -68,72 +71,53 @@
       </div>
     </nav>
 
-    <!-- 로그인 폼(Form) -->
-    <div class="login-form-container">
-      <form class="box login-form-box" id="loginForm">
-        <p class="title is-5 has-text-info">어서오세요!</p>
+    <!-- 회원가입 폼(Form) -->
+    <div class="register-user-form-container">
+      <form class="box register-user-form-box" id="registerUserForm">
+        <p class="title is-5 has-text-primary">환영합니다!</p>
         <div class="field">
-          <label class="label" for="emailInput">이메일</label>
+          <label class="label" for="fullNameInput">이름</label>
           <div class="control">
             <input
               class="input"
-              id="emailInput"
-              type="email"
-              placeholder="abc@example.com"
+              id="fullNameInput"
+              type="text"
+              placeholder="유재석"
               autocomplete="on"
             />
           </div>
         </div>
 
-        <div class="field mb-5">
-          <label class="label" for="passwordInput">비밀번호</label>
+        <div class="field">
+          <label class="label" for="postCodeInput">우편번호</label>
           <div class="control">
             <input
               class="input"
-              id="passwordInput"
-              type="password"
-              placeholder="********"
-              autocomplete="on"
+              id="postCodeInput"
+              type="number"
+              placeholder="06279"
+              autocomplete="off"
             />
           </div>
         </div>
 
-        <button class="button is-info is-fullwidth" id="submitButton">
-          로그인하기
+        <div class="field">
+          <label class="label" for="addressInput">주소</label>
+          <div class="control">
+            <input
+              class="input"
+              id="addressInput"
+              type="text"
+              placeholder="서울시 강남구 도곡로78길 22"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <button class="button is-primary is-fullwidth" id="submitButton">
+          회원가입하기
         </button>
-        <!-- 아래 부터 카카오 로그인을 위한 코드 -->
-        <a href="javascript:kakaoLogin();"
-          ><img
-            src="https://www.gb.go.kr/Main/Images/ko/member/certi_kakao_login.png"
-            alt="카카오로그인"
-            style="height: 60px; width: auto"
-        /></a>
       </form>
     </div>
-    <!-- 카카오 로그인을 위한 script -->
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <script>
-      window.Kakao.init("de945249a2674c6c7c7b4c6b90c0ba7d");
-
-      function kakaoLogin() {
-        window.Kakao.Auth.login({
-          scope: "profile_nickname, account_email",
-          success: function (authObj) {
-            localStorage.setItem("token", authObj.access_token);
-            window.Kakao.API.request({
-              url: "/v2/user/me",
-              success: (res) => {
-                const kakao_account = res.kakao_account;
-                const fullName = kakao_account.profile.nickname;
-                const email = kakao_account.email;
-                localStorage.setItem("fullName", fullName);
-                localStorage.setItem("email", email);
-                window.location.href = "/register-kakao";
-              },
-            });
-          },
-        });
-      }
-    </script>
   </body>
 </html>

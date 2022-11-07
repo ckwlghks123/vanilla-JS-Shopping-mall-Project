@@ -30,6 +30,31 @@ userRouter.post(
   })
 );
 
+// 카카오로그인을 통한 회원가입을 위한 API (수정자: 김상현)
+userRouter.post(
+  "/register-kakao",
+  asyncHandler(async function (req, res, next) {
+    // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
+    // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+
+    const { fullName, email, postCode, address } = req.body;
+
+    const newUser = await userService.addKakaoUser({
+      fullName,
+      email,
+      postCode,
+      address,
+    });
+
+    res.status(201).json(newUser);
+  })
+);
+
 userRouter.post(
   "/login",
   asyncHandler(async function (req, res, next) {
@@ -92,7 +117,7 @@ userRouter.get(
   "/email/:email",
   asyncHandler(async function (req, res, next) {
     const { email } = req.params;
-    const isExist = await userService.checkUserByEmail(email);
+    const { isExist } = await userService.checkUserByEmail(email);
     res.status(200).json({ isExist });
   })
 );

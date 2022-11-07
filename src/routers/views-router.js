@@ -8,6 +8,7 @@ const viewsRouter = express.Router();
 // http://localhost:5000/register 에서는 views/register/register.html 파일을 화면에 띄움
 viewsRouter.use("/", serveStatic("home"));
 viewsRouter.use("/register", serveStatic("register"));
+viewsRouter.use("/register-kakao", serveStatic("register-kakao"));
 viewsRouter.use("/login", serveStatic("login"));
 viewsRouter.use("/mypage", serveStatic("mypage"));
 viewsRouter.use("/cart", serveStatic("cart"));
