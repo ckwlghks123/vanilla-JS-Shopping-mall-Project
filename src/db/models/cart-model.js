@@ -79,6 +79,14 @@ export class CartModel {
 
     return updatedCart;
   }
+
+  async findDelete(cartId) {
+    const cart = await Cart.findOneAndDelete(
+      { _id: cartId },
+      { returnDocument: "before" }
+    );
+    return cart;
+  }
 }
 
 const cartModel = new CartModel();
