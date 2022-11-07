@@ -1,7 +1,3 @@
-// MONGODB_URL =  'mongodb+srv://elice10:nosleeprabbit2022@nosleeprabbit-cluster.i79rqlf.mongodb.net/test'
-// PORT = "8989"
-// JWT_SECRET_KEY = 'elice10nosleeprabbit'
-
 import * as Api from "/api.js";
 
 //get
