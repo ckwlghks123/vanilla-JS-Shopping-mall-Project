@@ -36,7 +36,6 @@ async function handleSubmit(e) {
   const passwordConfirm = passwordConfirmInput.value;
   const postCode = postCodeInput.value;
   let address = addressInput.value;
-  // console.log(detailAddressInput.value);
   let detailAddress = detailAddressInput.value || "";
 
   // 잘 입력했는지 확인
@@ -91,7 +90,6 @@ async function handleEmailCheck(e) {
   try {
     const email = emailInput.value;
     const { isExist } = await Api.get(`/api/email/${email}`);
-    console.log(isExist);
     if (isExist) {
       emailInput.value = "";
       return alert("중복된 이메일입니다.");

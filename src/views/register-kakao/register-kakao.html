@@ -22,10 +22,10 @@
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
-    <!-- 구글 OAuth -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <!-- 카카오 OAuth -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <!-- 다음 주소 API -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="register-kakao.css" />
     <script src="register-kakao.js" type="module" defer></script>
@@ -98,6 +98,11 @@
               placeholder="06279"
               autocomplete="off"
             />
+            <input
+              id="postCodeSearchButton"
+              type="button"
+              value="우편번호 찾기"
+            />
           </div>
         </div>
 
@@ -109,6 +114,19 @@
               id="addressInput"
               type="text"
               placeholder="서울시 강남구 도곡로78길 22"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="detailAddressInput">상세주소</label>
+          <div class="control">
+            <input
+              class="input"
+              id="detailAddressInput"
+              type="text"
+              placeholder="오일남 아파트 103동 1002호"
               autocomplete="off"
             />
           </div>
