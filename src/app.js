@@ -1,17 +1,17 @@
-import cors from "cors";
-import express from "express";
+import cors from 'cors';
+import express from 'express';
 import {
-  viewsRouter,
-  userRouter,
-  productRouter,
-  productlistRouter,
-  categoryRouter,
-  categorylistRouter,
-  orderRouter,
-  orderlistRouter,
-  cartRouter,
-} from "./routers";
-import { errorHandler } from "./middlewares";
+    viewsRouter,
+    userRouter,
+    productRouter,
+    menuRouter,
+    categoryRouter,
+    productDetailRouter,
+    orderRouter,
+    orderlistRouter,
+    cartRouter,
+} from './routers';
+import { errorHandler } from './middlewares';
 
 const app = express();
 
@@ -26,17 +26,20 @@ app.use(express.urlencoded({ extended: false }));
 // html, css, js 라우팅
 app.use(viewsRouter);
 
-app.use("/api", userRouter);
-app.use("/api/products", productRouter);
-app.use("/api/categories", categoryRouter);
-// app.use("/api/productlist", productlistRouter);
-// app.use("/api/categorylist", categorylistRouter);
-app.use("/api/order", orderRouter);
-app.use("/api/orderlist", orderlistRouter);
-app.use("/api/cart", cartRouter);
+// images static 라우팅
+app.use('/uploads', express.static('uploads'));
+
+app.use('/api', userRouter);
+app.use('/api/products', productRouter);
+app.use('/api/categories', categoryRouter);
+app.use('/api/productdetail', productDetailRouter);
+app.use('/api/menu', menuRouter);
+app.use('/api/order', orderRouter);
+app.use('/api/orderlist', orderlistRouter);
+app.use('/api/cart', cartRouter);
 
 app.use(function (req, res, next) {
-  res.status(404).json({ result: "error", reason: "page not found" });
+    res.status(404).json({ result: 'error', reason: 'page not found' });
 });
 
 //  next(error) 했을 때 여기로 오게 됨

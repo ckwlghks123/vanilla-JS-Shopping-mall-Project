@@ -3,11 +3,22 @@ import path from 'path';
 import is from '@sindresorhus/is';
 import { categoryService, productService } from '../services';
 import { upload } from '../utils/upload';
+import { asyncHandler } from '../utils';
+import fs from 'fs';
 
 const productRouter = express.Router();
 
+// 상품 가져오기
+productRouter.get('/', async (req, res, next) => {
+    try {
+        const products = await productService.getProductlist();
+        res.status(200).json(products);
+    } catch (error) {
+        next(error);
+    }
+});
+
 // 상품 생성
-// 카테고리쪽 모델 잘못됨 PR
 productRouter.post('/', upload.single('image'), async (req, res, next) => {
     try {
         const { name, price, category, description } = req.body;
@@ -27,37 +38,52 @@ productRouter.post('/', upload.single('image'), async (req, res, next) => {
 });
 
 // 수정
-// productRouter.patch(
-//     '/:productId',
-//     loginRequired,
-//     adminRequired,
-//     asyncHandler(async function (req, res, next) {
-//         const { productId } = req.params;
-//         const { name, price, category, description } = req.body;
+// loginRequired,
+// adminRequired,
+productRouter.patch(
+    '/:productId',
+    upload.single('image'),
+    asyncHandler(async function (req, res, next) {
+        const { productId } = req.params;
+        const { name, price, category, description } = req.body;
+        const categoryId = await categoryService.getCategoryId(category);
 
-//         const toUpdate = {
-//             ...(name && { name }),
-//             ...(price && { price }),
-//             ...(category && { category }),
-//             ...(description && { description }),
-//         };
+        let toUpdate = {
+            ...(name && { name }),
+            ...(price && { price }),
+            ...(category && { category: categoryId }),
+            ...(description && { description }),
+        };
 
-//         const updatedProductInfo = await productService.setProduct(productId, toUpdate);
+        if (req.file !== undefined) {
+            const { images } = await productService.getProductById(productId);
+            const imgPath = images[0];
+            fs.unlinkSync(imgPath);
+            toUpdate = { ...toUpdate, images: [req.file.path] };
+        }
 
-//         res.status(200).json(updatedProductInfo);
-//     })
-// );
+        const updatedProductInfo = await productService.setProduct(productId, toUpdate);
+        res.status(201).json('success');
+    })
+);
 
 // 삭제
-// productRouter.delete(
-//     '/:productId',
-//     loginRequired,
-//     adminRequired,
-//     asyncHandler(async function (req, res, next) {
-//         const { productId } = req.params;
-//         const result = await productService.deleteProduct(productId);
-//         res.status(201).json(result);
-//     })
-// );
+//loginRequired,
+//adminRequired,
+productRouter.delete(
+    '/:productId',
+    asyncHandler(async function (req, res, next) {
+        try {
+            const { productId } = req.params;
+            const { images } = await productService.getProductById(productId);
+            const imgPath = images[0];
+            fs.unlinkSync(imgPath);
+            const result = await productService.deleteProduct(productId);
+            res.json('delete');
+        } catch (error) {
+            next(error);
+        }
+    })
+);
 
 export { productRouter };
