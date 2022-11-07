@@ -4,9 +4,9 @@ import { CartSchema } from "../schemas/cart-schema";
 const Cart = model("cart", CartSchema);
 
 export class CartModel {
-  async getCntByUserId(userId) {
-    const cartCnt = await Cart.countDocuments({ user: userId });
-    return cartCnt;
+  async getCountByUserId(userId) {
+    const count = await Cart.countDocuments({ user: userId });
+    return count;
   }
 
   async create(cartInfo) {
@@ -78,6 +78,14 @@ export class CartModel {
     }
 
     return updatedCart;
+  }
+
+  async findDelete(cartId) {
+    const cart = await Cart.findOneAndDelete(
+      { _id: cartId },
+      { returnDocument: "before" }
+    );
+    return cart;
   }
 }
 
