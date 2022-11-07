@@ -1,3 +1,7 @@
+// MONGODB_URL =  'mongodb+srv://elice10:nosleeprabbit2022@nosleeprabbit-cluster.i79rqlf.mongodb.net/test'
+// PORT = "8989"
+// JWT_SECRET_KEY = 'elice10nosleeprabbit'
+
 import * as Api from "/api.js";
 
 //get
@@ -9,7 +13,7 @@ async function loadOrderList() {
 
   //다시로드 앞에 먼저 제거해조야되나? -> 안해줘도 삭제됨
   document.querySelectorAll(".copy").forEach(item=>{
-      document.querySelector("body").removeChild(item)
+      document.querySelector(".box").removeChild(item)
   })
   document.querySelector("#template").classList.add("on");
 
@@ -27,9 +31,17 @@ async function loadOrderList() {
     document.querySelectorAll(".orderList")[0].after(newNode);
     //값 넣기 //한 사람이 여러개 샀다면 어뜨카지?
     newNode.querySelector(".user").textContent = item.user.fullName;
-    newNode.querySelector(".product").textContent = item.list[0].product.name;
-    newNode.querySelector(".orderPrice").textContent =
-      item.list[0].product.price * item.list[0].amount; //product price
+
+    //주문 목록, 결제 금액
+    let [productName,orderPrice] = ["",0];
+    item.list.map(i =>{
+      productName += i.product.name +"</br>";
+      orderPrice += i.product.price * i.amount;
+    })
+    newNode.querySelector(".product").innerHTML = productName;//item.list[0].product.name;
+
+    newNode.querySelector(".orderPrice").textContent = orderPrice.toLocaleString('ko-KR');
+      //item.list[0].product.price * item.list[0].amount; //product price
     newNode.querySelector(".orderDate").textContent =
       item.createdAt.split("T")[0];
     //옵션 - 배송상태
@@ -52,6 +64,8 @@ async function loadOrderList() {
 
         //데이터에서도 삭제
         deleteOrderList(item._id); 
+        loadOrderList();
+        
       }
 
     });
@@ -77,8 +91,12 @@ async function loadOrderList() {
               break;
           }
       }}) 
-    changeOrderList(item._id,changeProcess)
-
+        changeOrderList(item._id,changeProcess)
+        .catch(e=>{
+          alert(`${e} \n배송완료의 경우, 배송 대기 혹은 배송중 상태로 돌아갈 수 없습니다`);
+          loadOrderList();
+        }
+        )
     })
 
   });
