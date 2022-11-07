@@ -18,6 +18,12 @@ class CategoryService {
         return categoryId;
     }
 
+    // 카테고리 이름 가져오기
+    async getCategoryName(id) {
+        const categoryName = await this.categoryModel.getCategoryName(id);
+        return categoryName;
+    }
+
     // 카테고리 생성
     async createCategory(categoryName) {
         const createdCategory = await this.categoryModel.createCategory(categoryName);

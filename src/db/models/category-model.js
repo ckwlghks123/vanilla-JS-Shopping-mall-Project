@@ -14,6 +14,11 @@ export class CategoryModel {
         return id.toString();
     }
 
+    async getCategoryName(id) {
+        const searchName = await Category.findOne({ _id: id }).select('name');
+        return searchName;
+    }
+
     // 현재 미사용
     async update(categoryId, name) {
         const filter = { _id: categoryId };

@@ -17,6 +17,12 @@ class ProductService {
         return products;
     }
 
+    // 상품 카테고리별 리스트
+    async getProductCategoryList(categoryId) {
+        const products = await this.productModel.findCategory(categoryId);
+        return products;
+    }
+
     // 특정 상품 선택
     async getProductById(productId) {
         const product = await this.productModel.findById(productId);
