@@ -117,7 +117,7 @@ userRouter.get(
   "/email/:email",
   asyncHandler(async function (req, res, next) {
     const { email } = req.params;
-    const isExist = await userService.checkUserByEmail(email);
+    const { isExist } = await userService.checkUserByEmail(email);
     res.status(200).json({ isExist });
   })
 );
