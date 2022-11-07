@@ -1,10 +1,34 @@
 import express, { Router } from 'express';
-import path from 'path';
-import is from '@sindresorhus/is';
-import { categoryService, productService } from '../services';
+import { categoryService, productService, cartService } from '../services';
 import { asyncHandler } from '../utils';
-import fs from 'fs';
+import { loginRequired } from '../middlewares/login-required';
 
 const productDetailRouter = express.Router();
+
+productDetailRouter.post(
+    '/',
+    loginRequired,
+    asyncHandler(async function (req, res, next) {
+        const userId = req.currentUserId;
+        const createdCart = await cartService.addCart(userId, req.body);
+        res.status(201).json('success');
+    })
+);
+
+productDetailRouter.post(
+    '/:id',
+    asyncHandler(async function (req, res, next) {
+        const { id: categoryId } = req.params;
+        const prodcut = await productService.getProductById(categoryId);
+        const category = await categoryService.getCategoryName(prodcut['category']);
+
+        const sumObj = {
+            ...prodcut['_doc'],
+            categoryName: category['name'],
+        };
+
+        res.status(201).json(sumObj);
+    })
+);
 
 export { productDetailRouter };
