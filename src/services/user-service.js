@@ -35,6 +35,11 @@ class UserService {
       address,
       isAdmin,
     };
+
+    // db에 저장
+    const createdNewUser = await this.userModel.create(newUserInfo);
+
+    return createdNewUser;
   }
 
   // 카카오 회원가입 (수정자: 김상현)
