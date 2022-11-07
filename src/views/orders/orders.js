@@ -18,7 +18,6 @@ async function loadOrderList() {
   console.log("testsdata!", testdata.length, testdata);
 
   testdata.map((item) => {
-    console.log("생성", item);
     const newNode = testDiv.cloneNode(true);
 
     newNode.id = "copyNode" + idNum;
@@ -47,7 +46,6 @@ async function loadOrderList() {
 
     //삭제버튼에 삭제기능 추가
     newNode.querySelector("#deleteBtn").addEventListener("click", (e) => {
-      console.log("삭제시도", e.target.parentElement.parentElement);
       if (confirm("주문 내역을 삭제하시겠습니까?")) {
         var li = e.target.parentElement.parentElement;
         document.querySelector(".box").removeChild(li);
@@ -60,14 +58,12 @@ async function loadOrderList() {
 
     //변경버튼에 변경기능 추가
     newNode.querySelector("#changeBtn").addEventListener("click",(e)=>{
-    console.log("변경시도", e.target.parentElement.parentElement);
     let changeProcess = ""
     //데이터에서 변경
     e.target.parentElement.parentElement.  //
       querySelectorAll(".process select option")
       .forEach(option => 
         {if(option.selected === true){
-          console.log("option",option.textContent)
           switch(option.textContent){
             case "배송대기":
               changeProcess = WAIT;
@@ -80,7 +76,6 @@ async function loadOrderList() {
               e.target.parentElement.parentElement.querySelector("#deleteBtn").classList.add("on");
               break;
           }
-          console.log("changeProcess", changeProcess)
       }}) 
     changeOrderList(item._id,changeProcess)
 
@@ -96,16 +91,12 @@ loadOrderList();
 //데이터 삭제
 async function deleteOrderList(data) {
     const result = await Api.delete('/api/order', data);
-    console.log(result)
-
 }
 //수정 기능
 async function changeOrderList(id,changeProcess){
   const process = changeProcess;
   const data = {process}
-  console.log("changeOrderList",changeProcess)
   const order = await Api.patch("",`api/order/${id}`,data);
-  console.log("수정완료")
 
 
 }
