@@ -6,8 +6,8 @@ class CartService {
   }
 
   async checkCart(userId) {
-    const cnt = await this.cartModel.getCntByUserId(userId);
-    return cnt > 0;
+    const count = await this.cartModel.getCountByUserId(userId);
+    return count > 0;
   }
 
   async getCartByUserId(userId) {
@@ -23,14 +23,14 @@ class CartService {
     return newCart;
   }
 
-  async setCartByUserId(userId, cartInfo, method) {
-    if (method === "POST") {
-      const updatedCart = await this.cartModel.checkUpdate(userId, cartInfo);
-      return updatedCart;
-    } else {
-      const updatedCart = await this.cartModel.updateDelete(userId, cartInfo);
-      return updatedCart;
-    }
+  async upsertCartElementByUserId(userId, cartInfo) {
+    const updatedCart = await this.cartModel.checkUpdate(userId, cartInfo);
+    return updatedCart;
+  }
+
+  async deleteCartElementByUserId(userId, cartInfo) {
+    const updatedCart = await this.cartModel.updateDelete(userId, cartInfo);
+    return updatedCart;
   }
 }
 

@@ -25,14 +25,10 @@ cartRouter.post(
 
     if (isExist) {
       // 업데이트
-      const cart = await cartService.setCartByUserId(
-        userId,
-        {
-          product: productId,
-          amount,
-        },
-        req.method
-      );
+      const cart = await cartService.upsertCartElementByUserId(userId, {
+        product: productId,
+        amount,
+      });
       res.status(201).json(cart);
     } else {
       // 생성
@@ -51,13 +47,9 @@ cartRouter.delete(
   asyncHandler(async function (req, res, next) {
     const userId = req.currentUserId;
     const { productId } = req.body;
-    const cart = await cartService.setCartByUserId(
-      userId,
-      {
-        product: productId,
-      },
-      req.method
-    );
+    const cart = await cartService.deleteCartElementByUserId(userId, {
+      product: productId,
+    });
     res.status(201).json(cart);
   })
 );
