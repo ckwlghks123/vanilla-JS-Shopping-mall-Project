@@ -98,6 +98,7 @@ async function getData() {
 
   renderProductsList(data.list);
 
+  console.log(data);
   const price = getTotalPrice(data.list);
   const total = updateTotalPrice(price);
 
@@ -123,9 +124,9 @@ $userAddress.addEventListener("click", (e) => {
     const [x, y] = [e.pageX, e.pageY];
 
     new daum.Postcode({
-      oncomplete: function (address) {
-        $zipCode.value = address.zonecode;
-        $address.value = address.address;
+      oncomplete: ({ zonecode, address }) => {
+        $zipCode.value = zonecode;
+        $address.value = address;
         $detailAdress.focus();
       },
       onclose: () => {
@@ -167,6 +168,7 @@ function purchase(type, total) {
         },
         (res) => {
           if (res.success) {
+            // Api.post
             window.location.replace("/order/result");
           } else {
             console.log(res);
@@ -206,8 +208,6 @@ function purchase(type, total) {
         .then((response) => response.json())
         .then((result) => {
           const { tid, next_redirect_pc_url } = result;
-          // const formData = new FormData($orderInfo);
-          // console.log(formData);
           location.href = next_redirect_pc_url;
         })
         .catch((error) => console.log("error", error));
@@ -224,7 +224,12 @@ function getFormData() {
   const $requirements = document.querySelector("#requirements");
   const data = {
     receiver: $receiver.value,
+    phone: $phone.value,
+    address: `${$zipCode.value} ${$address.value} ${$detail.value}`,
+    requirements: $requirements.value,
   };
+
+  return data;
 }
 
 getData();
