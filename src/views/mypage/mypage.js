@@ -159,7 +159,7 @@ async function withdrawUserHandler(e) {
     const password = prompt("회원탈퇴를 하려면 비밀번호를 입력하세요");
     try {
       const data = { password };
-      const user = await Api.delete("", "api/user", data);
+      const user = await Api.post("/api/signout", data);
       alert("회원탈퇴가 완료되었습니다.");
       localStorage.removeItem("token");
       localStorage.removeItem("isAdmin");
