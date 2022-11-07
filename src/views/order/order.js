@@ -1,5 +1,7 @@
 import * as Api from "../api.js";
 
+const ADMIN_KEY = "488ad1ea656667486f4f0657731dd055";
+
 const $productsList = document.querySelector(".products-list");
 const $paymentBtn = document.querySelector("#payment-btn");
 const $userAddress = document.querySelector(".user-address");
@@ -7,6 +9,8 @@ const $zipCode = document.querySelector("#zip-code");
 const $address = document.querySelector("#address");
 const $detailAdress = document.querySelector("#detailed-address");
 const $postCode = document.querySelector("#postcode");
+const $kakao = document.querySelector("#kakao");
+const $orderInfo = document.querySelector(".order-info");
 
 function renderProductsList(products) {
   products.forEach(({ amount, product, _id }) => {
@@ -85,7 +89,7 @@ function makePopUp(x, y) {
   $postCode.style.border = `${border}px solid black`;
   $postCode.style.position = `absolute`;
   $postCode.style.left = `${x - 10}px`;
-  $postCode.style.top = `${y - 10}px`;
+  $postCode.style.top = `${y - 50}px`;
 }
 
 async function getData() {
@@ -97,28 +101,43 @@ async function getData() {
   const price = getTotalPrice(data.list);
   const total = updateTotalPrice(price);
 
-  $userAddress.addEventListener("click", (e) => {
-    const target = e.target;
-    if (target.className === "zip-address-wrapper") {
-      const [x, y] = [e.pageX, e.pageY];
-      console.log(x, y);
-      new daum.Postcode({
-        oncomplete: function (address) {
-          $zipCode.value = address.zonecode;
-          $address.value = address.address;
-          $detailAdress.focus();
-        },
-        onclose: () => {
-          $postCode.style.display = "none";
-        },
-        width: "100%",
-        height: "100%",
-      }).embed($postCode, {});
-      $postCode.style.display = "block";
-      makePopUp(x, y);
+  $paymentBtn.addEventListener("click", (e) => {
+    const paymentMethod = document.querySelector("input[type=radio]:checked");
+    if (!paymentMethod) return alert("결제 방법을 선택해주세요");
+    switch (paymentMethod.value) {
+      case "CARD":
+        purchase("card", total);
+        break;
+      case "KAKAO":
+        purchase("kakao", total);
+        break;
+      default:
+        return;
     }
   });
 }
+
+$userAddress.addEventListener("click", (e) => {
+  const target = e.target;
+  if (target.className === "zip-address-wrapper") {
+    const [x, y] = [e.pageX, e.pageY];
+
+    new daum.Postcode({
+      oncomplete: function (address) {
+        $zipCode.value = address.zonecode;
+        $address.value = address.address;
+        $detailAdress.focus();
+      },
+      onclose: () => {
+        $postCode.style.display = "none";
+      },
+      width: "100%",
+      height: "100%",
+    }).embed($postCode, {});
+    $postCode.style.display = "block";
+    makePopUp(x, y);
+  }
+});
 
 $productsList.addEventListener("click", ({ target }) => {
   if (target.className === "product-img-wrapper") {
@@ -127,6 +146,85 @@ $productsList.addEventListener("click", ({ target }) => {
   }
 });
 
-$paymentBtn.addEventListener("click", (e) => {});
+function purchase(type, total) {
+  const uid = `elice_${new Date().getTime()}`;
+  const paymentType = {
+    card: () => {
+      const IMP = window.IMP;
+      IMP.init("imp84455120");
+      IMP.request_pay(
+        {
+          pg: "inicis",
+          pay_method: "card",
+          merchant_uid: uid,
+          name: "결제테스트",
+          amount: 1, // total
+          buyer_email: "test@test.com", // 구매자 이메일
+          buyer_name: "엘리스", // 구매자 이름
+          buyer_tel: "010-1111-1111", // 구매자 전화번호
+          buyer_addr: "구매자 정보",
+          buyer_postcode: "01111", // 구매자 우편번호
+        },
+        (res) => {
+          if (res.success) {
+            window.location.replace("/order/result");
+          } else {
+            console.log(res);
+            alert("결제 실패");
+          }
+        }
+      );
+    },
+    kakao: () => {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `KakaoAK ${ADMIN_KEY}`);
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+      const urlencoded = new URLSearchParams();
+      urlencoded.append("cid", "TC0ONETIME");
+      urlencoded.append("partner_order_id", "partner_order_id");
+      urlencoded.append("partner_user_id", "partner_user_id");
+      urlencoded.append("item_name", "족발");
+      urlencoded.append("quantity", "1");
+      urlencoded.append("total_amount", "100");
+      urlencoded.append("tax_free_amount", "0");
+      urlencoded.append("approval_url", "http://127.0.0.1:3000/order/result");
+      urlencoded.append("fail_url", "http://127.0.0.1:3000/order?result=fail");
+      urlencoded.append(
+        "cancel_url",
+        "http://127.0.0.1:3000/order?result=cancel"
+      );
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: "follow",
+      };
+
+      fetch("https://kapi.kakao.com/v1/payment/ready", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          const { tid, next_redirect_pc_url } = result;
+          // const formData = new FormData($orderInfo);
+          // console.log(formData);
+          location.href = next_redirect_pc_url;
+        })
+        .catch((error) => console.log("error", error));
+    },
+  };
+  paymentType[type]();
+}
+
+function getFormData() {
+  const $receiver = document.querySelector("#receiver");
+  const $phone = document.querySelector("#phone");
+  const $address = document.querySelector("#address");
+  const $detail = document.querySelector("#detailed-address");
+  const $requirements = document.querySelector("#requirements");
+  const data = {
+    receiver: $receiver.value,
+  };
+}
 
 getData();
