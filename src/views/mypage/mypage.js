@@ -17,6 +17,7 @@ const userPostCode = document.querySelector("#user-postcode");
 const userAddress = document.querySelector("#user-address");
 const userAddressButton = document.querySelector("#user-address-button");
 const userWithdrawButton = document.querySelector("#user-withdraw-button");
+const usersInfoButton = document.querySelector("#users-info-button");
 
 addAllElements();
 addAllEvents();
@@ -32,6 +33,7 @@ function addAllEvents() {
   userPasswordButton.addEventListener("click", changePasswordHandler);
   userAddressButton.addEventListener("click", changeAddressHandler);
   userWithdrawButton.addEventListener("click", withdrawUserHandler);
+  usersInfoButton.addEventListener("click", loadUsersInfoHandler);
 }
 
 // 유저 정보(isAdmin, 이름, 이메일, 주소, 우편번호) 조회 및 화면에 표시
@@ -51,11 +53,14 @@ async function insertUserInfo() {
   }
 }
 
+// 관리자일때만 보이는 요소들 랜더링
 function insertIsAdmin(isAdmin) {
   if (isAdmin) {
     userAdmin.style.removeProperty("display");
+    usersInfoButton.style.removeProperty("display");
   } else {
     userAdmin.style.display = "none";
+    usersInfoButton.style.display = "none";
   }
 }
 
@@ -141,6 +146,7 @@ async function changeAddressHandler(e) {
   }
 }
 
+// 회원탈퇴 (DB에서 회원정보 삭제함)
 async function withdrawUserHandler(e) {
   const isWithdraw = confirm("정말 회원 탈퇴를 하시겠습니까?");
   if (isWithdraw) {
@@ -158,5 +164,17 @@ async function withdrawUserHandler(e) {
         `문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`
       );
     }
+  }
+}
+
+// 관리자일때만 사용가능한 유저정보 콘솔로 불러오기
+// (adminRequired 미들웨어가 잘 작동하는지 테스트 하기 위함)
+async function loadUsersInfoHandler(e) {
+  try {
+    const users = await Api.get("", "api/userlist");
+    console.log(users);
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
