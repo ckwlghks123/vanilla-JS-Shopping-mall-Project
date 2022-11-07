@@ -107,6 +107,12 @@ async function changePasswordHandler(e) {
     if (isConfirm) {
       const currentPassword = prompt("현재 비밀번호를 입력하세요.");
       const password = prompt("새로운 비밀번호를 입력하세요.");
+      const isPasswordValid = password.length >= 4;
+      if (!isPasswordValid) {
+        return alert("비밀번호는 4글자 이상이어야 합니다.");
+      } else if (currentPassword === password) {
+        return alert("이전 비밀번호와 같습니다.");
+      }
       const data = { currentPassword, password };
       const user = await Api.patch("", "api/user", data);
       alert("비밀번호가 성공적으로 변경되었습니다.");
