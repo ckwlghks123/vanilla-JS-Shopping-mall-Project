@@ -115,6 +115,8 @@ function loginLogoutHandler(event) {
     case "navbar__order":
       document.location.href = "/admin/orders";
       break;
+    case "navbar__cart":
+      document.location.href = "/cart";
   }
 }
 
