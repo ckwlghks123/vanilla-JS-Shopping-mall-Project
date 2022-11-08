@@ -9,7 +9,8 @@ class UserService {
   }
 
   async addUser(userInfo) {
-    const { email, fullName, password, postCode, address, isAdmin } = userInfo;
+    const { email, fullName, password, postCode, address, isAdmin, type } =
+      userInfo;
     const isExist = await this.userModel.checkByEmail(email);
     if (isExist) {
       throw new Error(
@@ -17,26 +18,36 @@ class UserService {
       );
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUserInfo = {
-      fullName,
-      email,
-      password: hashedPassword,
-      postCode,
-      address,
-      isAdmin,
-    };
-
+    let newUserInfo;
+    if (type === "NOMAL") {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      newUserInfo = {
+        fullName,
+        email,
+        password: hashedPassword,
+        postCode,
+        address,
+        isAdmin,
+        type,
+      };
+    } else if (type === "SOCIAL") {
+      newUserInfo = {
+        fullName,
+        email,
+        postCode,
+        address,
+        isAdmin,
+        type,
+      };
+    }
     const createdNewUser = await this.userModel.create(newUserInfo);
     return createdNewUser;
   }
 
   // 카카오 회원가입 (수정자: 김상현)
   async addKakaoUser(userInfo) {
-    // 객체 destructuring
-    const { email, fullName, postCode, address } = userInfo;
+    const { email, fullName, postCode, address, type } = userInfo;
 
-    // 이메일 중복 확인
     const user = await this.userModel.findByEmail(email);
     if (user) {
       throw new Error(
@@ -44,18 +55,12 @@ class UserService {
       );
     }
 
-    // 이메일 중복은 이제 아니므로, 회원가입을 진행함
-
-    // 비밀번호가 required: true인데, 카카오 회원가입은 비밀번호를 어떻게
-    // 설정하여 넣어야할지 아직 정하지 못하였음. 일단 고정값 123123 넣음.
-    const password = "123123";
-
     const newUserInfo = {
       fullName,
       email,
       postCode,
       address,
-      password,
+      type,
     };
 
     // db에 저장

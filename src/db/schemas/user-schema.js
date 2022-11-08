@@ -12,7 +12,13 @@ const UserSchema = new Schema(
     },
     password: {
       type: String,
+      required: false,
+    },
+    type: {
+      type: String,
+      enum: ["NOMAL", "SOCIAL"],
       required: true,
+      default: "NOMAL",
     },
     postCode: {
       type: String,

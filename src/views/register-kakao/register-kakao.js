@@ -1,10 +1,9 @@
 /**
  * @author: 김상현
- * @date: 2022-11-06
+ * @date: 2022-11-08
  * @detail: 카카오를 통한 첫 로그인 시도 시 회원가입을 위한 추가 정보 입력 페이지
  */
 import * as Api from "/api.js";
-import { validateEmail } from "/useful-functions.js";
 
 // 요소(element), input 혹은 상수
 const fullNameInput = document.querySelector("#fullNameInput");
@@ -47,6 +46,7 @@ async function handleSubmit(e) {
 
   const fullName = fullNameInput.value;
   const postCode = postCodeInput.value;
+  const type = "SOCIAL";
   let address = addressInput.value;
   let detailAddress = detailAddressInput.value || "";
 
@@ -73,7 +73,7 @@ async function handleSubmit(e) {
   // 회원가입 api 요청
   try {
     const email = localStorage.getItem("email");
-    const data = { fullName, email, postCode, address };
+    const data = { fullName, email, postCode, address, type };
 
     await Api.post("/api/register-kakao", data);
 
