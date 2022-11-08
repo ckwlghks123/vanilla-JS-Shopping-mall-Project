@@ -10,7 +10,13 @@ productDetailRouter.post(
     loginRequired,
     asyncHandler(async function (req, res, next) {
         const userId = req.currentUserId;
-        const createdCart = await cartService.addCart(userId, req.body);
+        const userCheck = await cartService.getCartByUserId(userId);
+        if (userCheck === null) {
+            const createdCart = await cartService.addCart(userId, req.body);
+        } else {
+            const updatedCart = await cartService.upsertCartElementByUserId(userId, req.body);
+        }
+
         res.status(201).json('success');
     })
 );
