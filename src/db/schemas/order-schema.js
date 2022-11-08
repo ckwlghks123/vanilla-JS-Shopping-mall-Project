@@ -1,11 +1,9 @@
 import { Schema } from "mongoose";
+import { ProductSchema } from "./product-schema";
+import { UserSchema } from "./user-schema";
 
 const OrderElementSchema = new Schema({
-  product: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: "products",
-  },
+  product: ProductSchema,
   amount: {
     type: Number,
     required: true,
@@ -14,11 +12,7 @@ const OrderElementSchema = new Schema({
 
 const OrderSchema = new Schema(
   {
-    user: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: "users",
-    },
+    user: UserSchema,
     list: {
       type: [OrderElementSchema],
       required: true,

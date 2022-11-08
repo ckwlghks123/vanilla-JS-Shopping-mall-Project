@@ -10,8 +10,14 @@ export class CartModel {
   }
 
   async create(cartInfo) {
-    const newCart = await Cart.create(cartInfo);
-    return newCart;
+    const created = await Cart.create(cartInfo);
+    const populated = created.populate({
+      path: "list",
+      populate: {
+        path: "product",
+      },
+    });
+    return populated;
   }
 
   async findByUserId(userId) {
@@ -31,7 +37,7 @@ export class CartModel {
     let isExistElement = false;
     const updatedList = [];
     cart.list.forEach((el) => {
-      if (el.product === update.product) {
+      if (el.product == update.product) {
         updatedList.push(update);
         isExistElement = true;
       } else {
@@ -84,7 +90,14 @@ export class CartModel {
     const cart = await Cart.findOneAndDelete(
       { _id: cartId },
       { returnDocument: "before" }
-    );
+    )
+      .populate({
+        path: "list",
+        populate: {
+          path: "product",
+        },
+      })
+      .sort({ createdAt: -1 });
     return cart;
   }
 }
