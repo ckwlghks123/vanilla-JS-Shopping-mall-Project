@@ -67,7 +67,7 @@ async function handleSubmit(e) {
   }
 
   // 주소와 상세주소를 합침
-  address = address + " " + detailAddress;
+  address = address + ", " + detailAddress;
 
   // 회원가입 api 요청
   try {
