@@ -14,9 +14,9 @@ const UserSchema = new Schema(
       type: String,
       required: false,
     },
-    type: {
+    loginMethod: {
       type: String,
-      enum: ["NOMAL", "SOCIAL"],
+      enum: ["NOMAL", "KAKAO"],
       required: true,
       default: "NOMAL",
     },

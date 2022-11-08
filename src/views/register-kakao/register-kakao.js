@@ -32,7 +32,6 @@ async function handleSubmit(e) {
 
   const fullName = fullNameInput.value;
   const postCode = postCodeInput.value;
-  const type = "SOCIAL";
   let address = addressInput.value;
   let detailAddress = detailAddressInput.value || "";
 
@@ -59,17 +58,18 @@ async function handleSubmit(e) {
   // 회원가입 api 요청
   try {
     const email = localStorage.getItem("email");
-    let data = { fullName, email, postCode, address, type };
+    let data = { fullName, email, postCode, address, loginMethod: "KAKAO" };
 
     await Api.post("/api/register-kakao", data);
 
     // 로그인 API를 거쳐 토큰을 받고 홈으로 이동
     data = { email };
     const { userToken, user } = await Api.post("/api/login-kakao", data);
-    const { isAdmin } = user;
+    const { isAdmin, loginMethod } = user;
 
     localStorage.setItem("token", userToken);
     localStorage.setItem("isAdmin", isAdmin);
+    localStorage.setItem("loginMethod", loginMethod);
 
     window.location.href = "/";
     alert(`정상적으로 회원가입되었습니다.`);

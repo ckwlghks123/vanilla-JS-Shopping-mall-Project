@@ -35,7 +35,6 @@ async function handleSubmit(e) {
   const password = passwordInput.value;
   const passwordConfirm = passwordConfirmInput.value;
   const postCode = postCodeInput.value;
-  const type = "NOMAL";
   let address = addressInput.value;
   let detailAddress = detailAddressInput.value || "";
 
@@ -72,7 +71,14 @@ async function handleSubmit(e) {
 
   // 회원가입 api 요청
   try {
-    const data = { fullName, email, password, postCode, address, type };
+    const data = {
+      fullName,
+      email,
+      password,
+      postCode,
+      address,
+      loginMethod: "NOMAL",
+    };
 
     await Api.post("/api/register", data);
 

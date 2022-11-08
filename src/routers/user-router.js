@@ -15,8 +15,15 @@ userRouter.post(
       );
     }
 
-    const { fullName, email, password, postCode, address, isAdmin, type } =
-      req.body;
+    const {
+      fullName,
+      email,
+      password,
+      postCode,
+      address,
+      isAdmin,
+      loginMethod,
+    } = req.body;
 
     const newUser = await userService.addUser({
       fullName,
@@ -25,7 +32,7 @@ userRouter.post(
       postCode,
       address,
       isAdmin,
-      type,
+      loginMethod,
     });
 
     res.status(201).json(newUser);
@@ -44,14 +51,14 @@ userRouter.post(
       );
     }
 
-    const { fullName, email, postCode, address, type } = req.body;
+    const { fullName, email, postCode, address, loginMethod } = req.body;
 
     const newUser = await userService.addKakaoUser({
       fullName,
       email,
       postCode,
       address,
-      type,
+      loginMethod,
     });
 
     res.status(201).json(newUser);

@@ -9,8 +9,15 @@ class UserService {
   }
 
   async addUser(userInfo) {
-    const { email, fullName, password, postCode, address, isAdmin, type } =
-      userInfo;
+    const {
+      email,
+      fullName,
+      password,
+      postCode,
+      address,
+      isAdmin,
+      loginMethod,
+    } = userInfo;
     const isExist = await this.userModel.checkByEmail(email);
     if (isExist) {
       throw new Error(
@@ -19,7 +26,7 @@ class UserService {
     }
 
     let newUserInfo;
-    if (type === "NOMAL") {
+    if (loginMethod === "NOMAL") {
       const hashedPassword = await bcrypt.hash(password, 10);
       newUserInfo = {
         fullName,
@@ -28,16 +35,16 @@ class UserService {
         postCode,
         address,
         isAdmin,
-        type,
+        loginMethod,
       };
-    } else if (type === "SOCIAL") {
+    } else if (loginMethod === "KAKAO") {
       newUserInfo = {
         fullName,
         email,
         postCode,
         address,
         isAdmin,
-        type,
+        loginMethod,
       };
     }
     const createdNewUser = await this.userModel.create(newUserInfo);
@@ -46,7 +53,7 @@ class UserService {
 
   // 카카오 회원가입 (수정자: 김상현)
   async addKakaoUser(userInfo) {
-    const { email, fullName, postCode, address, type } = userInfo;
+    const { email, fullName, postCode, address, loginMethod } = userInfo;
 
     const user = await this.userModel.findByEmail(email);
     if (user) {
@@ -60,7 +67,7 @@ class UserService {
       email,
       postCode,
       address,
-      type,
+      loginMethod,
     };
 
     // db에 저장

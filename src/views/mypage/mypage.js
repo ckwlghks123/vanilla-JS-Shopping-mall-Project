@@ -43,7 +43,6 @@ async function insertUserInfo() {
     let tempAddress = address.split(", ");
     const address1 = tempAddress[0];
     const address2 = tempAddress[1];
-    console.log(address1);
 
     insertIsAdmin(isAdmin);
     insertUserName(fullName);
