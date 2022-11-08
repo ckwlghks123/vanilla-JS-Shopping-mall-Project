@@ -141,6 +141,7 @@ async function memberCart(type) {
               })
             : Storage.set("cart", data);
         });
+
         break;
 
       case "decrease":
@@ -165,6 +166,7 @@ async function memberCart(type) {
               })
             : Storage.set("cart", data);
         });
+
         break;
 
       case "delete":
@@ -179,6 +181,7 @@ async function memberCart(type) {
               productId: id,
             })
           : Storage.set("cart", data);
+
         break;
 
       case "purchase-btn":
