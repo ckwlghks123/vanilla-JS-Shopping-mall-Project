@@ -22,19 +22,87 @@
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
+    <!-- 다음 주소 API -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="mypage.css" />
     <script src="mypage.js" type="module" defer></script>
   </head>
   <body>
     <p id="user-admin" style="display: none">관리자</p>
-    <p id="user-name">유저이름</p>
-    <button id="user-name-button">이름변경</button>
-    <p id="user-email">이메일</p>
-    <button id="user-password-button">비밀번호 변경</button>
-    <p id="user-postcode">00000</p>
-    <p id="user-address">주소</p>
-    <button id="user-address-button">주소변경</button>
+    <div>
+      <label for="">이름</label>
+      <input
+        type="text"
+        id="user-name"
+        name="userName"
+        placeholder="유저이름"
+        style="width: 200px"
+      />
+    </div>
+    <div>
+      <label for="">이메일</label>
+      <input
+        type="text"
+        id="user-email"
+        name="userEmail"
+        placeholder="이메일"
+        readonly
+        style="width: 200px"
+      />
+    </div>
+    <div>
+      <label for="">현재 비밀번호</label>
+      <input
+        type="password"
+        id="user-current-password"
+        name="userCurrentPassword"
+        style="width: 200px"
+      />
+    </div>
+    <div>
+      <label for="">새 비밀번호</label>
+      <input
+        type="password"
+        id="user-new-password"
+        name="userNewPassword"
+        style="width: 200px"
+      />
+    </div>
+    <div>
+      <label for="">우편번호</label>
+      <input
+        type="number"
+        id="user-postcode"
+        name="userPostcode"
+        placeholder="06279"
+        style="width: 200px"
+      />
+      <input id="postCodeSearchButton" type="button" value="우편번호 찾기" />
+    </div>
+    <div>
+      <label for="">주소</label>
+      <input
+        type="text"
+        id="user-address"
+        name="userAddress"
+        placeholder="주소"
+        style="width: 200px"
+      />
+    </div>
+    <div>
+      <label for="">상세주소</label>
+      <input
+        type="text"
+        id="user-detail-address"
+        name="userDetailAddress"
+        placeholder="상세주소"
+        style="width: 200px"
+      />
+    </div>
+    <div>
+      <button id="user-info-edit-button">유저 정보 변경</button>
+    </div>
     <button id="user-withdraw-button">회원탈퇴</button>
     <button id="users-info-button" style="display: none">
       유저정보 콘솔로 불러오기

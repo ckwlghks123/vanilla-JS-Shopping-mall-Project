@@ -1,37 +1,34 @@
 /**
  * @author: 김상현
- * @date: 2022-11-04
+ * @date: 2022-11-08
  * @detail: 마이페이지를 위한 js파일입니다.
  */
 
 import * as Api from "/api.js";
-import { validateEmail } from "/useful-functions.js";
 
-// 요소(element), input 혹은 상수
 const userAdmin = document.querySelector("#user-admin");
 const userName = document.querySelector("#user-name");
-const userNameButton = document.querySelector("#user-name-button");
 const userEmail = document.querySelector("#user-email");
-const userPasswordButton = document.querySelector("#user-password-button");
+const userCurrentPassword = document.querySelector("#user-current-password");
+const userNewPassword = document.querySelector("#user-new-password");
 const userPostCode = document.querySelector("#user-postcode");
 const userAddress = document.querySelector("#user-address");
-const userAddressButton = document.querySelector("#user-address-button");
+const userDetailAddress = document.querySelector("#user-detail-address");
+const postCodeSearchButton = document.querySelector("#postCodeSearchButton");
+const userInfoEditButton = document.querySelector("#user-info-edit-button");
 const userWithdrawButton = document.querySelector("#user-withdraw-button");
 const usersInfoButton = document.querySelector("#users-info-button");
 
 addAllElements();
 addAllEvents();
 
-// html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   insertUserInfo();
 }
 
-// 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
-  userNameButton.addEventListener("click", changeNameHandler);
-  userPasswordButton.addEventListener("click", changePasswordHandler);
-  userAddressButton.addEventListener("click", changeAddressHandler);
+  postCodeSearchButton.addEventListener("click", daumPostHandler);
+  userInfoEditButton.addEventListener("click", editUserInfoHandler);
   userWithdrawButton.addEventListener("click", withdrawUserHandler);
   usersInfoButton.addEventListener("click", loadUsersInfoHandler);
 }
@@ -42,10 +39,17 @@ async function insertUserInfo() {
     const userInfo = await Api.get("/api/me");
     const { isAdmin, fullName, email, address, postCode } = userInfo;
 
+    // 주소를 상세주소와 주소로 구분
+    let tempAddress = address.split(", ");
+    const address1 = tempAddress[0];
+    const address2 = tempAddress[1];
+    console.log(address1);
+
     insertIsAdmin(isAdmin);
     insertUserName(fullName);
     insertUserEmail(email);
-    insertUserAddress(address);
+    insertUserAddress(address1);
+    insertUserDetailAddress(address2);
     insertUserPostCode(postCode);
   } catch (err) {
     console.error(err.stack);
@@ -65,90 +69,77 @@ function insertIsAdmin(isAdmin) {
 }
 
 function insertUserName(fullName) {
-  userName.innerText = fullName;
+  userName.value = fullName;
 }
 
 async function insertUserEmail(email) {
-  userEmail.innerText = email;
+  userEmail.value = email;
 }
 
-function insertUserAddress(address) {
-  userAddress.innerText = address;
+function insertUserAddress(address1) {
+  userAddress.value = address1;
+}
+
+function insertUserDetailAddress(address2) {
+  userDetailAddress.value = address2;
 }
 
 function insertUserPostCode(postCode) {
-  userPostCode.innerText = postCode;
+  userPostCode.value = postCode;
 }
 
-// 유저 이름 변경
-async function changeNameHandler(e) {
-  const fullName = prompt("변경할 이름을 입력하세요.");
-  const isFullNameValid = fullName.length >= 2;
-  if (!isFullNameValid) {
-    return alert("이름은 2글자 이상이어야 합니다.");
-  }
-  const currentPassword = prompt("이름을 변경하려면 비밀번호를 입력하세요.");
-  try {
-    const data = { fullName, currentPassword };
-    const user = await Api.patch("", "api/user", data);
-    const updatedFullName = user.fullName;
-    userName.innerText = updatedFullName;
-    alert(`이름이 ${updatedFullName}으로 변경되었습니다.`);
-  } catch (err) {
-    console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
-}
+function daumPostHandler(e) {
+  const width = 500;
+  const height = 600;
+  new daum.Postcode({
+    width: width,
+    height: height,
+    oncomplete: function (data) {
+      let address = "";
 
-// 유저 패스워드 변경
-async function changePasswordHandler(e) {
-  try {
-    const isConfirm = confirm("정말 비밀번호를 변경하시겠습니까?");
-    if (isConfirm) {
-      const currentPassword = prompt("현재 비밀번호를 입력하세요.");
-      const password = prompt("새로운 비밀번호를 입력하세요.");
-      const isPasswordValid = password.length >= 4;
-      if (!isPasswordValid) {
-        return alert("비밀번호는 4글자 이상이어야 합니다.");
-      } else if (currentPassword === password) {
-        return alert("이전 비밀번호와 같습니다.");
+      if (data.userSelectedType === "R") {
+        // 사용자가 도로명 주소 클릭
+        address = data.roadAddress;
+      } else {
+        // 사용자가 지번 주소 클릭
+        address = data.jibunAddress;
       }
-      const data = { currentPassword, password };
-      const user = await Api.patch("", "api/user", data);
-      alert("비밀번호가 성공적으로 변경되었습니다.");
-    }
-  } catch (err) {
-    console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
+
+      // 우편번호와 주소 정보를 해당 필드에 넣는다.
+      userPostCode.value = data.zonecode;
+      userAddress.value = address;
+      // 커서를 상세주소 필드로 이동한다.
+      userDetailAddress.focus();
+    },
+  }).open({
+    left: window.screen.width / 2 - width / 2,
+    top: window.screen.height / 2 - height / 2,
+  });
 }
 
-// 유저 주소 변경
-async function changeAddressHandler(e) {
-  const address = prompt("변경할 주소를 입력하세요.");
-  const isAddressValid = address.length >= 2;
-  if (!isAddressValid) {
-    return alert("올바른 주소를 입력해주세요.");
-  }
-  const postCode = prompt("변경할 우편번호를 입력하세요.");
-  const isPostCodeValid = postCode.length === 5;
-  if (!isPostCodeValid) {
-    return alert("우편번호는 숫자 5자리를 입력해 주세요.");
-  }
-  const currentPassword = prompt("주소를 변경하려면 비밀번호를 입력하세요.");
-  try {
-    const data = { address, currentPassword, postCode };
-    const user = await Api.patch("", "api/user", data);
-    const updatedAddress = user.address;
-    const updatedPostCode = user.postCode;
-    userAddress.innerText = updatedAddress;
-    userPostCode.innerText = updatedPostCode;
-    alert(
-      `주소가 ${updatedAddress}으로, 우편번호가 ${updatedPostCode}으로 변경되었습니다.`
-    );
-  } catch (err) {
-    console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+// 유저 정보 변경
+async function editUserInfoHandler(e) {
+  if (confirm("회원정보를 수정하시겠습니까?")) {
+    try {
+      const fullName = userName.value;
+      const currentPassword = userCurrentPassword.value;
+      const password = userNewPassword.value;
+      const postCode = userPostCode.value;
+      const address = userAddress.value + ", " + userDetailAddress.value;
+
+      const data = { fullName, currentPassword, password, postCode, address };
+
+      const updatedUserInfo = await Api.patch("", "api/user", data);
+
+      userCurrentPassword.value = null;
+      userNewPassword.value = null;
+      alert("회원정보가 변경되었습니다.");
+    } catch (err) {
+      console.error(err.stack);
+      alert(
+        `문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`
+      );
+    }
   }
 }
 
