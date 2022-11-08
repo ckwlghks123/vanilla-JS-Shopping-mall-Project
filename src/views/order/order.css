@@ -1,0 +1,12 @@
+.product-wrapper {
+  width: 100%;
+  height: 150px;
+}
+
+.img {
+  pointer-events: none;
+}
+
+.zip-address-wrapper > div {
+  pointer-events: none;
+}

@@ -18,6 +18,11 @@ export class ProductModel {
         return product;
     }
 
+    async findCategory(categoryId) {
+        const product = await Product.find({ category: { $in: categoryId } });
+        return product;
+    }
+
     async update(productId, update) {
         const filter = { _id: productId };
         const option = { returnOriginal: false };

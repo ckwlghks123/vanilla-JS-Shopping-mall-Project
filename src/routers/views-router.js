@@ -12,10 +12,12 @@ viewsRouter.use("/register-kakao", serveStatic("register-kakao"));
 viewsRouter.use("/login", serveStatic("login"));
 viewsRouter.use("/mypage", serveStatic("mypage"));
 viewsRouter.use("/cart", serveStatic("cart"));
+viewsRouter.use("/order", serveStatic("order"));
+viewsRouter.use("/order/result", serveStatic("result"));
 viewsRouter.use("/categories", serveStatic("categories"));
 viewsRouter.use("/products", serveStatic("products"));
-viewsRouter.use("/admin/categories", serveStatic("categories"));
-viewsRouter.use("/admin/products", serveStatic("products"));
+viewsRouter.use("/menu", serveStatic("menu"));
+viewsRouter.use("/product/:id", serveStatic("productdetail"));
 viewsRouter.use("/admin/orders", serveStatic("orders"));
 
 // views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함

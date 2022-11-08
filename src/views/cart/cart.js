@@ -6,6 +6,7 @@
  */
 
 import * as Api from "../api.js";
+import * as Storage from "../../utils/storage.js";
 
 const $cartMain = document.querySelector(".cart-main");
 const $cartIn = document.querySelector(".cart-in");
@@ -16,20 +17,7 @@ const $list = document.querySelector(".product-list");
 const PORT = 3000;
 
 let timer;
-const token = getStorage("token");
-
-function getStorage(name) {
-  let item = null;
-  try {
-    item =
-      name === "cart"
-        ? JSON.parse(localStorage.getItem(name))
-        : localStorage.getItem(name);
-  } catch (e) {
-    console.warn(e);
-  }
-  return item;
-}
+const token = Storage.get("token");
 
 // 데이터가 비었을때 빈 장바구니 템플릿 생성하는 함수
 function emptyCart() {
@@ -64,7 +52,7 @@ function totalPrice(list) {
 }
 
 // 데이터를 인자로 받아서 상품 갯수만큼 템플릿 생성
-function genProduct(list) {
+function renderProductsList(list) {
   const items = list
     .map(
       ({ product: { _id, name, price, images }, amount }) => `
@@ -92,9 +80,22 @@ function genProduct(list) {
 async function memberCart(type) {
   const memType = {
     nonMem() {
-      return getStorage("cart");
+      return Storage.get("cart");
     },
-    mem() {
+    async mem() {
+      const item = Storage.get("cart");
+      if (item) {
+        const postBody = item.map(({ amount, product }) => ({
+          amount,
+          productId: product._id,
+        }));
+        await Promise.all(
+          postBody.map(
+            async (e) => await Api.post(`http://localhost:${PORT}/api/cart`, e)
+          )
+        );
+        Storage.clear("cart");
+      }
       return Api.get(`http://localhost:${PORT}`, "api/cart");
     },
   };
@@ -106,7 +107,7 @@ async function memberCart(type) {
     return;
   }
 
-  genProduct(data);
+  renderProductsList(data);
   totalPrice(data);
 
   $cartIn.classList.remove("hidden");
@@ -139,9 +140,7 @@ async function memberCart(type) {
                 productId: id,
                 amount: numAdd,
               })
-            : setStorage(data);
-
-          console.log("증가");
+            : Storage.set("cart", data);
         });
         break;
 
@@ -165,9 +164,7 @@ async function memberCart(type) {
                 productId: id,
                 amount: numSub,
               })
-            : setStorage(data);
-
-          console.log("감소");
+            : Storage.set("cart", data);
         });
         break;
 
@@ -182,16 +179,13 @@ async function memberCart(type) {
           ? Api.delete(`http://localhost:${PORT}`, "api/cart", {
               productId: id,
             })
-          : setStorage(data);
-
-        console.log("삭제되었습니다");
+          : Storage.set("cart", data);
         break;
 
       case "purchase-btn":
         token
           ? window.location.replace("/order")
           : window.location.replace("/login");
-
         break;
 
       default:
@@ -213,10 +207,6 @@ function getData(data, id, num) {
 
 function getProductPrice(data, num) {
   return `${(data.product.price * num).toLocaleString()}원`;
-}
-
-function setStorage(data) {
-  localStorage.setItem("cart", JSON.stringify(data));
 }
 
 token ? memberCart("mem") : memberCart("nonMem");
