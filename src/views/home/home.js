@@ -107,10 +107,10 @@ function loginLogoutHandler(event) {
       document.location.href = "/mypage";
       break;
     case "navbar__category":
-      document.location.href = "/admin/categories";
+      document.location.href = "/categories";
       break;
     case "navbar__product":
-      document.location.href = "/admin/products";
+      document.location.href = "/products";
       break;
     case "navbar__order":
       document.location.href = "/admin/orders";
