@@ -118,6 +118,36 @@ function daumPostHandler(e) {
 
 // 유저 정보 변경
 async function editUserInfoHandler(e) {
+  const isNormal =
+    localStorage.getItem("loginMethod") === "NOMAL" ? true : false;
+  console.log(isNormal);
+  if (!isNormal) {
+    try {
+      const user = await Api.get("", "api/me");
+      const { password } = user;
+      // 소셜로그인이고 패스워드가 없으면 패스워드를 설정하라고 한다.
+      if (!password) {
+        alert("소셜계정으로 유저정보를 변경하려면 비밀번호를 설정해야합니다.");
+        const userInputPassword = prompt("비밀번호를 입력하세요.");
+        if (userInputPassword.length < 4) {
+          return alert("비밀번호는 4글자 이상이어야 합니다.");
+        }
+        const userInputPassword2 = prompt("비밀번호를 한번 더 입력하세요.");
+        if (userInputPassword !== userInputPassword2) {
+          return alert("비밀번호가 일치하지 않습니다.");
+        }
+        const data = { password: userInputPassword };
+        await Api.patch("", "api/user/password", data);
+        return alert("비밀번호가 설정되었습니다.");
+      }
+    } catch (err) {
+      console.error(err.stack);
+      alert(
+        `문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`
+      );
+    }
+  }
+
   if (confirm("회원정보를 수정하시겠습니까?")) {
     try {
       const fullName = userName.value;

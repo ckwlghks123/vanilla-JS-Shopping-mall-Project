@@ -188,6 +188,36 @@ userRouter.patch(
 
 /**
  * @author: 김상현
+ * @date: 2022-11-08
+ * @detail: 소셜유저의 비밀번호 설정을 위한 API
+ */
+userRouter.patch(
+  "/user/password",
+  loginRequired,
+  asyncHandler(async function (req, res, next) {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+
+    const userId = req.currentUserId;
+    const { password } = req.body;
+
+    const userInfoRequired = { userId };
+    const toUpdate = { password };
+
+    const updatedUserInfo = await userService.setUserPassword(
+      userInfoRequired,
+      toUpdate
+    );
+
+    res.status(200).json(updatedUserInfo);
+  })
+);
+
+/**
+ * @author: 김상현
  * @detail: mypage 회원탈퇴를 위한 delete API
  */
 userRouter.post(

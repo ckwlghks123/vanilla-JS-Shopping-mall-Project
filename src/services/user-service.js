@@ -200,6 +200,33 @@ class UserService {
     return user;
   }
 
+  /**
+   * @author: 김상현
+   * @date: 2022-11-08
+   * @detail: 소셜유저의 비밀번호 설정을 위한 userService
+   */
+  async setUserPassword(userInfoRequired, toUpdate) {
+    const { userId } = userInfoRequired;
+    let user = await this.userModel.findById(userId);
+    if (!user) {
+      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+    }
+
+    const { password } = toUpdate;
+
+    if (password) {
+      const newPasswordHash = await bcrypt.hash(password, 10);
+      toUpdate.password = newPasswordHash;
+    }
+
+    user = await this.userModel.update({
+      userId,
+      update: toUpdate,
+    });
+
+    return user;
+  }
+
   async checkUserByEmail(email) {
     const isExist = await this.userModel.checkByEmail(email);
     return { isExist };
