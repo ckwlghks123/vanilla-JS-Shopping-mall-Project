@@ -101,7 +101,39 @@
         <button class="button is-info is-fullwidth" id="submitButton">
           로그인하기
         </button>
+        <!-- 아래 부터 카카오 로그인을 위한 코드 -->
+        <a href="javascript:kakaoLogin();"
+          ><img
+            src="https://www.gb.go.kr/Main/Images/ko/member/certi_kakao_login.png"
+            alt="카카오로그인"
+            style="height: 60px; width: auto"
+        /></a>
       </form>
     </div>
+    <!-- 카카오 로그인을 위한 script -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+      window.Kakao.init("de945249a2674c6c7c7b4c6b90c0ba7d");
+
+      function kakaoLogin() {
+        window.Kakao.Auth.login({
+          scope: "profile_nickname, account_email",
+          success: function (authObj) {
+            localStorage.setItem("token", authObj.access_token);
+            window.Kakao.API.request({
+              url: "/v2/user/me",
+              success: (res) => {
+                const kakao_account = res.kakao_account;
+                const fullName = kakao_account.profile.nickname;
+                const email = kakao_account.email;
+                localStorage.setItem("fullName", fullName);
+                localStorage.setItem("email", email);
+                window.location.href = "/register-kakao";
+              },
+            });
+          },
+        });
+      }
+    </script>
   </body>
 </html>

@@ -4,6 +4,11 @@ import { UserSchema } from "../schemas/user-schema";
 const User = model("users", UserSchema);
 
 export class UserModel {
+  async checkByEmail(email) {
+    const cnt = await User.countDocuments({ email });
+    return cnt > 0;
+  }
+
   async findByEmail(email) {
     const user = await User.findOne({ email });
     return user;
@@ -20,7 +25,7 @@ export class UserModel {
   }
 
   async findAll() {
-    const users = await User.find({});
+    const users = await User.find({}).sort({ createdAt: -1 });
     return users;
   }
 
@@ -30,6 +35,11 @@ export class UserModel {
 
     const updatedUser = await User.findOneAndUpdate(filter, update, option);
     return updatedUser;
+  }
+
+  async deleteById(userId) {
+    const result = await User.deleteOne({ _id: userId });
+    return result;
   }
 }
 

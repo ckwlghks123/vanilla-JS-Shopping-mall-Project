@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>마이페이지</title>
+    <!-- 아이콘 -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/elice-rabbit-favicon.png"
+    />
+    <!-- bulma css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="mypage.css" />
+    <script src="mypage.js" type="module" defer></script>
+  </head>
+  <body>
+    <p id="user-admin" style="display: none">관리자</p>
+    <p id="user-name">유저이름</p>
+    <button id="user-name-button">이름변경</button>
+    <p id="user-email">이메일</p>
+    <button id="user-password-button">비밀번호 변경</button>
+    <p id="user-postcode">00000</p>
+    <p id="user-address">주소</p>
+    <button id="user-address-button">주소변경</button>
+    <button id="user-withdraw-button">회원탈퇴</button>
+    <button id="users-info-button" style="display: none">
+      유저정보 콘솔로 불러오기
+    </button>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <link rel="stylesheet" href="cart.css" />
+    <script src="cart.js" type="module" defer></script>
+  </head>
+  <body>
+    <div class="top-bar">
+      <h1>장바구니</h1>
+      <ul class="status-bar">
+        <li>01 장바구니</li>
+        &nbsp;>&nbsp;
+        <li>02 주문결제</li>
+        &nbsp;>&nbsp;
+        <li>03 결제완료</li>
+      </ul>
+    </div>
+    <main class="cart-main">
+      <div class="cart-none hidden">
+        <img src="" alt="카트이미지" class="cart-image" />
+        <span>장바구니에 담긴 상품이 없습니다.</span>
+      </div>
+      <div class="cart-in hidden">
+        <h2 class="title">엘리스배송</h2>
+        <div class="product-list"></div>
+        <div class="shipping-cost">
+          <div class="price">
+            <span>상품금액</span>
+            <strong class="product-price">10000원</strong>
+          </div>
+          <div class="shipping">
+            <span>배송비(30,000원 이상 무료)</span>
+            <strong class="ship">무료</strong>
+          </div>
+          <div class="total">
+            <span>주문금액</span>
+            <strong class="total-price">10000원</strong>
+          </div>
+        </div>
+        <footer>
+          <div class="footer-price">
+            <span>총 상품금액</span>
+            <strong class="product-price">10000원</strong>
+          </div>
+          <div class="footer-shipping">
+            <span>총 배송비</span>
+            <strong class="ship">무료</strong>
+          </div>
+          <div class="footer-total">
+            <span>결제금액</span>
+            <strong class="total-price">10000원</strong>
+            <button class="purchase-btn">구매하기</button>
+          </div>
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>

@@ -51,10 +51,25 @@
 
         <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
           <ul id="navbar">
-            <li><a href="/login">로그인</a></li>
-            <li><a href="/register">회원가입</a></li>
+            <li id="navbar__category" style="display: none">
+              <a href="#">카테고리 관리</a>
+            </li>
+            <li id="navbar__product" style="display: none">
+              <a href="#">상품 관리</a>
+            </li>
+            <li id="navbar__order" style="display: none">
+              <a href="#">주문 관리</a>
+            </li>
+            <li id="navbar__admin" style="display: none">
+              <a href="#">관리자</a>
+            </li>
+            <li id="navbar__mypage" style="display: none">
+              <a href="/mypage">마이페이지</a>
+            </li>
+            <li id="navbar__login"><a href="/login">로그인</a></li>
+            <li id="navbar__register"><a href="/register">회원가입</a></li>
             <li>
-              <a href="#cart" aria-current="page">
+              <a href="cart" aria-current="page">
                 <span class="icon">
                   <i class="fas fa-cart-shopping"></i>
                 </span>

@@ -1,197 +1,100 @@
-# 쇼핑몰 웹 서비스 - 기본 코드
+# Pets Shop
 
-<div>
+- 애완동물을 타겟으로한 쇼핑몰
 
-<img alt="쇼핑-데모 로고" src="https://i.ibb.co/xSZHxmy/image.png">
-
-</div>
-
-<br />
+## 서비스 구성 안내
 
 ## 1. 서비스 소개
 
-#### 제품 등록, 장바구니 추가, 주문하기 등 쇼핑몰의 핵심 서비스를 구현합니다. 
-1. 회원가입, 로그인, 회원정보 수정 등 **유저 정보 관련 CRUD** 
-2. **제품 목록**을 조회 및, **제품 상세 정보**를 조회 가능함. 
-3. 장바구니에 제품을 추가할 수 있으며, **장바구니에서 CRUD** 작업이 가능함.
-4. 장바구니는 서버 DB가 아닌, 프론트 단에서 저장 및 관리됨 (localStorage, indexedDB 등)
-5. 장바구니에서 주문을 진행하며, **주문 완료 후 조회 및 삭제**가 가능함.
-6. 추가 기능 ...
+- Front
 
-<br />
+  - HTML, CSS3
+  - JavaScript
 
-### 1-1. API 문서
+- Back
 
-### https://documenter.getpostman.com/view/23952739/2s847JrX6f
+  - node.js
 
-<br>
+- Database
 
-### 1-2. 데모 영상
+  - MongoDB
 
-<details><summary>사용자 회원가입, 로그인</summary>
+- Library
+  - multer
+  - uuid
 
-![image](https://user-images.githubusercontent.com/91174156/172159634-1e105633-9948-464e-a540-5429200a1353.gif)
+## 2. 서비스 주요 기능 설명
 
-</details>
+**웹서비스의 유용성, 편의성 및 시각화의 실용성에 대한 설명**
 
-<details><summary>카테고리 추가 및 반영</summary>
+- 주요 기능 (주된 활용성) 및 서브 기능 소개
+- 프로젝트만의 차별점, 기대 효과
 
-추후 관련 영상을 삽입하세요 (하기 2가지 방법 가능)
-1. 화면녹화 -> 유튜브 업로드 -> 유튜브 링크 삽입  
-2. 화면움짤녹화 -> 움짤삽입 (https://www.screentogif.com/ 활용가능)
-   
-</details>
+## 3. 서비스 구성도
 
-<details><summary>제품 추가 및 반영</summary>
+#### [디자인 시스템](https://www.figma.com/file/55xqd6w8U3WGDQPt2IevKh/pet-shop-design-system?node-id=0%3A1)
 
-추후 관련 영상을 삽입하세요 (하기 2가지 방법 가능)
-1. 화면녹화 -> 유튜브 업로드 -> 유튜브 링크 삽입  
-2. 화면움짤녹화 -> 움짤삽입 (https://www.screentogif.com/ 활용가능)
+#### [작업 진행도 스프레드시트](https://docs.google.com/spreadsheets/d/1X6PqVyeI6bxo8NmF57tKayFB1DoMshBlpRgUTgPL-3A/edit#gid=0)
 
-</details>
+#### [API 명세서](https://documenter.getpostman.com/view/14584609/2s8YRfNbVn)
 
-<details><summary>장바구니 기능</summary>
+## 4. 프로젝트 팀원 역할 분담
 
-추후 관련 영상을 삽입하세요 (하기 2가지 방법 가능)
-1. 화면녹화 -> 유튜브 업로드 -> 유튜브 링크 삽입  
-2. 화면움짤녹화 -> 움짤삽입 (https://www.screentogif.com/ 활용가능)
+### 🐰 무수면 토끼
 
-</details>
+| 이름   | 담당 업무            |
+| ------ | -------------------- |
+| 김동한 | 팀장/프론트엔드 개발 |
+| 김상현 | 프론트엔드 개발      |
+| 차지환 | 프론트엔드 개발      |
+| 김채현 | 프론트엔드 개발      |
+| 손병진 | 백엔드 개발          |
 
-<details><summary>주문 기능</summary>
+**멤버별 responsibility**
 
-추후 관련 영상을 삽입하세요 (하기 2가지 방법 가능)
-1. 화면녹화 -> 유튜브 업로드 -> 유튜브 링크 삽입  
-2. 화면움짤녹화 -> 움짤삽입 (https://www.screentogif.com/ 활용가능)
+1. 김 동한: 팀장/프론트엔드 담당
 
-</details>
+- 기획 단계: Figma를 활용한 디자인시스템 작성, 스프레드시트를 사용하여 역할 분담 및 진행도 체크
+- 개발 단계: [관리자 메뉴] - 카테고리, 상품관리, 상품상세 개발, 스타일링
+- 수정 단계: 준비 중
 
-<details><summary>관리자 페이지</summary>
+2. 김 상현: 프론트엔드 담당
 
-추후 관련 영상을 삽입하세요 (하기 2가지 방법 가능)
-1. 화면녹화 -> 유튜브 업로드 -> 유튜브 링크 삽입  
-2. 화면움짤녹화 -> 움짤삽입 (https://www.screentogif.com/ 활용가능)
+- 기획 단계: 회원가입 및 로그인 과정, 마이페이지 기능 설계
+- 개발 단계: 회원가입 및 로그인, 마이페이지 조회 및 수정, 회원탈퇴 개발
+- 수정 단계: 작성 예정
 
-</details>
+3. 차 지환 : 프론트엔드 담당
 
-<br />
+- 기획 단계: 장바구니, 주문 관련 기능 설계
+- 개발 단계: 회원 비회원 장바구니 및 주문 상세, 결제 페이지 개발
+- 수정 단계:
 
-### 1-3. 페이지 별 화면
+1. 김 채현: 프론트엔드 담당
 
-|  |  |
-| ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------|
-| ![image](https://i.ibb.co/jyxjcd3/image.png) | ![image](https://i.ibb.co/Q860RKz/image.png) |
-|    메인 페이지                                |      회원가입 화면                            |
-| ![image](https://i.ibb.co/RpYN379/image.png) |                                         |
-|    로그인 페이지                              |     앞으로 추가할 페이지                         |
+- 기획 단계: Figma (관리자페이지 - 주문 내역 조회, 배송상태 변경, 주문 내역 삭제)
+- 개발 단계: 프론트엔드 개발
+- 수정 단계:
 
-<br />
+5. 손 병진: 백엔드 담당
 
-
-## 2. 기술 스택
-
-![image](https://i.ibb.co/N34mXzy/image.png)
-
-<br />
-
-### 2-1. 프론트엔드
-
-- **Vanilla javascript**, html, css (**Bulma css**)
-- Font-awesome 
-- Daum 도로명 주소 api 
-- 이외
-
-### 2-2. 백엔드 
-
-- **Express** (nodemon, babel-node로 실행됩니다.)
-- Mongodb, Mongoose
-- cors
-- 이외
-
-
-
-## 3. 인프라 구조
-
-![image](https://i.ibb.co/9tGxmx0/image.png)<br />
-
-### 3-1. 폴더 구조
-- 프론트: `src/views` 폴더 
-- 백: src/views 이외 폴더 전체
-- 실행: **프론트, 백 동시에, express로 실행**
-
-<br />
-
-## 4. 제작자
-
-| 이름 | 담당 업무 |
-| ------ | ------ |
-| 엘리스 | 팀장/개발 |
-
-<br />
+- 기획 단계: 콜렉션별 엔드포인트 및 API 분리
+- 개발 단계: 유저, 카테고리, 상품, 장바구니, 주문 API
+- 수정 단계: VM 배포, mongoDB 클라우드 생성
 
 ## 5. 실행 방법
 
-1. 레포지토리를 클론하고자 하는 디렉토리에서 아래 명령어를 수행
-
-```bash
-git clone <레포지토리 주소>
-```
-
-
-2. 클론한 디렉토리에서 backend 디렉토리로 들어가 아래 명령어를 통해 backend에서 필요한 module 설치
-
-```bash
-npm install
-```
-
-
-3. backend에서 필요한 `.env` 설정
-
-```bash
-MONGODB_URL=<몽고DB URL>
-PORT=5000
-JWT_SECERT_KEY=<랜덤 문자열>
-```
-
-  앱을 테스트하고 싶은 경우 다음의 몽고DB URL을 이용하세요.
-
-  - mongodb+srv://elice:W8RsZsSX2Xs1ydE4@cluster0.4gz9ij3.mongodb.net/?retryWrites=true&w=majority
-
-  단, 해당 URL은 READ만 가능하며 회원 가입을 하거나 상품 정보를 추가하는 등의 동작은 할 수 없습니다. <br>
-  주어진 URL은 테스트 용이므로 실제 개발을 할 때는 해당 URL을 사용하지 않고, 반드시 직접 설치한 몽고DB의 URL을 사용하시기를 바랍니다.
-
-
-
-4. express 앱을 실행
-
-```bash
-npm start
-```
-
-<br>
+- 프론트엔드 + 백엔드:
+  mongodb 실행
+  .env 파일 생성 및 변수 선언
+  ```bash
+  npm start
+  ```
 
 ## 6. 버전
-### 1.0.0
 
-<br>
+- 준비 중
 
 ## 7. FAQ
-<details><summary>1. 배포된 페이지는 어디에서 확인할 수 있나요?</summary>
 
-  <p>
-    프로젝트 기본 코드는 따로 배포하지 않았습니다, 레포지토리를 클론하여 직접 실행해보세요.
-  </p>
-
-</details>
-<details><summary>2. env 파일이 보이지 않습니다.</summary>
-
-  <p>
-    해당 파일은 직접 만들어서 코드를 작성해야 합니다, DB를 비롯한 서비스의 계정 정보는 <b>절대로</b> Git에 함부로 공유하면 안되기 때문에 유의 바랍니다.
-  </p>
-
-</details>
-
----
-
-본 프로젝트에서 제공하는 모든 코드 등의는 저작권법에 의해 보호받는 ㈜엘리스의 자산이며, 무단 사용 및 도용, 복제 및 배포를 금합니다.
-Copyright 2022 엘리스 Inc. All rights reserved.
+- 준비 중

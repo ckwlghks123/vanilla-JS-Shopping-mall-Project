@@ -1,0 +1,43 @@
+body{
+    width:100%;
+    height: 100%;
+}
+
+.box{
+    margin: 5% 15%;
+}
+.orderList{
+    display: none;
+}
+
+.orderList.on{
+    display : grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 0.5fr 0.5fr;
+    grid-auto-rows: minmax(50px, auto);
+}
+.orderList.on.menu{
+    background-color: #FBA7A7;
+    border-radius: 10px 10px 0px 0px;
+}
+.orderList.on.list{
+    background-color: #F6F5F5;
+}
+.orderList.on.list.even{
+    background-color: #FEFEFE;
+}
+.orderList.on div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+#deleteBtn{
+    display: none;
+}
+#deleteBtn.on{
+    display: block;
+}
+

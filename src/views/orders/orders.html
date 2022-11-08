@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>주문관리</title>
+    <link rel="stylesheet" href="orders.css">
+  </head>
+
+  <body>
+    <div class="box">
+      <h1>주문관리</h1>
+      <div class="orderList on menu">
+        <div class="user">구매자</div>
+        <div class="product">주문정보</div>
+        <div class="orderPrice">결제금액</div>
+        <div class="orderDate">주문일자</div>
+        <div class="process">상태</div>
+        <div class="changeBtn">변경</div>
+        <div class="deleteBtn">삭제</div>
+      </div>
+      <div class="orderList on list" id="template">
+        <div class="user">구매자</div>
+        <div class="product">주문정보</div>
+        <div class="orderPrice">결제금액</div>
+        <div class="orderDate">주문일자</div>
+        <div class="process">
+          <form>
+            <select>
+              <option value="WAIT">배송대기</option>
+              <option value="INPROCESS">배송중</option>
+              <option value="COMPLETED">배송완료</option>
+            </select>
+          </form>
+        </div>
+        <div><button id="changeBtn">변경</button></div>
+        <div><button class="on" id="deleteBtn">삭제</button></div>
+      </div>
+      <script src="orders.js" type="module" defer></script>
+    </div>
+  </body>
+</html>
