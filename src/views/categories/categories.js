@@ -1,8 +1,8 @@
+import * as Api from '/api.js';
+
 const categoryAddBtn = document.querySelector('#category-add-btn');
 const categoryInput = document.querySelector('#category-name');
 const categoryLists = document.querySelector('#category-lists');
-
-import * as Api from '/api.js';
 
 addAllEvents();
 loadCategories();
@@ -11,9 +11,7 @@ loadCategories();
 async function loadCategories() {
     const categories = await Api.get('/api/categories');
 
-    while (categoryLists.hasChildNodes()) {
-        categoryLists.removeChild(categoryLists.firstChild);
-    }
+    if (categoryLists.hasChildNodes()) categoryLists.innerHTML = '';
 
     categories.map((item) => {
         const categoryName = item.name;

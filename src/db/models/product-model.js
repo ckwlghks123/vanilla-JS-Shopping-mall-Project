@@ -5,7 +5,6 @@ const Product = model('products', ProductSchema);
 
 export class ProductModel {
     async createProduct(productInfo) {
-        console.log(productInfo);
         const createdNewProduct = await Product.create(productInfo);
         return createdNewProduct;
     }
@@ -19,6 +18,11 @@ export class ProductModel {
         return product;
     }
 
+    async findCategory(categoryId) {
+        const product = await Product.find({ category: { $in: categoryId } });
+        return product;
+    }
+
     async update(productId, update) {
         const filter = { _id: productId };
         const option = { returnOriginal: false };
@@ -28,7 +32,7 @@ export class ProductModel {
     }
 
     async deleteById(productId) {
-        const result = await Product.deleteOne({ _id: productId });
+        const result = await Product.findOneAndRemove({ _id: productId });
         return result;
     }
 }

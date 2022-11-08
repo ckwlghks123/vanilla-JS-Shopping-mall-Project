@@ -1,13 +1,13 @@
-import express, { Router } from 'express';
-import path from 'path';
-import is from '@sindresorhus/is';
-import { categoryService, productService } from '../services';
-import { upload } from '../utils/upload';
+import express, { Router } from "express";
+import path from "path";
+import is from "@sindresorhus/is";
+import { categoryService, productService } from "../services";
+import { upload } from "../utils/upload";
 
 const categoryRouter = express.Router();
 
 // 카테고리 전체조회
-categoryRouter.get('/', async (req, res, next) => {
+categoryRouter.get("/", async (req, res, next) => {
     try {
         const categories = await categoryService.getCategories();
         res.status(200).json(categories);
@@ -17,7 +17,7 @@ categoryRouter.get('/', async (req, res, next) => {
 });
 
 // 카테고리 생성
-categoryRouter.post('/', async (req, res, next) => {
+categoryRouter.post("/", async (req, res, next) => {
     try {
         const { categoryName: name } = req.body;
         const createdCategory = await categoryService.createCategory({ name });
@@ -28,7 +28,7 @@ categoryRouter.post('/', async (req, res, next) => {
 });
 
 // 카테고리 삭제
-categoryRouter.delete('/:name', async (req, res, next) => {
+categoryRouter.delete("/:name", async (req, res, next) => {
     const { name } = req.params;
 
     try {
@@ -39,7 +39,7 @@ categoryRouter.delete('/:name', async (req, res, next) => {
     }
 });
 
-// 카테고리 수정 미사용 중
+// 카테고리 수정 미사용
 // categoryRouter.patch(
 //     '/:categoryId',
 //     loginRequired,
@@ -54,7 +54,7 @@ categoryRouter.delete('/:name', async (req, res, next) => {
 // );
 
 // 상품 전체 조회
-categoryRouter.get('/products', async (req, res, next) => {
+categoryRouter.get("/products", async (req, res, next) => {
     try {
         const products = await productService.findAllProducts();
         req.status(200).json(products);
