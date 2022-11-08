@@ -1,14 +1,15 @@
 import * as Api from "../api.js";
+import * as Storage from "../../utils/storage.js";
 
 const pg_token = new URLSearchParams(location.search).get("pg_token");
 const result = new URLSearchParams(location.search).get("result");
 
 if (pg_token) {
-  Api.post("/api/order/register", getStorage("order"));
-  localStorage.removeItem("order");
+  Api.post("/api/order/register", Storage.get("order"));
+  Storage.clear("order");
   window.location.replace("/order/result");
 } else if (result) {
-  localStorage.removeItem("order");
+  Storage.clear("order");
 }
 
 const ADMIN_KEY = "488ad1ea656667486f4f0657731dd055";
@@ -104,8 +105,8 @@ function makePopUp(x, y) {
 }
 
 async function getData() {
-  // let data = await Api.get("http://localhost:3000", "api/cart");
-  let data = await Api.get(".", "test.json");
+  let data = await Api.get("http://localhost:3000", "api/cart");
+  // let data = await Api.get(".", "test.json");
 
   renderProductsList(data.list);
 
@@ -183,7 +184,6 @@ function purchase(type, total, id) {
             Api.post("/api/order/register", formData);
             window.location.replace("/order/result");
           } else {
-            console.log(res);
             alert("결제 실패");
           }
         }
@@ -220,7 +220,7 @@ function purchase(type, total, id) {
         .then((response) => response.json())
         .then((result) => {
           const { tid, next_redirect_pc_url } = result;
-          setStorage(formData);
+          Storage.set("order", formData);
           location.href = next_redirect_pc_url;
         })
         .catch((error) => console.log("error", error));
@@ -244,20 +244,6 @@ function getFormData(id) {
   };
 
   return data;
-}
-
-function setStorage(data) {
-  localStorage.setItem("order", JSON.stringify(data));
-}
-
-function getStorage(name) {
-  let item = null;
-  try {
-    item = JSON.parse(localStorage.getItem(name));
-  } catch (e) {
-    console.warn(e);
-  }
-  return item;
 }
 
 getData();
