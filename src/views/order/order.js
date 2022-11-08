@@ -6,7 +6,7 @@
  */
 
 import * as Api from "../api.js";
-import * as Storage from "../../utils/storage.js";
+import * as Storage from "../storage.js";
 
 const pg_token = new URLSearchParams(location.search).get("pg_token");
 const result = new URLSearchParams(location.search).get("result");
@@ -53,7 +53,7 @@ function renderProductsList(products) {
     $priceWrapper.classList.add("product-price-wrapper");
     $price.classList.add("product-price");
 
-    // $img.setAttribute("src", product.images[0]);
+    $img.setAttribute("src", product.images[0]);
     $li.setAttribute("id", _id);
     $quantity.innerText = `수량 : ${amount}개`;
     $title.innerText = product.name;
