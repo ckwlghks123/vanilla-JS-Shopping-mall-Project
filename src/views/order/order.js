@@ -1,5 +1,16 @@
 import * as Api from "../api.js";
 
+const pg_token = new URLSearchParams(location.search).get("pg_token");
+const result = new URLSearchParams(location.search).get("result");
+
+if (pg_token) {
+  Api.post("/api/order/register", getStorage("order"));
+  localStorage.removeItem("order");
+  window.location.replace("/order/result");
+} else if (result) {
+  localStorage.removeItem("order");
+}
+
 const ADMIN_KEY = "488ad1ea656667486f4f0657731dd055";
 
 const $productsList = document.querySelector(".products-list");
@@ -98,7 +109,7 @@ async function getData() {
 
   renderProductsList(data.list);
 
-  console.log(data);
+  const id = data._id;
   const price = getTotalPrice(data.list);
   const total = updateTotalPrice(price);
 
@@ -107,10 +118,10 @@ async function getData() {
     if (!paymentMethod) return alert("결제 방법을 선택해주세요");
     switch (paymentMethod.value) {
       case "CARD":
-        purchase("card", total);
+        purchase("card", total, id);
         break;
       case "KAKAO":
-        purchase("kakao", total);
+        purchase("kakao", total, id);
         break;
       default:
         return;
@@ -147,8 +158,9 @@ $productsList.addEventListener("click", ({ target }) => {
   }
 });
 
-function purchase(type, total) {
+function purchase(type, total, id) {
   const uid = `elice_${new Date().getTime()}`;
+  const formData = getFormData(id);
   const paymentType = {
     card: () => {
       const IMP = window.IMP;
@@ -168,7 +180,7 @@ function purchase(type, total) {
         },
         (res) => {
           if (res.success) {
-            // Api.post
+            Api.post("/api/order/register", formData);
             window.location.replace("/order/result");
           } else {
             console.log(res);
@@ -190,7 +202,7 @@ function purchase(type, total) {
       urlencoded.append("quantity", "1");
       urlencoded.append("total_amount", "100");
       urlencoded.append("tax_free_amount", "0");
-      urlencoded.append("approval_url", "http://127.0.0.1:3000/order/result");
+      urlencoded.append("approval_url", `http://127.0.0.1:3000/order`);
       urlencoded.append("fail_url", "http://127.0.0.1:3000/order?result=fail");
       urlencoded.append(
         "cancel_url",
@@ -208,6 +220,7 @@ function purchase(type, total) {
         .then((response) => response.json())
         .then((result) => {
           const { tid, next_redirect_pc_url } = result;
+          setStorage(formData);
           location.href = next_redirect_pc_url;
         })
         .catch((error) => console.log("error", error));
@@ -216,13 +229,14 @@ function purchase(type, total) {
   paymentType[type]();
 }
 
-function getFormData() {
+function getFormData(id) {
   const $receiver = document.querySelector("#receiver");
   const $phone = document.querySelector("#phone");
   const $address = document.querySelector("#address");
   const $detail = document.querySelector("#detailed-address");
   const $requirements = document.querySelector("#requirements");
   const data = {
+    cartId: id,
     receiver: $receiver.value,
     phone: $phone.value,
     address: `${$zipCode.value} ${$address.value} ${$detail.value}`,
@@ -230,6 +244,20 @@ function getFormData() {
   };
 
   return data;
+}
+
+function setStorage(data) {
+  localStorage.setItem("order", JSON.stringify(data));
+}
+
+function getStorage(name) {
+  let item = null;
+  try {
+    item = JSON.parse(localStorage.getItem(name));
+  } catch (e) {
+    console.warn(e);
+  }
+  return item;
 }
 
 getData();
