@@ -82,10 +82,18 @@ async function memberCart(type) {
     nonMem() {
       return Storage.get("cart");
     },
-    mem() {
+    async mem() {
       const item = Storage.get("cart");
       if (item) {
-        Api.post(`http://localhost:${PORT}/api/cart`, item);
+        const postBody = item.map(({ amount, product }) => ({
+          amount,
+          productId: product._id,
+        }));
+        await Promise.all(
+          postBody.map(
+            async (e) => await Api.post(`http://localhost:${PORT}/api/cart`, e)
+          )
+        );
         Storage.clear("cart");
       }
       return Api.get(`http://localhost:${PORT}`, "api/cart");
