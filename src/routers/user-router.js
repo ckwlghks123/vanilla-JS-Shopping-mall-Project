@@ -74,6 +74,26 @@ userRouter.post(
   })
 );
 
+/**
+ * @author: 김상현
+ * @date: 2022-11-08
+ * @detail: 카카오로그인을 위한 로그인API
+ */
+userRouter.post(
+  "/login-kakao",
+  asyncHandler(async function (req, res, next) {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+
+    const email = req.body.email;
+    const { token, user } = await userService.getUserTokenForKakao({ email });
+    res.status(200).json({ userToken: token, user });
+  })
+);
+
 userRouter.get(
   "/me",
   loginRequired,

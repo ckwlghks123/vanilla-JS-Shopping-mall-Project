@@ -99,6 +99,30 @@ class UserService {
     return { token, user };
   }
 
+  /**
+   *
+   * @author: 김상현
+   * @date: 2022-11-08
+   * @detail: 카카오로그인을 위한 서비스 코드
+   */
+  async getUserTokenForKakao(loginInfo) {
+    const { email } = loginInfo;
+    const user = await this.userModel.findByEmail(email);
+    if (!user) {
+      throw new Error(
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
+      );
+    }
+
+    const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
+    const token = jwt.sign(
+      { userId: user._id, isAdmin: user.isAdmin },
+      secretKey
+    );
+
+    return { token, user };
+  }
+
   async getUsers() {
     const users = await this.userModel.findAll();
     return users;
