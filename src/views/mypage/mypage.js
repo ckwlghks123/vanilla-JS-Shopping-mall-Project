@@ -37,7 +37,7 @@ function addAllEvents() {
 async function insertUserInfo() {
   const isLogin = localStorage.getItem("token");
   if (!isLogin) {
-    window.location.href = "/";
+    window.location.href = "/login";
     return alert("로그인한 유저만 사용할 수 있는 서비스입니다.");
   }
   try {
