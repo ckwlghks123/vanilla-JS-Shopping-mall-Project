@@ -124,7 +124,7 @@ function insertMyPageLi() {
   if (localStorage.getItem("token")) {
     myPageLi.style.removeProperty("display");
   } else {
-    myPageLi.style.style.display = "none";
+    myPageLi.style.display = "none";
   }
 }
 
