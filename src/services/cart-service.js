@@ -33,7 +33,7 @@ class CartService {
     return updatedCart;
   }
 
-  async getCartById(cartId) {
+  async deleteCartById(cartId) {
     const cart = await this.cartModel.findDelete(cartId);
     return cart;
   }

@@ -10,40 +10,17 @@ export class OrderModel {
   }
 
   async findByOrderId(orderId) {
-    const order = await Order.findById({ _id: orderId })
-      .populate("user")
-      .populate({
-        path: "list",
-        populate: {
-          path: "product",
-        },
-      });
+    const order = await Order.findById({ _id: orderId });
     return order;
   }
 
   async findAll() {
-    const orders = await Order.find({})
-      .populate("user")
-      .populate({
-        path: "list",
-        populate: {
-          path: "product",
-        },
-      })
-      .sort({ createdAt: -1 });
+    const orders = await Order.find({}).sort({ createdAt: -1 });
     return orders;
   }
 
   async findByUserId(userId) {
-    const orders = await Order.find({ user: userId })
-      .populate("user")
-      .populate({
-        path: "list",
-        populate: {
-          path: "product",
-        },
-      })
-      .sort({ createdAt: -1 });
+    const orders = await Order.find({ user: userId }).sort({ createdAt: -1 });
     return orders;
   }
 
@@ -55,14 +32,7 @@ export class OrderModel {
   async update(orderId, update) {
     const filter = { _id: orderId };
     const option = { returnOriginal: false };
-    const updatedOrder = await Order.findOneAndUpdate(filter, update, option)
-      .populate("user")
-      .populate({
-        path: "list",
-        populate: {
-          path: "product",
-        },
-      });
+    const updatedOrder = await Order.findOneAndUpdate(filter, update, option);
     return updatedOrder;
   }
 }
