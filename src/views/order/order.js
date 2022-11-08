@@ -1,3 +1,10 @@
+/**
+ * @fileName order.js
+ * @author 차지환
+ * @date 2022-11-07
+ * @description 장바구니 데이터를 불러와 주문자 정보를 입력하고 결제를 수행하는 파일입니다.
+ */
+
 import * as Api from "../api.js";
 import * as Storage from "../../utils/storage.js";
 
