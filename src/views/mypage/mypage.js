@@ -35,6 +35,11 @@ function addAllEvents() {
 
 // 유저 정보(isAdmin, 이름, 이메일, 주소, 우편번호) 조회 및 화면에 표시
 async function insertUserInfo() {
+  const isLogin = localStorage.getItem("token");
+  if (!isLogin) {
+    window.location.href = "/";
+    return alert("로그인한 유저만 사용할 수 있는 서비스입니다.");
+  }
   try {
     const userInfo = await Api.get("/api/me");
     const { isAdmin, fullName, email, address, postCode } = userInfo;
