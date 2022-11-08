@@ -14,6 +14,7 @@ const userNewPassword = document.querySelector("#user-new-password");
 const userPostCode = document.querySelector("#user-postcode");
 const userAddress = document.querySelector("#user-address");
 const userDetailAddress = document.querySelector("#user-detail-address");
+const postCodeSearchButton = document.querySelector("#postCodeSearchButton");
 const userInfoEditButton = document.querySelector("#user-info-edit-button");
 const userWithdrawButton = document.querySelector("#user-withdraw-button");
 const usersInfoButton = document.querySelector("#users-info-button");
@@ -26,6 +27,7 @@ async function addAllElements() {
 }
 
 function addAllEvents() {
+  postCodeSearchButton.addEventListener("click", daumPostHandler);
   userInfoEditButton.addEventListener("click", editUserInfoHandler);
   userWithdrawButton.addEventListener("click", withdrawUserHandler);
   usersInfoButton.addEventListener("click", loadUsersInfoHandler);
@@ -86,6 +88,35 @@ function insertUserPostCode(postCode) {
   userPostCode.value = postCode;
 }
 
+function daumPostHandler(e) {
+  const width = 500;
+  const height = 600;
+  new daum.Postcode({
+    width: width,
+    height: height,
+    oncomplete: function (data) {
+      let address = "";
+
+      if (data.userSelectedType === "R") {
+        // 사용자가 도로명 주소 클릭
+        address = data.roadAddress;
+      } else {
+        // 사용자가 지번 주소 클릭
+        address = data.jibunAddress;
+      }
+
+      // 우편번호와 주소 정보를 해당 필드에 넣는다.
+      userPostCode.value = data.zonecode;
+      userAddress.value = address;
+      // 커서를 상세주소 필드로 이동한다.
+      userDetailAddress.focus();
+    },
+  }).open({
+    left: window.screen.width / 2 - width / 2,
+    top: window.screen.height / 2 - height / 2,
+  });
+}
+
 // 유저 정보 변경
 async function editUserInfoHandler(e) {
   if (confirm("회원정보를 수정하시겠습니까?")) {
@@ -100,6 +131,8 @@ async function editUserInfoHandler(e) {
 
       const updatedUserInfo = await Api.patch("", "api/user", data);
 
+      userCurrentPassword.value = null;
+      userNewPassword.value = null;
       alert("회원정보가 변경되었습니다.");
     } catch (err) {
       console.error(err.stack);

@@ -102,7 +102,11 @@ async function handleEmailCheck(e) {
 }
 
 function handleDaumPost(e) {
+  const width = 500;
+  const height = 600;
   new daum.Postcode({
+    width: width,
+    height: height,
     oncomplete: function (data) {
       let address = "";
 
@@ -120,5 +124,8 @@ function handleDaumPost(e) {
       // 커서를 상세주소 필드로 이동한다.
       detailAddressInput.focus();
     },
-  }).open();
+  }).open({
+    left: window.screen.width / 2 - width / 2,
+    top: window.screen.height / 2 - height / 2,
+  });
 }
