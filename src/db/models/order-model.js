@@ -20,7 +20,9 @@ export class OrderModel {
   }
 
   async findByUserId(userId) {
-    const orders = await Order.find({ user: userId }).sort({ createdAt: -1 });
+    const orders = await Order.find({ "user._id": userId }).sort({
+      createdAt: -1,
+    });
     return orders;
   }
 
