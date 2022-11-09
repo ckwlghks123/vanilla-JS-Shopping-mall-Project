@@ -88,7 +88,7 @@ async function handleSubmit(e) {
     window.location.href = "/login";
   } catch (err) {
     console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+    alert(`error: ${err.message}`);
   }
 }
 
@@ -103,7 +103,7 @@ async function handleEmailCheck(e) {
     }
   } catch (err) {
     console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+    alert(`error: ${err.message}`);
   }
   alert("사용 가능한 이메일입니다.");
 }
