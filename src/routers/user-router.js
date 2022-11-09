@@ -204,12 +204,9 @@ userRouter.patch(
     const userId = req.currentUserId;
     const { password } = req.body;
 
-    const userInfoRequired = { userId };
-    const toUpdate = { password };
-
     const updatedUserInfo = await userService.setUserPassword(
-      userInfoRequired,
-      toUpdate
+      { userId },
+      { password }
     );
 
     res.status(200).json(updatedUserInfo);
