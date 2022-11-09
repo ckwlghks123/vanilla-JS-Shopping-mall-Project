@@ -1,4 +1,12 @@
 import * as Api from '/api.js';
+import {
+    insertLogoutLi,
+    insertMyPageLi,
+    insertAdminLi,
+    insertCategoryLi,
+    insertProductLi,
+    insertOrderLi,
+} from '../home/nav.js';
 
 const productNameInput = document.querySelector('#product-name');
 const productPriceInput = document.querySelector('#product-price');
@@ -227,6 +235,12 @@ function handleCreate(e) {
 }
 
 function addAllEvents() {
+    insertLogoutLi();
+    insertMyPageLi();
+    insertAdminLi();
+    insertCategoryLi();
+    insertProductLi();
+    insertOrderLi();
     productImgInput.addEventListener('change', handleImage);
     productCreateBtn.addEventListener('click', handleCreate);
     fileRestBtn.addEventListener('click', (e) => {

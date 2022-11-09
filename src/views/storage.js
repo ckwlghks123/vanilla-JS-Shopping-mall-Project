@@ -5,7 +5,7 @@ function getStorage(name, parse = true) {
       ? JSON.parse(localStorage.getItem(name))
       : localStorage.getItem(name);
   } catch (e) {
-    console.warn(e);
+    console.error("로컬스토리지 아이템을 가져오지 못했습니다.");
   }
   return item;
 }

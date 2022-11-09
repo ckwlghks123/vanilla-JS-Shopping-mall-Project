@@ -6,8 +6,7 @@
  */
 
 import * as Api from "../api.js";
-import * as Storage from "../../utils/storage.js";
-
+import * as Storage from "../storage.js";
 const $cartMain = document.querySelector(".cart-main");
 const $cartIn = document.querySelector(".cart-in");
 const $cartNone = document.querySelector(".cart-none");
@@ -17,7 +16,7 @@ const $list = document.querySelector(".product-list");
 const PORT = 3000;
 
 let timer;
-const token = Storage.get("token");
+const token = Storage.get("token", false);
 
 // 데이터가 비었을때 빈 장바구니 템플릿 생성하는 함수
 function emptyCart() {
@@ -142,6 +141,7 @@ async function memberCart(type) {
               })
             : Storage.set("cart", data);
         });
+
         break;
 
       case "decrease":
@@ -166,6 +166,7 @@ async function memberCart(type) {
               })
             : Storage.set("cart", data);
         });
+
         break;
 
       case "delete":
@@ -180,6 +181,7 @@ async function memberCart(type) {
               productId: id,
             })
           : Storage.set("cart", data);
+
         break;
 
       case "purchase-btn":
