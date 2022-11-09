@@ -19,11 +19,11 @@ viewsRouter.use("/categories", serveStatic("categories"));
 viewsRouter.use("/products", serveStatic("products"));
 viewsRouter.use("/menu", serveStatic("menu"));
 viewsRouter.use("/product/:id", serveStatic("productdetail"));
-viewsRouter.use("/admin/orders", serveStatic("orders"));
-// viewsRouter.use("/error", serveStatic("error"));
+viewsRouter.use("/adminorders", serveStatic("orders"));
+viewsRouter.use("/error", serveStatic("error"));
 
 // views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함
-// viewsRouter.use("/", serveStatic(""));
+viewsRouter.use("/", serveStatic(""));
 
 // views폴더 내의 ${resource} 폴더 내의 모든 파일을 웹에 띄우며,
 // 이 때 ${resource}.html 을 기본 파일로 설정함.
