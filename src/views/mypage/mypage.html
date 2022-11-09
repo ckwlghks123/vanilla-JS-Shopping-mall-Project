@@ -11,11 +11,6 @@
       sizes="16x16"
       href="/elice-rabbit-favicon.png"
     />
-    <!-- bulma css -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
     <!-- 폰트 어썸: 아이콘 -->
     <script
       defer
@@ -25,87 +20,171 @@
     <!-- 다음 주소 API -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="mypage.css" />
+    <link rel="stylesheet" href="../CSS/styles.css" />
     <script src="mypage.js" type="module" defer></script>
   </head>
   <body>
-    <p id="user-admin" style="display: none">관리자</p>
-    <div>
-      <label for="">이름</label>
-      <input
-        type="text"
-        id="user-name"
-        name="userName"
-        placeholder="유저이름"
-        style="width: 200px"
-      />
+    <!-- 헤더 -->
+    <nav role="navigation" aria-label="main navigation">
+      <div class="nav-frame">
+        <div class="nav-logo-box">
+          <!-- <img src="/elice-rabbit.png" width="30" height="30" /> -->
+          <a href="/">
+            <i class="fas fa-cat"></i>
+            <span class="">Pet Shop</span>
+          </a>
+        </div>
+
+        <div class="github-link">
+          <a
+            href="https://github.com/Elice-SW-Engineer-Project"
+            target="_blank"
+          >
+            <i class="fa-brands fa-github fa-lg"></i>
+            Github Organization
+          </a>
+        </div>
+
+        <div class="nav-link-box-frame">
+          <ul class="nav-link-box" id="navbar">
+            <li id="navbar__category" style="display: none">
+              <a href="#">카테고리 관리</a>
+            </li>
+            <li id="navbar__product" style="display: none">
+              <a href="#">상품 관리</a>
+            </li>
+            <li id="navbar__order" style="display: none">
+              <a href="#">주문 관리</a>
+            </li>
+            <li id="navbar__admin" style="display: none">
+              <a href="#">관리자</a>
+            </li>
+            <li id="navbar__mypage" style="display: none">
+              <a href="/mypage">마이페이지</a>
+            </li>
+            <li id="navbar__login"><a href="/login">로그인</a></li>
+            <li id="navbar__register"><a href="/register">회원가입</a></li>
+            <li>
+              <a href="cart" id="navbar__cart" aria-current="page">
+                <i class="fas fa-shopping-cart"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="div-container">
+      <p id="user-admin" style="display: none">관리자</p>
+      <div>
+        <label for="">이름</label>
+        <input
+          type="text"
+          id="user-name"
+          name="userName"
+          placeholder="유저이름"
+          style="width: 200px"
+        />
+      </div>
+      <div>
+        <label for="">이메일</label>
+        <input
+          type="text"
+          id="user-email"
+          name="userEmail"
+          placeholder="이메일"
+          readonly
+          style="width: 200px"
+        />
+      </div>
+      <div>
+        <label for="">현재 비밀번호</label>
+        <input
+          type="password"
+          id="user-current-password"
+          name="userCurrentPassword"
+          style="width: 200px"
+        />
+      </div>
+      <div>
+        <label for="">새 비밀번호</label>
+        <input
+          type="password"
+          id="user-new-password"
+          name="userNewPassword"
+          style="width: 200px"
+        />
+      </div>
+      <div>
+        <label for="">우편번호</label>
+        <input
+          type="number"
+          id="user-postcode"
+          name="userPostcode"
+          placeholder="06279"
+          style="width: 200px"
+        />
+        <input id="postCodeSearchButton" type="button" value="우편번호 찾기" />
+      </div>
+      <div>
+        <label for="">주소</label>
+        <input
+          type="text"
+          id="user-address"
+          name="userAddress"
+          placeholder="주소"
+          style="width: 200px"
+        />
+      </div>
+      <div>
+        <label for="">상세주소</label>
+        <input
+          type="text"
+          id="user-detail-address"
+          name="userDetailAddress"
+          placeholder="상세주소"
+          style="width: 200px"
+        />
+      </div>
+      <div>
+        <button id="user-info-edit-button">유저 정보 변경</button>
+      </div>
+      <button id="user-withdraw-button">회원탈퇴</button>
+      <button id="users-info-button" style="display: none">
+        유저정보 콘솔로 불러오기
+      </button>
     </div>
-    <div>
-      <label for="">이메일</label>
-      <input
-        type="text"
-        id="user-email"
-        name="userEmail"
-        placeholder="이메일"
-        readonly
-        style="width: 200px"
-      />
-    </div>
-    <div>
-      <label for="">현재 비밀번호</label>
-      <input
-        type="password"
-        id="user-current-password"
-        name="userCurrentPassword"
-        style="width: 200px"
-      />
-    </div>
-    <div>
-      <label for="">새 비밀번호</label>
-      <input
-        type="password"
-        id="user-new-password"
-        name="userNewPassword"
-        style="width: 200px"
-      />
-    </div>
-    <div>
-      <label for="">우편번호</label>
-      <input
-        type="number"
-        id="user-postcode"
-        name="userPostcode"
-        placeholder="06279"
-        style="width: 200px"
-      />
-      <input id="postCodeSearchButton" type="button" value="우편번호 찾기" />
-    </div>
-    <div>
-      <label for="">주소</label>
-      <input
-        type="text"
-        id="user-address"
-        name="userAddress"
-        placeholder="주소"
-        style="width: 200px"
-      />
-    </div>
-    <div>
-      <label for="">상세주소</label>
-      <input
-        type="text"
-        id="user-detail-address"
-        name="userDetailAddress"
-        placeholder="상세주소"
-        style="width: 200px"
-      />
-    </div>
-    <div>
-      <button id="user-info-edit-button">유저 정보 변경</button>
-    </div>
-    <button id="user-withdraw-button">회원탈퇴</button>
-    <button id="users-info-button" style="display: none">
-      유저정보 콘솔로 불러오기
-    </button>
+    <!-- Site footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-6 text-team-name">
+            <h3>🐰 무수면 토끼</h3>
+            <span>김동한</span>
+            <span>차지환</span>
+            <span>손병진</span>
+            <span>김채현</span>
+            <span>김상현</span>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-sm-6 col-xs-12 icon-parent">
+            <p class="copyright-text">엘리스 웹 서비스 팀프로젝트 팀 페이지</p>
+            <ul class="social-icons">
+              <li>
+                <a
+                  class="notion"
+                  href="https://www.notion.so/elice/e4a5fa484abe445898f5e39870e257be"
+                  target="_blank"
+                  ><i class="fa-solid fa-info"></i
+                ></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
