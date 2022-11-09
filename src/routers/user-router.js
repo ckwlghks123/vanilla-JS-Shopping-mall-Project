@@ -15,7 +15,15 @@ userRouter.post(
       );
     }
 
-    const { fullName, email, password, postCode, address, isAdmin } = req.body;
+    const {
+      fullName,
+      email,
+      password,
+      postCode,
+      address,
+      isAdmin,
+      loginMethod,
+    } = req.body;
 
     const newUser = await userService.addUser({
       fullName,
@@ -24,6 +32,7 @@ userRouter.post(
       postCode,
       address,
       isAdmin,
+      loginMethod,
     });
 
     res.status(201).json(newUser);
@@ -42,13 +51,14 @@ userRouter.post(
       );
     }
 
-    const { fullName, email, postCode, address } = req.body;
+    const { fullName, email, postCode, address, loginMethod } = req.body;
 
-    const newUser = await userService.addKakaoUser({
+    const newUser = await userService.addUser({
       fullName,
       email,
       postCode,
       address,
+      loginMethod,
     });
 
     res.status(201).json(newUser);
@@ -67,6 +77,26 @@ userRouter.post(
     const email = req.body.email;
     const password = req.body.password;
     const { token, user } = await userService.getUserToken({ email, password });
+    res.status(200).json({ userToken: token, user });
+  })
+);
+
+/**
+ * @author: 김상현
+ * @date: 2022-11-08
+ * @detail: 카카오로그인을 위한 로그인API
+ */
+userRouter.post(
+  "/login-kakao",
+  asyncHandler(async function (req, res, next) {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+
+    const email = req.body.email;
+    const { token, user } = await userService.getUserTokenForKakao({ email });
     res.status(200).json({ userToken: token, user });
   })
 );
@@ -151,6 +181,30 @@ userRouter.patch(
       userInfoRequired,
       toUpdate
     );
+
+    res.status(200).json(updatedUserInfo);
+  })
+);
+
+/**
+ * @author: 김상현
+ * @date: 2022-11-08
+ * @detail: 소셜유저의 비밀번호 설정을 위한 API
+ */
+userRouter.patch(
+  "/user/password",
+  loginRequired,
+  asyncHandler(async function (req, res, next) {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+
+    const userId = req.currentUserId;
+    const { password } = req.body;
+
+    const updatedUserInfo = await userService.setUser({ userId }, { password });
 
     res.status(200).json(updatedUserInfo);
   })

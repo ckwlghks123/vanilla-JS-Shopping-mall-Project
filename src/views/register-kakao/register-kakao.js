@@ -1,10 +1,9 @@
 /**
  * @author: 김상현
- * @date: 2022-11-06
+ * @date: 2022-11-08
  * @detail: 카카오를 통한 첫 로그인 시도 시 회원가입을 위한 추가 정보 입력 페이지
  */
 import * as Api from "/api.js";
-import { validateEmail } from "/useful-functions.js";
 
 // 요소(element), input 혹은 상수
 const fullNameInput = document.querySelector("#fullNameInput");
@@ -14,23 +13,9 @@ const submitButton = document.querySelector("#submitButton");
 const postCodeSearchButton = document.querySelector("#postCodeSearchButton");
 const detailAddressInput = document.querySelector("#detailAddressInput");
 
-isUserRedirect();
+// isUserRedirect();
 addAllElements();
 addAllEvents();
-
-// 가입 이력이 있는 카카오 로그인이면 바로 홈으로 리다이렉트
-async function isUserRedirect() {
-  try {
-    const email = localStorage.getItem("email");
-    const { isExist } = await Api.get(`/api/email/${email}`);
-    if (isExist) {
-      window.location.href = "/";
-    }
-  } catch (err) {
-    console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
-}
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {}
@@ -73,14 +58,21 @@ async function handleSubmit(e) {
   // 회원가입 api 요청
   try {
     const email = localStorage.getItem("email");
-    const data = { fullName, email, postCode, address };
+    let data = { fullName, email, postCode, address, loginMethod: "KAKAO" };
 
     await Api.post("/api/register-kakao", data);
 
-    alert(`정상적으로 회원가입되었습니다.`);
+    // 로그인 API를 거쳐 토큰을 받고 홈으로 이동
+    data = { email };
+    const { userToken, user } = await Api.post("/api/login-kakao", data);
+    const { isAdmin, loginMethod } = user;
 
-    // 로그인 페이지 이동
+    localStorage.setItem("token", userToken);
+    localStorage.setItem("isAdmin", isAdmin);
+    localStorage.setItem("loginMethod", loginMethod);
+
     window.location.href = "/";
+    alert(`정상적으로 회원가입되었습니다.`);
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);

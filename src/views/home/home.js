@@ -8,24 +8,24 @@
  * @date: 2022-11-05
  */
 
-import * as Api from '/api.js';
+import * as Api from "/api.js";
 import {
-    insertLogoutLi,
-    insertMyPageLi,
-    insertAdminLi,
-    insertCategoryLi,
-    insertProductLi,
-    insertOrderLi,
-} from './nav.js';
+  insertLogoutLi,
+  insertMyPageLi,
+  insertAdminLi,
+  insertCategoryLi,
+  insertProductLi,
+  insertOrderLi,
+} from "./nav.js";
 
 addAllElements();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
-    insertLogoutLi();
-    insertMyPageLi();
-    insertAdminLi();
-    insertCategoryLi();
-    insertProductLi();
-    insertOrderLi();
+  insertLogoutLi();
+  insertMyPageLi();
+  insertAdminLi();
+  insertCategoryLi();
+  insertProductLi();
+  insertOrderLi();
 }
