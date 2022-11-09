@@ -53,7 +53,7 @@ userRouter.post(
 
     const { fullName, email, postCode, address, loginMethod } = req.body;
 
-    const newUser = await userService.addKakaoUser({
+    const newUser = await userService.addUser({
       fullName,
       email,
       postCode,
@@ -204,10 +204,7 @@ userRouter.patch(
     const userId = req.currentUserId;
     const { password } = req.body;
 
-    const updatedUserInfo = await userService.setUserPassword(
-      { userId },
-      { password }
-    );
+    const updatedUserInfo = await userService.setUser({ userId }, { password });
 
     res.status(200).json(updatedUserInfo);
   })

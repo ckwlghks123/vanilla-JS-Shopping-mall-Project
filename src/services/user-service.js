@@ -30,15 +30,20 @@ class UserService {
       isAdmin,
       loginMethod,
     } = userInfo;
+
     const isExist = await this.userModel.checkByEmail(email);
     if (isExist) {
-      throw new Error(
-        "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
-      );
+      if (loginMethod === "NOMAL") {
+        throw new Error(
+          "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
+        );
+      } else {
+        // 기존 회원 이메일과 소셜 이메일이 같으면 프론트에서 바로 로그인
+        return;
+      }
     }
 
     const passwordField = await getPasswordField(loginMethod, password);
-    console.log(passwordField);
     const newUserInfo = {
       fullName,
       email,
@@ -50,31 +55,6 @@ class UserService {
     };
 
     const createdNewUser = await this.userModel.create(newUserInfo);
-    return createdNewUser;
-  }
-
-  // 카카오 회원가입 (수정자: 김상현)
-  async addKakaoUser(userInfo) {
-    const { email, fullName, postCode, address, loginMethod } = userInfo;
-
-    const user = await this.userModel.findByEmail(email);
-    if (user) {
-      throw new Error(
-        "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
-      );
-    }
-
-    const newUserInfo = {
-      fullName,
-      email,
-      postCode,
-      address,
-      loginMethod,
-    };
-
-    // db에 저장
-    const createdNewUser = await this.userModel.create(newUserInfo);
-
     return createdNewUser;
   }
 
@@ -175,43 +155,18 @@ class UserService {
       throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
     }
 
-    const correctPasswordHash = user.password;
-    const isPasswordCorrect = await bcrypt.compare(
-      currentPassword,
-      correctPasswordHash
-    );
-
-    if (!isPasswordCorrect) {
-      throw new Error(
-        "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
+    if (currentPassword) {
+      const correctPasswordHash = user.password;
+      const isPasswordCorrect = await bcrypt.compare(
+        currentPassword,
+        correctPasswordHash
       );
-    }
 
-    const { password } = toUpdate;
-
-    if (password) {
-      const newPasswordHash = await bcrypt.hash(password, 10);
-      toUpdate.password = newPasswordHash;
-    }
-
-    user = await this.userModel.update({
-      userId,
-      update: toUpdate,
-    });
-
-    return user;
-  }
-
-  /**
-   * @author: 김상현
-   * @date: 2022-11-08
-   * @detail: 소셜유저의 비밀번호 설정을 위한 userService
-   */
-  async setUserPassword(userInfoRequired, toUpdate) {
-    const { userId } = userInfoRequired;
-    let user = await this.userModel.findById(userId);
-    if (!user) {
-      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+      if (!isPasswordCorrect) {
+        throw new Error(
+          "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
+        );
+      }
     }
 
     const { password } = toUpdate;
