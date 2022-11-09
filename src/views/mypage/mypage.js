@@ -5,6 +5,14 @@
  */
 
 import * as Api from "/api.js";
+import {
+  insertLogoutLi,
+  insertMyPageLi,
+  insertAdminLi,
+  insertCategoryLi,
+  insertProductLi,
+  insertOrderLi,
+} from "./nav.js";
 
 const userAdmin = document.querySelector("#user-admin");
 const userName = document.querySelector("#user-name");
@@ -23,6 +31,13 @@ addAllElements();
 addAllEvents();
 
 async function addAllElements() {
+  insertLogoutLi();
+  insertMyPageLi();
+  insertAdminLi();
+  insertCategoryLi();
+  insertProductLi();
+  insertOrderLi();
+  // 위에까지 nav
   insertUserInfo();
 }
 
