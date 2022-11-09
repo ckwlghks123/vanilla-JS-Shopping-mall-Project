@@ -13,6 +13,7 @@ body {
     top: 0;
     left: 0;
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    z-index: 10;
 }
 
 .github-link {
