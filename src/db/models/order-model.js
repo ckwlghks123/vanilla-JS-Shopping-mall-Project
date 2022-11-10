@@ -29,7 +29,7 @@ export class OrderModel {
     ]);
 
     const totalPage = Math.ceil(total / perPage);
-    return { orders, page, perPage, totalPage };
+    return { orders, page, perPage, totalPage, totalCount: total };
   }
 
   async deleteById(orderId) {
