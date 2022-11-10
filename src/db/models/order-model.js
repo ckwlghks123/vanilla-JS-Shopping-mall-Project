@@ -19,11 +19,17 @@ export class OrderModel {
     return orders;
   }
 
-  async findByUserId(userId) {
-    const orders = await Order.find({ "user._id": userId }).sort({
-      createdAt: -1,
-    });
-    return orders;
+  async findByUserId(userId, page, perPage) {
+    const [total, orders] = await Promise.all([
+      Order.countDocuments({ "user._id": userId }),
+      Order.find({ "user._id": userId })
+        .skip(perPage * (page - 1))
+        .limit(perPage)
+        .sort({ createdAt: -1 }),
+    ]);
+
+    const totalPage = Math.ceil(total / perPage);
+    return { orders, page, perPage, totalPage };
   }
 
   async deleteById(orderId) {

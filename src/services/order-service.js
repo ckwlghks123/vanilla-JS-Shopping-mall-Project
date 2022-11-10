@@ -14,8 +14,8 @@ class OrderService {
     return orders;
   }
 
-  async getOrderlistByUserId(userId) {
-    const orders = await this.orderModel.findByUserId(userId);
+  async getOrderlistByUserId(userId, page, perPage) {
+    const orders = await this.orderModel.findByUserId(userId, page, perPage);
     return orders;
   }
 
