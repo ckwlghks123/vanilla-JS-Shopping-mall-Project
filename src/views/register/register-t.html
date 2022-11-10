@@ -22,21 +22,13 @@
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
-
+    <!-- 카카오 OAuth -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <!-- 다음 주소 API -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="../CSS/styles.css" />
-    <script src="login.js" type="module" defer></script>
-
-    <!-- 네이버 OAuth -->
-    <script
-      type="text/javascript"
-      src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
-      charset="utf-8"
-    ></script>
-    <script
-      type="text/javascript"
-      src="http://code.jquery.com/jquery-1.11.3.min.js"
-    ></script>
+    <script src="register.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -80,12 +72,8 @@
             <li id="navbar__mypage" style="display: none">
               <a href="/mypage">마이페이지</a>
             </li>
-            <li id="navbar__login">
-              <a href="/login">로그인</a>
-            </li>
-            <li id="navbar__register">
-              <a href="/register">회원가입</a>
-            </li>
+            <li id="navbar__login"><a href="/login">로그인</a></li>
+            <li id="navbar__register"><a href="/register">회원가입</a></li>
             <li>
               <a href="cart" id="navbar__cart" aria-current="page">
                 <i class="fas fa-shopping-cart"></i>
@@ -95,58 +83,116 @@
         </div>
       </div>
     </nav>
-
-    <section class="main-container">
-      <!-- 로그인 폼(Form) -->
-      <div class="login-form-container">
-        <form class="box login-form-box" id="loginForm">
-          <div class="logo-box">
-            <i class="fas fa-cat"></i>
-            <span class="">Pet Shop</span>
-          </div>
+    <div class="div-container">
+      <!-- 회원가입 폼(Form) -->
+      <div class="register-user-form-container">
+        <form class="box register-user-form-box" id="registerUserForm">
+          <p class="title is-5 has-text-primary">환영합니다!</p>
           <div class="field">
+            <label class="label" for="fullNameInput">이름</label>
             <div class="control">
               <input
-                class="loginInput"
+                class="input"
+                id="fullNameInput"
+                type="text"
+                placeholder="유재석"
+                autocomplete="on"
+              />
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="emailInput">이메일</label>
+            <div class="control">
+              <input
+                class="input"
                 id="emailInput"
                 type="email"
-                placeholder="아이디 또는 이메일을 입력해주세요."
+                placeholder="abc@example.com"
                 autocomplete="on"
+              />
+              <button id="emailCheck">이메일 중복검사</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="passwordInput">비밀번호</label>
+            <div class="control">
+              <input
+                class="input"
+                id="passwordInput"
+                type="password"
+                placeholder="********"
+                autocomplete="off"
               />
             </div>
           </div>
 
           <div class="field mb-5">
+            <label class="label" for="passwordConfirmInput"
+              >비밀번호 확인</label
+            >
             <div class="control">
               <input
-                class="loginInput"
-                id="passwordInput"
+                class="input"
+                id="passwordConfirmInput"
                 type="password"
-                placeholder="비밀번호를 입력해주세요."
-                autocomplete="on"
+                placeholder="********"
+                autocomplete="off"
               />
             </div>
           </div>
-          <div className="loginBtns">
-            <a class="mainSignInBtn" id="submitButton">로그인</a>
-            <a href="/register/" class="mainSignUpBtn" id="submitButton">
-              회원가입
-            </a>
-            <!-- 카카오 로그인을 위한 코드 -->
-            <div class="socialLoginButtonContainer">
-              <a id="kakaoLoginButton" class="loginBtn kakao"
-                ><img
-                  src="https://www.gb.go.kr/Main/Images/ko/member/certi_kakao_login.png"
-                  alt="카카오로그인"
-              /></a>
-              <!-- 네이버 로그인을 버튼 위치 -->
-              <div id="naver_id_login" class="loginBtn"></div>
+
+          <div class="field">
+            <label class="label" for="postCodeInput">우편번호</label>
+            <div class="control">
+              <input
+                class="input"
+                id="postCodeInput"
+                type="number"
+                placeholder="06279"
+                autocomplete="off"
+              />
+              <input
+                id="postCodeSearchButton"
+                type="button"
+                value="우편번호 찾기"
+              />
             </div>
           </div>
+
+          <div class="field">
+            <label class="label" for="addressInput">주소</label>
+            <div class="control">
+              <input
+                class="input"
+                id="addressInput"
+                type="text"
+                placeholder="서울시 강남구 도곡로78길 22"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="detailAddressInput">상세주소</label>
+            <div class="control">
+              <input
+                class="input"
+                id="detailAddressInput"
+                type="text"
+                placeholder="오일남 아파트 103동 1002호"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <button class="button is-primary is-fullwidth" id="submitButton">
+            회원가입하기
+          </button>
         </form>
       </div>
-    </section>
-
+    </div>
     <!-- Site footer -->
     <footer class="site-footer">
       <div class="container">
@@ -180,21 +226,5 @@
         </div>
       </div>
     </footer>
-
-    <!-- 카카오 로그인을 위한 script -->
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <!-- 네이버 로그인을 위한 script -->
-    <script type="text/javascript">
-      var naver_id_login = new naver_id_login(
-        "JcFN_8sJzeQtma1R9tY7",
-        "http://localhost:4000/register-social"
-      );
-      var state = naver_id_login.getUniqState();
-      naver_id_login.setButton("green", 3, 60);
-      naver_id_login.setDomain("http://localhost:4000");
-      naver_id_login.setState(state);
-      naver_id_login.init_naver_id_login();
-      localStorage.setItem("loginMethod", "NAVER");
-    </script>
   </body>
 </html>

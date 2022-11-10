@@ -39,9 +39,9 @@ userRouter.post(
   })
 );
 
-// 카카오로그인을 통한 회원가입을 위한 API (수정자: 김상현)
+// 소셜로그인을 통한 회원가입을 위한 API (수정자: 김상현)
 userRouter.post(
-  "/register-kakao",
+  "/register-social",
   asyncHandler(async function (req, res, next) {
     // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
@@ -84,10 +84,10 @@ userRouter.post(
 /**
  * @author: 김상현
  * @date: 2022-11-08
- * @detail: 카카오로그인을 위한 로그인API
+ * @detail: 소셜로그인을 위한 로그인API
  */
 userRouter.post(
-  "/login-kakao",
+  "/login-social",
   asyncHandler(async function (req, res, next) {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -96,7 +96,7 @@ userRouter.post(
     }
 
     const email = req.body.email;
-    const { token, user } = await userService.getUserTokenForKakao({ email });
+    const { token, user } = await userService.getUserTokenForSocial({ email });
     res.status(200).json({ userToken: token, user });
   })
 );
