@@ -9,6 +9,7 @@ import {
     productDetailRouter,
     orderRouter,
     orderlistRouter,
+    orderStateRouter,
     cartRouter,
 } from './routers';
 import { errorHandler } from './middlewares';
@@ -35,6 +36,7 @@ app.use('/api/categories', categoryRouter);
 app.use('/api/productdetail', productDetailRouter);
 app.use('/api/menu', menuRouter);
 app.use('/api/order', orderRouter);
+app.use('/api/orderstate', orderStateRouter);
 app.use('/api/orderlist', orderlistRouter);
 app.use('/api/cart', cartRouter);
 

@@ -29,7 +29,7 @@ export class OrderModel {
     ]);
 
     const totalPage = Math.ceil(total / perPage);
-    return { orders, page, perPage, totalPage };
+    return { orders, page, perPage, totalPage, totalCount: total };
   }
 
   async deleteById(orderId) {
@@ -39,7 +39,7 @@ export class OrderModel {
 
   async update(orderId, update) {
     const filter = { _id: orderId };
-    const option = { returnOriginal: false };
+    const option = { returnOriginal: false, runValidators: true };
     const updatedOrder = await Order.findOneAndUpdate(filter, update, option);
     return updatedOrder;
   }
