@@ -134,8 +134,11 @@ orderStateRouter.post(
       throw new Error("해당 주문은 더이상 배송 상태를 변경할 수 없습니다");
     }
 
-    if (!isAdmin && order.process !== OrderState.wait) {
-      throw new Error("배송 대기 상태일 때에만 수정 가능합니다");
+    if (
+      !isAdmin &&
+      (order.process !== OrderState.wait || process !== OrderState.cancel)
+    ) {
+      throw new Error("배송 대기 상태일 때에만 주문을 취소할 수 있습니다");
     }
 
     const updatedOrder = await orderService.setOrder(orderId, { process });

@@ -50,7 +50,7 @@ const OrderSchema = new Schema(
         OrderState.cancel,
       ],
       required: false,
-      default: "WAIT",
+      default: OrderState.wait,
     },
   },
   {
