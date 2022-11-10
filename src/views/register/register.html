@@ -72,8 +72,12 @@
             <li id="navbar__mypage" style="display: none">
               <a href="/mypage">마이페이지</a>
             </li>
-            <li id="navbar__login"><a href="/login">로그인</a></li>
-            <li id="navbar__register"><a href="/register">회원가입</a></li>
+            <li id="navbar__login">
+              <a href="/login">로그인</a>
+            </li>
+            <li id="navbar__register">
+              <a href="/register">회원가입</a>
+            </li>
             <li>
               <a href="cart" id="navbar__cart" aria-current="page">
                 <i class="fas fa-shopping-cart"></i>
@@ -83,115 +87,126 @@
         </div>
       </div>
     </nav>
-    <div class="div-container">
+    <div class="container">
       <!-- 회원가입 폼(Form) -->
-      <div class="register-user-form-container">
-        <form class="box register-user-form-box" id="registerUserForm">
-          <p class="title is-5 has-text-primary">환영합니다!</p>
-          <div class="field">
-            <label class="label" for="fullNameInput">이름</label>
-            <div class="control">
-              <input
-                class="input"
-                id="fullNameInput"
-                type="text"
-                placeholder="유재석"
-                autocomplete="on"
-              />
-            </div>
+      <form class="signUpForm" id="registerUserForm">
+        <div class="field">
+          <label class="signUpLabel" for="fullNameInput"
+            >이름 <span class="star">*</span></label
+          >
+          <div class="control">
+            <input
+              class="signUpInput"
+              id="fullNameInput"
+              type="text"
+              placeholder="이름"
+              autocomplete="on"
+            />
           </div>
+        </div>
 
-          <div class="field">
-            <label class="label" for="emailInput">이메일</label>
-            <div class="control">
-              <input
-                class="input"
-                id="emailInput"
-                type="email"
-                placeholder="abc@example.com"
-                autocomplete="on"
-              />
-              <button id="emailCheck">이메일 중복검사</button>
-            </div>
+        <div class="field">
+          <label class="signUpLabel" for="emailInput"
+            >이메일 <span class="star">*</span></label
+          >
+          <div class="inputContainer">
+            <input
+              class="signUpInput"
+              id="emailInput"
+              type="email"
+              placeholder="이메일 주소"
+              autocomplete="on"
+            />
+            <button id="emailCheck" class="checkBtn" type="button">
+              이메일 중복검사
+            </button>
           </div>
+        </div>
 
-          <div class="field">
-            <label class="label" for="passwordInput">비밀번호</label>
-            <div class="control">
-              <input
-                class="input"
-                id="passwordInput"
-                type="password"
-                placeholder="********"
-                autocomplete="off"
-              />
-            </div>
+        <div class="field">
+          <label class="signUpLabel" for="passwordInput"
+            >비밀번호 <span class="star">*</span></label
+          >
+          <div class="control">
+            <input
+              class="signUpInput"
+              id="passwordInput"
+              type="password"
+              placeholder="비밀번호"
+              autocomplete="off"
+            />
           </div>
+        </div>
 
-          <div class="field mb-5">
-            <label class="label" for="passwordConfirmInput"
-              >비밀번호 확인</label
-            >
-            <div class="control">
-              <input
-                class="input"
-                id="passwordConfirmInput"
-                type="password"
-                placeholder="********"
-                autocomplete="off"
-              />
-            </div>
+        <div class="field mb-5">
+          <label class="signUpLabel" for="passwordConfirmInput"
+            >비밀번호 확인 <span class="star">*</span></label
+          >
+          <div class="control">
+            <input
+              class="signUpInput"
+              id="passwordConfirmInput"
+              type="password"
+              placeholder="비밀번호 확인"
+              autocomplete="off"
+            />
           </div>
+        </div>
 
-          <div class="field">
-            <label class="label" for="postCodeInput">우편번호</label>
-            <div class="control">
-              <input
-                class="input"
-                id="postCodeInput"
-                type="number"
-                placeholder="06279"
-                autocomplete="off"
-              />
-              <input
-                id="postCodeSearchButton"
-                type="button"
-                value="우편번호 찾기"
-              />
-            </div>
+        <div class="field">
+          <label class="signUpLabel" for="postCodeInput"
+            >우편번호 <span class="star">*</span></label
+          >
+          <div class="inputContainer">
+            <input
+              class="signUpInput"
+              id="postCodeInput"
+              type="number"
+              placeholder="06279"
+              autocomplete="off"
+            />
+            <input
+              id="postCodeSearchButton"
+              class="checkBtn"
+              type="button"
+              value="우편번호 찾기"
+            />
           </div>
+        </div>
 
-          <div class="field">
-            <label class="label" for="addressInput">주소</label>
-            <div class="control">
-              <input
-                class="input"
-                id="addressInput"
-                type="text"
-                placeholder="서울시 강남구 도곡로78길 22"
-                autocomplete="off"
-              />
-            </div>
+        <div class="field">
+          <label class="signUpLabel" for="addressInput"
+            >주소 <span class="star">*</span></label
+          >
+          <div class="control">
+            <input
+              class="signUpInput"
+              id="addressInput"
+              type="text"
+              placeholder="서울시 강남구 도곡로78길 22"
+              autocomplete="off"
+            />
           </div>
+        </div>
 
-          <div class="field">
-            <label class="label" for="detailAddressInput">상세주소</label>
-            <div class="control">
-              <input
-                class="input"
-                id="detailAddressInput"
-                type="text"
-                placeholder="오일남 아파트 103동 1002호"
-                autocomplete="off"
-              />
-            </div>
+        <div class="field">
+          <label class="signUpLabel" for="detailAddressInput"
+            >상세주소
+            <span class="star">*</span>
+          </label>
+          <div class="control">
+            <input
+              class="signUpInput"
+              id="detailAddressInput"
+              type="text"
+              placeholder="오일남 아파트 103동 1002호"
+              autocomplete="off"
+            />
           </div>
+        </div>
 
-          <button class="button is-primary is-fullwidth" id="submitButton">
-            회원가입하기
-          </button>
-        </form>
-      </div>
+        <button class="signUpBtn" id="submitButton">동의하고 가입하기</button>
+      </form>
     </div>
     <!-- Site footer -->
     <footer class="site-footer">

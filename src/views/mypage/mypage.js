@@ -12,7 +12,7 @@ import {
   insertCategoryLi,
   insertProductLi,
   insertOrderLi,
-} from "./nav.js";
+} from "../home/nav.js";
 
 const userAdmin = document.querySelector("#user-admin");
 const userName = document.querySelector("#user-name");
