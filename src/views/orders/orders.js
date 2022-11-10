@@ -126,12 +126,7 @@ async function deleteOrderList(data) {
     const result = await Api.delete('/api/order', data);
 }
 
-class OrderState {
-  static wait = "WAIT";
-  static inprogress = "INPROGRESS";
-  static completed = "COMPLETED";
-  static cancel = "CANCEL";
-}
+
 //수정 기능
 async function changeOrderList(id,changeProcess){
   const process = changeProcess;
