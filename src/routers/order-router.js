@@ -2,6 +2,7 @@ import { Router } from "express";
 import { asyncHandler } from "../utils";
 import { orderService, cartService } from "../services";
 import { loginRequired, adminRequired } from "../middlewares";
+import { OrderState } from "../db/schemas/order-schema";
 
 const orderRouter = Router();
 const orderStateRouter = Router();
@@ -43,7 +44,7 @@ orderRouter.patch(
   asyncHandler(async function (req, res, next) {
     const { orderId } = req.params;
     const order = await orderService.getOrderById(orderId);
-    if (order.process !== "WAIT") {
+    if (order.process !== OrderState.wait) {
       throw new Error("주문 정보를 수정할 수 없는 상태입니다");
     }
 
@@ -126,11 +127,14 @@ orderStateRouter.post(
       isAdmin,
     } = req;
     const order = await orderService.getOrderById(orderId);
-    if (order.process === "COMPLETED" || order.process === "CANCEL") {
+    if (
+      order.process === OrderState.completed ||
+      order.process === OrderState.cancel
+    ) {
       throw new Error("해당 주문은 더이상 배송 상태를 변경할 수 없습니다");
     }
 
-    if (!isAdmin && order.process !== "WAIT") {
+    if (!isAdmin && order.process !== OrderState.wait) {
       throw new Error("배송 대기 상태일 때에만 수정 가능합니다");
     }
 

@@ -2,6 +2,13 @@ import { Schema } from "mongoose";
 import { ProductSchema } from "./product-schema";
 import { UserSchema } from "./user-schema";
 
+class OrderState {
+  static wait = "WAIT";
+  static inprogress = "INPROGRESS";
+  static completed = "COMPLETED";
+  static cancel = "CANCEL";
+}
+
 const OrderElementSchema = new Schema({
   product: ProductSchema,
   amount: {
@@ -36,7 +43,12 @@ const OrderSchema = new Schema(
     },
     process: {
       type: String,
-      enum: ["WAIT", "INPROGRESS", "COMPLETED", "CANCEL"],
+      enum: [
+        OrderState.wait,
+        OrderState.inprogress,
+        OrderState.completed,
+        OrderState.cancel,
+      ],
       required: false,
       default: "WAIT",
     },
@@ -47,4 +59,4 @@ const OrderSchema = new Schema(
   }
 );
 
-export { OrderSchema };
+export { OrderSchema, OrderState };
