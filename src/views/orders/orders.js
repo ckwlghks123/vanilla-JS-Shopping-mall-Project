@@ -1,4 +1,23 @@
 import * as Api from "/api.js";
+import {
+  insertLogoutLi,
+  insertMyPageLi,
+  insertAdminLi,
+  insertCategoryLi,
+  insertProductLi,
+  insertOrderLi,
+} from '../home/nav.js';
+
+addAllElements();
+async function addAllElements() {
+  insertLogoutLi();
+  insertMyPageLi();
+  insertAdminLi();
+  insertCategoryLi();
+  insertProductLi();
+  insertOrderLi();
+
+}
 
 //get
 //데이터 갯수 만큼 노드 복제
