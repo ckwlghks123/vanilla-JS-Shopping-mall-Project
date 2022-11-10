@@ -84,8 +84,16 @@ async function handleSubmit(e) {
 
     alert(`정상적으로 회원가입되었습니다.`);
 
-    // 로그인 페이지 이동
-    window.location.href = "/login";
+    // 회원가입 후 자동 로그인 진행
+    const loginData = { email, password };
+    const { userToken, user } = await Api.post("/api/login", loginData);
+    const { isAdmin, loginMethod } = user;
+
+    localStorage.setItem("token", userToken);
+    localStorage.setItem("isAdmin", isAdmin);
+    localStorage.setItem("loginMethod", loginMethod);
+
+    window.location.href = "/";
   } catch (err) {
     console.error(err.stack);
     alert(`error: ${err.message}`);
