@@ -32,46 +32,50 @@ const $kakao = document.querySelector("#kakao");
 const $orderInfo = document.querySelector(".order-info");
 
 function renderProductsList(products) {
-  products.forEach(({ amount, product, _id }) => {
-    const $li = document.createElement("li");
-    const $imgWrapper = document.createElement("div");
-    const $img = document.createElement("img");
-    const $info = document.createElement("div");
-    const $titleWrapper = document.createElement("div");
-    const $title = document.createElement("h3");
-    const $quantity = document.createElement("div");
-    const $priceWrapper = document.createElement("div");
-    const $price = document.createElement("strong");
-    const $productInner = document.createElement("div");
+  try {
+    products.forEach(({ amount, product, _id }) => {
+      const $li = document.createElement("li");
+      const $imgWrapper = document.createElement("div");
+      const $img = document.createElement("img");
+      const $info = document.createElement("div");
+      const $titleWrapper = document.createElement("div");
+      const $title = document.createElement("h3");
+      const $quantity = document.createElement("div");
+      const $priceWrapper = document.createElement("div");
+      const $price = document.createElement("strong");
+      const $productInner = document.createElement("div");
 
-    $li.classList.add("product-wrapper");
-    $imgWrapper.classList.add("product-img-wrapper");
-    $info.classList.add("product-info");
-    $titleWrapper.classList.add("product-capa-wrapper");
-    $title.classList.add("product-capa");
-    $quantity.classList.add("product-quantity");
-    $priceWrapper.classList.add("product-price-wrapper");
-    $price.classList.add("product-price");
+      $li.classList.add("product-wrapper");
+      $imgWrapper.classList.add("product-img-wrapper");
+      $info.classList.add("product-info");
+      $titleWrapper.classList.add("product-capa-wrapper");
+      $title.classList.add("product-capa");
+      $quantity.classList.add("product-quantity");
+      $priceWrapper.classList.add("product-price-wrapper");
+      $price.classList.add("product-price");
 
-    $img.setAttribute("src", product.images[0]);
-    $li.setAttribute("id", _id);
-    $quantity.innerText = `수량 : ${amount}개`;
-    $title.innerText = product.name;
-    $price.innerHTML = `${(
-      product.price * amount
-    ).toLocaleString()}<span>원</span>`;
+      $img.setAttribute("src", `../../../${product.images[0]}`);
+      $li.setAttribute("id", _id);
+      $quantity.innerText = `수량 : ${amount}개`;
+      $title.innerText = product.name;
+      $price.innerHTML = `${(
+        product.price * amount
+      ).toLocaleString()}<span>원</span>`;
 
-    $priceWrapper.appendChild($price);
-    $titleWrapper.appendChild($title);
-    $titleWrapper.appendChild($quantity);
-    $info.appendChild($titleWrapper);
-    $info.appendChild($priceWrapper);
-    $imgWrapper.appendChild($img);
-    $li.appendChild($productInner);
-    $productInner.appendChild($imgWrapper);
-    $productInner.appendChild($info);
-    $productsList.appendChild($li);
-  });
+      $priceWrapper.appendChild($price);
+      $titleWrapper.appendChild($title);
+      $titleWrapper.appendChild($quantity);
+      $info.appendChild($titleWrapper);
+      $info.appendChild($priceWrapper);
+      $imgWrapper.appendChild($img);
+      $li.appendChild($productInner);
+      $productInner.appendChild($imgWrapper);
+      $productInner.appendChild($info);
+      $productsList.appendChild($li);
+    });
+  } catch (e) {
+    alert(e.message);
+  }
 }
 
 function updateTotalPrice(price) {
@@ -92,10 +96,17 @@ function updateTotalPrice(price) {
 }
 
 function getTotalPrice(data) {
-  return data.reduce(
-    (price, { amount, product }) => price + amount * product.price,
-    0
-  );
+  let total;
+  try {
+    total = data.reduce(
+      (price, { amount, product }) => price + amount * product.price,
+      0
+    );
+  } catch (e) {
+    alert(e.message);
+  }
+
+  return total;
 }
 
 function makePopUp(x, y) {
@@ -215,10 +226,7 @@ function purchase(type, total, id) {
       urlencoded.append("tax_free_amount", "0");
       urlencoded.append("approval_url", `http://127.0.0.1:3000/order`);
       urlencoded.append("fail_url", "http://127.0.0.1:3000/order?result=fail");
-      urlencoded.append(
-        "cancel_url",
-        "http://127.0.0.1:3000/order?result=cancel"
-      );
+      urlencoded.append("cancel_url", "http://127.0.0.1:3000/order");
 
       const requestOptions = {
         method: "POST",

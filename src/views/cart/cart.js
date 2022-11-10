@@ -55,22 +55,24 @@ function renderProductsList(list) {
   const items = list
     .map(
       ({ product: { _id, name, price, images }, amount }) => `
-      <div class="product" id="${_id}">
-        <div class="product-section">
-          <img src="${images[0]}" alt="이미지" class="product-image" />
-          <div class="product-name">${name}</div>
-          <div class="product-stock">재고 있음</div>
-        </div>
-        <div class="product-amount">
-          <button class="decrease" ${amount === 1 && "disabled"}>-</button>
-          <div class="amount">${amount}</div>
-          <button class="increase">+</button>
-        </div>
-        <div class="product-total">${(price * amount).toLocaleString()}원</div>
-        <div class="section-button">
-          <button class="delete">삭제</button>
-        </div>
-      </div>`
+       <div class="product" id="${_id}">
+         <div class="product-section">
+           <img src="../../../${
+             images[0]
+           }" alt="이미지" class="product-image" />
+           <div class="product-name">${name}</div>
+           <div class="product-stock">재고 있음</div>
+         </div>
+         <div class="product-amount">
+           <button class="decrease" ${amount === 1 && "disabled"}>-</button>
+           <div class="amount">${amount}</div>
+           <button class="increase">+</button>
+         </div>
+         <div class="product-total">${(price * amount).toLocaleString()}원</div>
+         <div class="section-button">
+           <button class="delete">삭제</button>
+         </div>
+       </div>`
     )
     .join("");
   $list.innerHTML = items;
@@ -95,11 +97,12 @@ async function memberCart(type) {
         );
         Storage.clear("cart");
       }
-      return Api.get(`http://localhost:${PORT}`, "api/cart");
+      const data = await Api.get(`http://localhost:${PORT}`, "api/cart");
+      return data?.list;
     },
   };
 
-  let data = (await memType[type]())?.list;
+  let data = await memType[type]();
 
   if (!data) {
     emptyCart();
@@ -190,6 +193,9 @@ async function memberCart(type) {
           : window.location.replace("/login");
         break;
 
+      case "product-image":
+        location.replace(`/products/${id}`);
+
       default:
         return;
     }
@@ -209,6 +215,18 @@ function getData(data, id, num) {
 
 function getProductPrice(data, num) {
   return `${(data.product.price * num).toLocaleString()}원`;
+}
+
+function getStorage(name, parse = true) {
+  let item = null;
+  try {
+    item = parse
+      ? JSON.parse(localStorage.getItem(name))
+      : localStorage.getItem(name);
+  } catch (e) {
+    console.log(e);
+  }
+  return item;
 }
 
 token ? memberCart("mem") : memberCart("nonMem");
