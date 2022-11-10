@@ -123,12 +123,7 @@ function makePopUp(x, y) {
 }
 
 async function getData() {
-  let data = null;
-  try {
-    data = await Api.get("http://localhost:3000", "api/cart");
-  } catch (err) {
-    location.replace("/login");
-  }
+  let data = await Api.get("http://localhost:3000", "api/cart");
 
   renderProductsList(data.list);
 

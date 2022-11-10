@@ -19,8 +19,11 @@ const $orderData = document.querySelector(".order-data");
 const $menu = document.querySelector(".my-order-menu-list");
 
 async function getOrderInfoData(currentPage = 1, type) {
-  // let data = Api.get('/api',`orderlist/me?page=${currentPage}&perPage=5`)
-  data = await fetch("./test.json").then((res) => res.json());
+  let data = await Api.get(
+    "/api",
+    `orderlist/me?page=${currentPage}&perPage=5`
+  );
+  // data = await fetch("./test.json").then((res) => res.json());
   currentPage = data.page;
   console.log(data);
   if (data.orders.length > 0) {
@@ -40,7 +43,7 @@ function renderOrderList(
     COMPLETED: "배송 완료",
     CANCEL: "주문 취소",
   };
-
+  console.log(orders);
   $table.innerHTML = "";
 
   const orderHTML = orders
@@ -86,14 +89,18 @@ function renderOrderList(
             </p>
           </td>
           <td rowspan="${list.length}" align="center">
-            <button class="order-cancel" data-id="${_id}"}>주문 취소</button>
+            <button class="order-cancel" ${
+              process === "CANCEL" && "disabled"
+            } data-id="${_id}"}>${
+                process === "CANCEL" ? "취소 완료" : "주문 취소"
+              }</button>
           </td>
         </tr>`
             : `
         <tr>
           <td class="product-info" align="center">
             <div class="product-image-wrapper">
-              <img class="product-image" src="${images[0]}" alt="상품 이미지" />
+              <img class="product-image" src="../../../${images[0]}" alt="상품 이미지" />
             </div>
             <div class="product-name-wrapper">
               <p class="product-name">
@@ -253,16 +260,19 @@ $ul.addEventListener("click", (e) => {
   }
 });
 
-$table.addEventListener("click", (e) => {
+$table.addEventListener("click", async (e) => {
   e.preventDefault();
   const target = e.target;
   switch (target.className) {
     case "order-cancel":
       const id = target.dataset.id;
-      Api.patch("/api/order", id, { process: "CANCEL" });
+      const response = await Api.post(`/api/orderstate/${id}`, {
+        process: "CANCEL",
+      });
+
       getOrderInfoData(currentPage);
-      target.innerText = "취소 완료";
-      target.disabled = true;
+      // target.innerText = "취소 완료";
+      // target.disabled = true;
       break;
   }
 });

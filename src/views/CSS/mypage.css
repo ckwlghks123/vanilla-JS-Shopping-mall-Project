@@ -6,6 +6,10 @@
   display: flex;
 }
 
+#page-btn a {
+  color: black;
+}
+
 .hidden {
   display: none;
 }

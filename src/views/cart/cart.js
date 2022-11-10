@@ -5,8 +5,27 @@
  * @description 장바구니 데이터를 불러와 화면을 구성하는 파일입니다.
  */
 
+import {
+  insertLogoutLi,
+  insertMyPageLi,
+  insertAdminLi,
+  insertCategoryLi,
+  insertProductLi,
+  insertOrderLi,
+} from "../home/nav.js";
 import * as Api from "../api.js";
 import * as Storage from "../storage.js";
+
+addAllElements();
+async function addAllElements() {
+  insertLogoutLi();
+  insertMyPageLi();
+  insertAdminLi();
+  insertCategoryLi();
+  insertProductLi();
+  insertOrderLi();
+}
+
 const $cartMain = document.querySelector(".cart-main");
 const $cartIn = document.querySelector(".cart-in");
 const $cartNone = document.querySelector(".cart-none");
