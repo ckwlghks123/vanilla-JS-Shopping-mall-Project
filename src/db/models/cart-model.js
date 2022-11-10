@@ -91,6 +91,7 @@ export class CartModel {
       { _id: cartId },
       { returnDocument: "before" }
     )
+      .populate("user")
       .populate({
         path: "list",
         populate: {
