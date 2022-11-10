@@ -133,6 +133,11 @@ class UserService {
     }
 
     const correctPasswordHash = user.password;
+    if (!correctPasswordHash) {
+      throw new Error(
+        "비밀번호를 설정하지 않았습니다. 유저정보 변경을 통해 비밀번호를 설정해주세요."
+      );
+    }
     const isPasswordCorrect = await bcrypt.compare(
       currentPassword,
       correctPasswordHash

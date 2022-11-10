@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { asyncHandler } from "../utils";
-import { orderService, cartService, userService } from "../services";
+import { orderService, cartService } from "../services";
 import { loginRequired, adminRequired } from "../middlewares";
 
 const orderRouter = Router();
@@ -11,8 +11,7 @@ orderRouter.post(
   loginRequired,
   asyncHandler(async function (req, res, next) {
     const { cartId, receiver, phone, address, requirement } = req.body;
-    const { list } = await cartService.deleteCartById(cartId);
-    const user = await userService.getUser(req.currentUserId);
+    const { user, list } = await cartService.deleteCartById(cartId);
 
     const newOrder = await orderService.addOrder({
       user,
@@ -92,7 +91,13 @@ orderlistRouter.get(
   loginRequired,
   asyncHandler(async function (req, res, next) {
     const userId = req.currentUserId;
-    const orders = await orderService.getOrderlistByUserId(userId);
+    const page = Number(req.query.page || 1);
+    const perPage = Number(req.query.perPage || 10);
+    const orders = await orderService.getOrderlistByUserId(
+      userId,
+      page,
+      perPage
+    );
     res.status(201).json(orders);
   })
 );
@@ -102,8 +107,14 @@ orderlistRouter.get(
   loginRequired,
   adminRequired,
   asyncHandler(async function (req, res, next) {
-    let { userId } = req.params;
-    const orders = await orderService.getOrderlistByUserId(userId);
+    const { userId } = req.params;
+    const page = Number(req.query.page || 1);
+    const perPage = Number(req.query.perPage || 10);
+    const orders = await orderService.getOrderlistByUserId(
+      userId,
+      page,
+      perPage
+    );
     res.status(201).json(orders);
   })
 );

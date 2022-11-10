@@ -5,6 +5,14 @@
  */
 
 import * as Api from "/api.js";
+import {
+  insertLogoutLi,
+  insertMyPageLi,
+  insertAdminLi,
+  insertCategoryLi,
+  insertProductLi,
+  insertOrderLi,
+} from "./nav.js";
 
 const userAdmin = document.querySelector("#user-admin");
 const userName = document.querySelector("#user-name");
@@ -23,6 +31,13 @@ addAllElements();
 addAllEvents();
 
 async function addAllElements() {
+  insertLogoutLi();
+  insertMyPageLi();
+  insertAdminLi();
+  insertCategoryLi();
+  insertProductLi();
+  insertOrderLi();
+  // 위에까지 nav
   insertUserInfo();
 }
 
@@ -57,7 +72,7 @@ async function insertUserInfo() {
     insertUserPostCode(postCode);
   } catch (err) {
     console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+    alert(`error: ${err.message}`);
     // location.replace("/login");
   }
 }
@@ -135,6 +150,9 @@ async function editUserInfoHandler(e) {
       if (!password) {
         alert("소셜계정으로 유저정보를 변경하려면 비밀번호를 설정해야합니다.");
         const userInputPassword = prompt("비밀번호를 입력하세요.");
+        if (!userInputPassword) {
+          return;
+        }
         if (userInputPassword.length < 4) {
           return alert("비밀번호는 4글자 이상이어야 합니다.");
         }
@@ -148,9 +166,7 @@ async function editUserInfoHandler(e) {
       }
     } catch (err) {
       console.error(err.stack);
-      alert(
-        `문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`
-      );
+      alert(`error: ${err.message}`);
     }
   }
 
@@ -171,9 +187,7 @@ async function editUserInfoHandler(e) {
       alert("회원정보가 변경되었습니다.");
     } catch (err) {
       console.error(err.stack);
-      alert(
-        `문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`
-      );
+      alert(`error: ${err.message}`);
     }
   }
 }
@@ -192,9 +206,7 @@ async function withdrawUserHandler(e) {
       document.location.href = "/";
     } catch (err) {
       console.error(err.stack);
-      alert(
-        `문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`
-      );
+      alert(`error: ${err.message}`);
     }
   }
 }
@@ -207,6 +219,6 @@ async function loadUsersInfoHandler(e) {
     console.log(users);
   } catch (err) {
     console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+    alert(`error: ${err.message}`);
   }
 }
