@@ -14,7 +14,7 @@ const postCodeSearchButton = document.querySelector("#postCodeSearchButton");
 const detailAddressInput = document.querySelector("#detailAddressInput");
 
 // isUserRedirect();
-addAllElements();
+addAllElements(await redirectNaverLogin());
 addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -58,13 +58,20 @@ async function handleSubmit(e) {
   // 회원가입 api 요청
   try {
     const email = localStorage.getItem("email");
-    let data = { fullName, email, postCode, address, loginMethod: "KAKAO" };
+    const socialLoginMethod = localStorage.getItem("loginMethod");
+    let data = {
+      fullName,
+      email,
+      postCode,
+      address,
+      loginMethod: socialLoginMethod,
+    };
 
-    await Api.post("/api/register-kakao", data);
+    await Api.post("/api/register-social", data);
 
     // 로그인 API를 거쳐 토큰을 받고 홈으로 이동
     data = { email };
-    const { userToken, user } = await Api.post("/api/login-kakao", data);
+    const { userToken, user } = await Api.post("/api/login-social", data);
     const { isAdmin, loginMethod } = user;
 
     localStorage.setItem("token", userToken);
@@ -77,22 +84,6 @@ async function handleSubmit(e) {
     console.error(err.stack);
     alert(`error: ${err.message}`);
   }
-}
-
-async function handleEmailCheck(e) {
-  e.preventDefault();
-  try {
-    const email = emailInput.value;
-    const { isExist } = await Api.get(`/api/email/${email}`);
-    if (isExist) {
-      emailInput.value = "";
-      return alert("중복된 이메일입니다.");
-    }
-  } catch (err) {
-    console.error(err.stack);
-    alert(`error: ${err.message}`);
-  }
-  alert("사용 가능한 이메일입니다.");
 }
 
 function handleDaumPost(e) {
@@ -122,4 +113,30 @@ function handleDaumPost(e) {
     left: window.screen.width / 2 - width / 2,
     top: window.screen.height / 2 - height / 2,
   });
+}
+
+async function redirectNaverLogin() {
+  // 네이버 로그인이 이미 회원이면 로그인하고 홈으로
+  const loginMethod = localStorage.getItem("loginMethod");
+  const email = localStorage.getItem("email");
+  if (loginMethod === "NAVER") {
+    try {
+      const { isExist } = await Api.get(`/api/email/${email}`);
+      if (isExist) {
+        const data = { email };
+        const { userToken, user } = await Api.post("/api/login-social", data);
+        const { isAdmin, loginMethod } = user;
+
+        localStorage.setItem("token", userToken);
+        localStorage.setItem("isAdmin", isAdmin);
+        localStorage.setItem("loginMethod", loginMethod);
+
+        window.location.href = "/";
+        alert(`정상적으로 로그인되었습니다.`);
+      }
+    } catch (err) {
+      console.error(err.stack);
+      alert(`error: ${err.message}`);
+    }
+  }
 }

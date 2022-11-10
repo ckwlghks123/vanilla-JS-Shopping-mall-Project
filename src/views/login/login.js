@@ -64,20 +64,20 @@ async function handleKakaoLogin(e) {
   window.Kakao.Auth.login({
     scope: "profile_nickname, account_email",
     success: async function (authObj) {
-      localStorage.setItem("token", authObj.access_token);
+      localStorage.setItem("KakaoToken", authObj.access_token);
       window.Kakao.API.request({
         url: "/v2/user/me",
         success: async (res) => {
           const kakao_account = res.kakao_account;
           const email = kakao_account.email;
           localStorage.setItem("email", email);
-          // 이미 회원이면 홈으로, 회원가입이면 추가 입력페이지로 리다이렉트
+          // 이미 회원이면 로그인하고 홈으로, 회원가입이면 추가 입력페이지로 리다이렉트
           try {
             const { isExist } = await Api.get(`/api/email/${email}`);
             if (isExist) {
               const data = { email };
               const { userToken, user } = await Api.post(
-                "/api/login-kakao",
+                "/api/login-social",
                 data
               );
               const { isAdmin, loginMethod } = user;
@@ -89,7 +89,7 @@ async function handleKakaoLogin(e) {
               window.location.href = "/";
               alert(`정상적으로 로그인되었습니다.`);
             } else {
-              window.location.href = "/register-kakao";
+              window.location.href = "/register-social";
             }
           } catch (err) {
             console.error(err.stack);

@@ -8,8 +8,6 @@ const getPasswordField = async (loginMethod, password = "") => {
     case "NOMAL":
       const hashedPassword = await bcrypt.hash(password, 10);
       return { password: hashedPassword };
-    case "KAKAO":
-      return {};
     default:
       return {};
   }
@@ -92,9 +90,9 @@ class UserService {
    *
    * @author: 김상현
    * @date: 2022-11-08
-   * @detail: 카카오로그인을 위한 서비스 코드
+   * @detail: 소셜로그인을 위한 서비스 코드
    */
-  async getUserTokenForKakao(loginInfo) {
+  async getUserTokenForSocial(loginInfo) {
     const { email } = loginInfo;
     const user = await this.userModel.findByEmail(email);
     if (!user) {
