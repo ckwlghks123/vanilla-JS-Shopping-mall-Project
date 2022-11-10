@@ -12,11 +12,13 @@ import {
   insertCategoryLi,
   insertProductLi,
   insertOrderLi,
+  addAllEvents,
 } from "../home/nav.js";
 import * as Api from "../api.js";
 import * as Storage from "../storage.js";
 
 addAllElements();
+addAllEvents();
 async function addAllElements() {
   insertLogoutLi();
   insertMyPageLi();
@@ -122,6 +124,8 @@ async function memberCart(type) {
   };
 
   let data = await memType[type]();
+
+  console.log(data);
 
   if (!data) {
     emptyCart();
