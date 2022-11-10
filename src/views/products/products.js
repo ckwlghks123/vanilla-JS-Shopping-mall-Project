@@ -14,8 +14,8 @@ const productSelCtg = document.querySelector('#product-category');
 const productDesInput = document.querySelector('#product-description');
 const productImgInput = document.querySelector('#product-image');
 const productCreateBtn = document.querySelector('#product-create-btn');
-const fileRestBtn = document.querySelector('#file-reset-btn');
 const productLists = document.querySelector('#product-lists');
+const uploadName = document.querySelector('#upload-name');
 
 addAllEvents();
 loadCategory();
@@ -62,6 +62,7 @@ async function loadProduct() {
         }) => {
             const li = document.createElement('li');
             const form = document.createElement('form');
+            form.className = 'li-form';
             form.style.display = 'flex';
             form.style.flexDirection = 'column';
             form.style.width = '300px';
@@ -113,17 +114,39 @@ async function loadProduct() {
             const imgInputLabel = document.createElement('label');
             imgInputLabel.htmlFor = 'product-img';
             imgInputLabel.textContent =
-                '상품 사진 (사진 등록시 기존 사진은 삭제됩니다.\n사진을 등록하지 않을시 기존 사진으로 유지됩니다.';
+                '사진 등록시 기존 사진은 삭제됩니다.\n사진을 등록하지 않을시 기존 사진으로 유지됩니다.';
+
+            const liUploadName = document.createElement('input');
+            liUploadName.id = 'li-upload-name';
+            liUploadName.value = '첨부파일';
+            liUploadName.placeholder = '첨부파일';
+
+            const liProductLabel = document.createElement('label');
+            liProductLabel.id = 'li-product-image-label';
+            liProductLabel.htmlFor = 'li-product-image';
+            liProductLabel.innerHTML = '<span>추가</span>';
+
             const imgInput = document.createElement('input');
             imgInput.type = 'file';
+            imgInput.id = 'li-product-image';
             let productFile;
             imgInput.addEventListener('change', (e) => {
                 e.preventDefault();
 
+                const fileName = imgInput.value;
+                liUploadName.value = fileName;
+
                 productFile = e.target.files[0];
             });
 
+            const liFileBox = document.createElement('div');
+            liFileBox.id = 'li-file-box';
+            liFileBox.appendChild(liUploadName);
+            liFileBox.appendChild(liProductLabel);
+            liFileBox.appendChild(imgInput);
+
             const editBtn = document.createElement('button');
+            editBtn.className = 'edit-button';
             editBtn.textContent = '수정';
             editBtn.onclick = (e) => {
                 e.preventDefault();
@@ -163,6 +186,7 @@ async function loadProduct() {
             };
             const delBtn = document.createElement('button');
             delBtn.textContent = '삭제';
+            delBtn.className = 'del-button';
             delBtn.onclick = (e) => {
                 e.preventDefault();
 
@@ -186,7 +210,7 @@ async function loadProduct() {
             form.appendChild(desLabel);
             form.appendChild(desInput);
             form.appendChild(imgInputLabel);
-            form.appendChild(imgInput);
+            form.appendChild(liFileBox);
             form.appendChild(editBtn);
             form.appendChild(delBtn);
             li.appendChild(form);
@@ -243,8 +267,8 @@ function addAllEvents() {
     insertOrderLi();
     productImgInput.addEventListener('change', handleImage);
     productCreateBtn.addEventListener('click', handleCreate);
-    fileRestBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        productImgInput.value = '';
+    productImgInput.addEventListener('change', () => {
+        const fileName = productImgInput.value;
+        uploadName.value = fileName;
     });
 }

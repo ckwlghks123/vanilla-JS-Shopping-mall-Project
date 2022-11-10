@@ -30,6 +30,9 @@
 
                 <div class="nav-link-box-frame">
                     <ul class="nav-link-box" id="navbar">
+                        <li id="navbar__menu">
+                            <a href="#">메뉴</a>
+                        </li>
                         <li id="navbar__category" style="display: none">
                             <a href="#">카테고리 관리</a>
                         </li>
@@ -49,38 +52,48 @@
                         <li id="navbar__register"><a href="/register">회원가입</a></li>
                         <li>
                             <a href="cart" id="navbar__cart" aria-current="page">
-                                <span class="">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </span>
+                                <i class="fas fa-shopping-cart"></i>
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <div>
+        <div class="product-frame">
             <div id="productBox">
-                <form style="display: flex; flex-direction: column">
+                <form id="product-form">
                     <label>상품명</label>
-                    <input type="text" id="product-name" name="productName" style="width: 200px" />
+                    <input
+                        type="text"
+                        id="product-name"
+                        name="productName"
+                        placeholder="상품명을 입력하세요"
+                    />
                     <label>가격</label>
-                    <input type="number" id="product-price" name="price" style="width: 200px" />
+                    <input type="number" id="product-price" name="price" placeholder="가격을 입력하세요" />
                     <label>카테고리</label>
-                    <select id="product-category" style="width: 200px">
-                        <option value="none">Select Category</option>
+                    <select id="product-category">
+                        <option value="none">카테고리를 선택하세요</option>
                     </select>
                     <label>설명</label>
-                    <textarea id="product-description" name="description" style="width: 200px"></textarea>
-                    <label>파일</label>
-                    <input type="file" id="product-image" multiple />
-                    <button id="file-reset-btn" style="width: 200px">파일 초기화</button>
-                    <button id="product-create-btn" style="width: 200px">추가</button>
+                    <textarea
+                        id="product-description"
+                        name="description"
+                        placeholder="상품설명을 입력하세요"
+                    ></textarea>
+                    <div id="file-box">
+                        <input id="upload-name" value="첨부파일" placeholder="첨부파일" />
+                        <label id="product-image-label" for="product-image"><span>추가</span></label>
+                        <input type="file" id="product-image" />
+                    </div>
+                    <button id="product-create-btn">상품 생성</button>
                 </form>
             </div>
             <div>
                 <ul id="product-lists"></ul>
             </div>
         </div>
+        <!-- Site footer -->
         <footer class="site-footer">
             <div class="container">
                 <div class="row">
