@@ -54,6 +54,8 @@ const $detailAdress = document.querySelector("#detailed-address");
 const $postCode = document.querySelector("#postcode");
 const $kakao = document.querySelector("#kakao");
 const $orderInfo = document.querySelector(".order-info");
+const $postWrap = document.querySelector(".postcode-wrapper");
+const $postClose = document.querySelector("#postcode-close");
 
 function renderProductsList(products) {
   try {
@@ -142,9 +144,9 @@ function makePopUp(x, y) {
   $postCode.style.width = `${width}px`;
   $postCode.style.height = `${height}px`;
   $postCode.style.border = `${border}px solid black`;
-  $postCode.style.position = `absolute`;
-  $postCode.style.left = `${x - 10}px`;
-  $postCode.style.top = `${y - 50}px`;
+  $postWrap.style.position = `absolute`;
+  $postWrap.style.left = `${x - 10}px`;
+  $postWrap.style.top = `${y - 50}px`;
 }
 
 async function getData() {
@@ -193,6 +195,7 @@ $userAddress.addEventListener("click", (e) => {
       height: "100%",
     }).embed($postCode, {});
     $postCode.style.display = "block";
+    $postWrap.style.display = "block";
     makePopUp(x, y);
   }
 });
@@ -300,4 +303,9 @@ function getFormData(id) {
   return data;
 }
 
+$postClose.addEventListener("click", (e) => {
+  e.preventDefault();
+  const $close = document.querySelector(".postcode-wrapper");
+  $close.style.display = "none";
+});
 getData();

@@ -1,151 +1,156 @@
 .clicked {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 #page-btn {
-  display: flex;
+    display: flex;
 }
 
 #page-btn a {
-  color: black;
+    color: black;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
 .event-ignore {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 .user-info-container {
-  background-color: #e0ebef;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 45%;
-  border-radius: 12px;
-  margin: 0 auto;
+    background-color: #e0ebef;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    border-radius: 12px;
+    margin: 30px auto;
 }
 
 #user-admin {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .user-info-container > label {
-  display: block;
-  width: 295px;
-  font-size: 14px;
+    display: block;
+    width: 295px;
+    font-size: 14px;
 }
 
 .user-info__input {
-  height: 30px;
-  width: 300px;
-  margin: 10px 0;
-  border-radius: 6px;
-  border: none;
+    height: 30px;
+    width: 300px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: none;
 }
 
 .user-info__bottom-buttons {
-  display: flex;
-  width: 300px;
-  justify-content: space-between;
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
 }
 
 .postcodeBtn {
-  background-color: #ff7675;
-  border: none;
-  border-radius: 6px;
-  height: 30px;
-  color: #fff;
-  cursor: pointer;
+    background-color: #ff7675;
+    border: none;
+    border-radius: 6px;
+    height: 30px;
+    color: #fff;
+    cursor: pointer;
 }
 
 .user-info__bottom-buttons > button {
-  margin: 20px 0;
-  background-color: #ff7675;
-  border: none;
-  border-radius: 6px;
-  height: 40px;
-  width: 120px;
-  color: #fff;
-  cursor: pointer;
+    margin: 20px 0;
+    background-color: #ff7675;
+    border: none;
+    border-radius: 6px;
+    height: 40px;
+    width: 120px;
+    color: #fff;
+    cursor: pointer;
 }
 
 .client-order-info {
-  display: flex;
-  margin-top: 10px;
-  border-top: 2px solid var(--border-color);
-  padding-top: 30px;
-  margin-bottom: 40px;
+    display: flex;
+    margin-top: 10px;
+    border-top: 2px solid var(--border-color);
+    padding-top: 30px;
+    margin-bottom: 40px;
 }
 
 .client-order-info .my-shopping-title {
-  display: flex;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 24px;
-  margin-bottom: 15px;
-  padding-bottom: 20px;
-  border-bottom: 5px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 15px;
+    padding-bottom: 20px;
+    border-bottom: 5px solid var(--border-color);
 }
 
 .my-order-menu-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  height: 150px;
-  font-size: 20px;
-  font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    height: 150px;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 .active-new {
-  color: white;
-  background-color: #ff7675;
+    color: white;
+    background-color: #ff7675;
 }
 
 .my-order-menu-wrapper .event-ignore {
-  display: flex;
-  align-items: center;
-  height: 50px;
+    display: flex;
+    align-items: center;
+    height: 50px;
 }
-.my-order-menu-wrapper[data-type="getInfo"] {
-  background-color: none;
-  /* margin-bottom: 10px; */
+.my-order-menu-wrapper[data-type='getInfo'] {
+    background-color: none;
+    /* margin-bottom: 10px; */
 }
 
 .my-order-menu-wrapper:not(.active) {
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
 .my-order-menu-wrapper:not(.active):hover {
-  background-color: rgba(255, 118, 117, 0.4);
+    background-color: rgba(255, 118, 117, 0.4);
 }
 
 .my-order-menu-wrapper .active {
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
 .my-shopping {
-  width: 20%;
+    width: 20%;
 }
 
 .display-order-info {
-  margin-left: 3%;
-  padding-left: 2%;
-  padding-right: 2%;
-  width: 53vw;
+    margin-left: 3%;
+    padding-left: 2%;
+    padding-right: 2%;
+    width: 53vw;
 }
 
 .display-order-info {
-  border-right: 1px solid var(--border-color);
-  border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
 }
 
 .order-table {
-  width: 100%;
+    width: 100%;
+}
+
+.order-table th {
+    font-weight: bold;
+    font-size: 16px;
 }
