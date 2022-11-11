@@ -201,14 +201,14 @@ async function memberCart(type) {
 
       case "delete":
         $list.removeChild(parent);
-
-        data = data.filter((e) => e.product._id !== id);
-
+        const deleteId = parent.id;
+        data = data.filter((e) => e.product._id !== deleteId);
+        console.log(deleteId);
         totalPrice(data);
 
         token
           ? Api.delete(`http://localhost:${PORT}`, "api/cart", {
-              productId: id,
+              productId: deleteId,
             })
           : Storage.set("cart", data);
 
