@@ -121,12 +121,19 @@ async function memberCart(type) {
         }));
         await Promise.all(
           postBody.map(
-            async (e) => await Api.post(`http://localhost:${PORT}/api/cart`, e)
+            async (e) =>
+              await Api.post(
+                `${location.protocol}//${location.host}/api/cart`,
+                e
+              )
           )
         );
         Storage.clear("cart");
       }
-      const data = await Api.get(`http://localhost:${PORT}`, "api/cart");
+      const data = await Api.get(
+        `${location.protocol}//${location.host}`,
+        "api/cart"
+      );
       return data?.list;
     },
   };
@@ -170,7 +177,7 @@ async function memberCart(type) {
 
         debounce(() => {
           token
-            ? Api.post(`http://localhost:${PORT}/api/cart`, {
+            ? Api.post(`${location.protocol}//${location.host}/api/cart`, {
                 productId: id,
                 amount: numAdd,
               })
@@ -195,7 +202,7 @@ async function memberCart(type) {
 
         debounce(() => {
           token
-            ? Api.post(`http://localhost:${PORT}/api/cart`, {
+            ? Api.post(`${location.protocol}//${location.host}/api/cart`, {
                 productId: id,
                 amount: numSub,
               })
@@ -212,7 +219,7 @@ async function memberCart(type) {
         totalPrice(data);
 
         token
-          ? Api.delete(`http://localhost:${PORT}`, "api/cart", {
+          ? Api.delete(`${location.protocol}//${location.host}`, "api/cart", {
               productId: deleteId,
             })
           : Storage.set("cart", data);

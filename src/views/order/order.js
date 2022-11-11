@@ -34,7 +34,10 @@ const result = new URLSearchParams(location.search).get("result");
 
 if (pg_token) {
   console.log(pg_token);
-  Api.post(`http://localhost:${PORT}/api/order/register`, Storage.get("order"));
+  Api.post(
+    `${location.protocol}//${location.host}/api/order/register`,
+    Storage.get("order")
+  );
   Storage.clear("order");
   // window.location.replace("/order/result");
 } else if (result) {
@@ -145,7 +148,10 @@ function makePopUp(x, y) {
 }
 
 async function getData() {
-  let data = await Api.get(`http://localhost:3000`, "api/cart");
+  let data = await Api.get(
+    `${location.protocol}//${location.host}`,
+    "api/cart"
+  );
 
   renderProductsList(data.list);
 
@@ -220,7 +226,10 @@ function purchase(type, total, id) {
         },
         (res) => {
           if (res.success) {
-            Api.post(`http://localhost:3000/api/order/register`, formData);
+            Api.post(
+              `${location.protocol}//${location.host}/api/order/register`,
+              formData
+            );
             window.location.replace("/order/result");
           } else {
             alert("결제 실패");
@@ -241,9 +250,18 @@ function purchase(type, total, id) {
       urlencoded.append("quantity", "1");
       urlencoded.append("total_amount", "100");
       urlencoded.append("tax_free_amount", "0");
-      urlencoded.append("approval_url", `http://127.0.0.1:3000/order`);
-      urlencoded.append("fail_url", "http://127.0.0.1:3000/order?result=fail");
-      urlencoded.append("cancel_url", "http://127.0.0.1:3000/order");
+      urlencoded.append(
+        "approval_url",
+        `${location.protocol}//${location.host}/order`
+      );
+      urlencoded.append(
+        "fail_url",
+        `${location.protocol}//${location.host}/order?result=fail`
+      );
+      urlencoded.append(
+        "cancel_url",
+        `${location.protocol}//${location.host}/order`
+      );
 
       const requestOptions = {
         method: "POST",
