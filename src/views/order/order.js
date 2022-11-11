@@ -195,6 +195,7 @@ $userAddress.addEventListener("click", (e) => {
       height: "100%",
     }).embed($postCode, {});
     $postCode.style.display = "block";
+    $postWrap.style.display = "block";
     makePopUp(x, y);
   }
 });
