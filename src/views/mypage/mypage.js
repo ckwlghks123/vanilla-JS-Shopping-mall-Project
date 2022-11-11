@@ -25,7 +25,6 @@ const userDetailAddress = document.querySelector("#user-detail-address");
 const postCodeSearchButton = document.querySelector("#postCodeSearchButton");
 const userInfoEditButton = document.querySelector("#user-info-edit-button");
 const userWithdrawButton = document.querySelector("#user-withdraw-button");
-const usersInfoButton = document.querySelector("#users-info-button");
 
 addAllElements();
 addAllEvents();
@@ -45,7 +44,6 @@ function addAllEvents() {
   postCodeSearchButton.addEventListener("click", daumPostHandler);
   userInfoEditButton.addEventListener("click", editUserInfoHandler);
   userWithdrawButton.addEventListener("click", withdrawUserHandler);
-  usersInfoButton.addEventListener("click", loadUsersInfoHandler);
 }
 
 // 유저 정보(isAdmin, 이름, 이메일, 주소, 우편번호) 조회 및 화면에 표시
@@ -81,10 +79,8 @@ async function insertUserInfo() {
 function insertIsAdmin(isAdmin) {
   if (isAdmin) {
     userAdmin.style.removeProperty("display");
-    usersInfoButton.style.removeProperty("display");
   } else {
     userAdmin.style.display = "none";
-    usersInfoButton.style.display = "none";
   }
 }
 
@@ -208,17 +204,5 @@ async function withdrawUserHandler(e) {
       console.error(err.stack);
       alert(`error: ${err.message}`);
     }
-  }
-}
-
-// 관리자일때만 사용가능한 유저정보 콘솔로 불러오기
-// (adminRequired 미들웨어가 잘 작동하는지 테스트 하기 위함)
-async function loadUsersInfoHandler(e) {
-  try {
-    const users = await Api.get("", "api/userlist");
-    console.log(users);
-  } catch (err) {
-    console.error(err.stack);
-    alert(`error: ${err.message}`);
   }
 }
