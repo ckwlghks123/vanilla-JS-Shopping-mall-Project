@@ -21,7 +21,7 @@ async function addAllElements() {
 //get
 //데이터 갯수 만큼 노드 복제
 const testDiv = document.querySelector('#template');
-const [WAIT, INPROGRESS, COMPLETED] = ['WAIT', 'INPROGRESS', 'COMPLETED', 'CANCEL'];
+const [WAIT, INPROGRESS, COMPLETED, CANCEL] = ['WAIT', 'INPROGRESS', 'COMPLETED', 'CANCEL'];
 async function loadOrderList() {
     let idNum = 0;
 
@@ -60,8 +60,9 @@ async function loadOrderList() {
                 select.selected = true;
             }
         });
-        if (item.process !== COMPLETED || item.process !== CANCEL) {
-            //배송완료와 취소가 아니면 삭제버튼 끄기
+
+        if (item.process === WAIT || item.process === INPROGRESS) {
+            //배송완료 아니면 삭제버튼 지움
             document.querySelector('#deleteBtn').classList.remove('on');
         }
 
