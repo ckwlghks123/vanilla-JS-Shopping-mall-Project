@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>쇼핑-데모</title>
+    <title>로그인</title>
     <!-- 아이콘 -->
     <link
       rel="icon"
@@ -11,18 +11,12 @@
       sizes="16x16"
       href="/elice-rabbit-favicon.png"
     />
-    <!-- bulma css 관련 -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
     <!-- 폰트 어썸: 아이콘 -->
     <script
       defer
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
-
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="../CSS/styles.css" />
     <script src="login.js" type="module" defer></script>
@@ -187,11 +181,11 @@
     <script type="text/javascript">
       var naver_id_login = new naver_id_login(
         "JcFN_8sJzeQtma1R9tY7",
-        "http://localhost:4000/register-social"
+        "http://kdt-sw3-team10.elicecoding.com/register-social"
       );
       var state = naver_id_login.getUniqState();
       naver_id_login.setButton("green", 3, 60);
-      naver_id_login.setDomain("http://localhost:4000");
+      naver_id_login.setDomain("http://kdt-sw3-team10.elicecoding.com");
       naver_id_login.setState(state);
       naver_id_login.init_naver_id_login();
       localStorage.setItem("loginMethod", "NAVER");

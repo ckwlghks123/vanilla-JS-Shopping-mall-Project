@@ -1,41 +1,62 @@
 import * as Api from '/api.js';
+import {
+    insertLogoutLi,
+    insertMyPageLi,
+    insertAdminLi,
+    insertCategoryLi,
+    insertProductLi,
+    insertOrderLi,
+} from '../home/nav.js';
 
 const menu = document.querySelector('#menu');
-const productLists = document.querySelector('#products-Lists');
+const productBox = document.querySelector('.product-lists');
 
 addAllEvents();
 loadMenu();
 loadProducts();
 
 function makeProduct(productAry) {
-    productLists.innerHTML = '';
+    productBox.innerHTML = '';
 
     if (productAry.length > 0) {
         productAry.map(({ _id: id, images, name, price }) => {
-            const li = document.createElement('li');
             const div = document.createElement('div');
-            div.style.display = 'flex';
-            div.style.flexDirection = 'column';
-            div.style.cursor = 'pointer';
-            div.style.width = '150px';
+            div.className = 'product-item';
             div.onclick = () => {
                 window.location.href = `${location.protocol}//${location.host}/product/${id}`;
             };
 
             const img = document.createElement('img');
-            img.style.width = '150px';
-            img.style.height = '150px';
+            img.className = 'product-image';
             img.src = `../../../${images}`;
+
+            const deliveryText = document.createElement('span');
+            deliveryText.className = 'product-delivery';
+            deliveryText.textContent = '엘리스배송';
             const titleSpan = document.createElement('span');
-            titleSpan.textContent = `상품명: ${name}`;
-            const priceSpan = document.createElement('span');
-            priceSpan.textContent = `가격: ${price}`;
+            titleSpan.className = 'product-title';
+            titleSpan.textContent = name;
+
+            const priceDiv = document.createElement('div');
+            priceDiv.className = 'product-price';
+
+            const priceNumber = document.createElement('span');
+            priceNumber.className = 'price-number';
+            priceNumber.textContent = Number(price).toLocaleString('ko-KR');
+
+            const priceUnit = document.createElement('span');
+            priceUnit.className = 'price-unit';
+            priceUnit.textContent = '원';
+
+            priceNumber.appendChild(priceUnit);
+            priceDiv.appendChild(priceNumber);
 
             div.appendChild(img);
+            div.appendChild(deliveryText);
             div.appendChild(titleSpan);
-            div.appendChild(priceSpan);
-            li.appendChild(div);
-            productLists.appendChild(li);
+            div.appendChild(priceDiv);
+
+            productBox.appendChild(div);
         });
 
         return;
@@ -43,7 +64,7 @@ function makeProduct(productAry) {
 
     const li = document.createElement('li');
     li.textContent = '해당 카테고리에 상품이 없습니다.';
-    productLists.appendChild(li);
+    productBox.appendChild(li);
 }
 
 async function getProductFilter(id) {
@@ -61,22 +82,33 @@ async function loadMenu() {
     const li = document.createElement('li');
     li.textContent = `전체(${categories.length})`;
     li.style.cursor = 'pointer';
-    li.onclick = () => loadProducts();
+    li.className = 'active';
+    li.onclick = () => {
+        loadProducts();
+    };
     menu.appendChild(li);
 
     categories.map(({ _id: id, name }) => {
         const li = document.createElement('li');
         li.textContent = `${name}`;
         li.style.cursor = 'pointer';
+        li.className = 'non-active';
         li.onclick = (e) => {
             getProductFilter(id);
-            productLists.innerHTML = '';
+            productBox.innerHTML = '';
             const li = document.createElement('li');
             li.textContent = `${id}`;
-            productLists.appendChild(li);
+            productBox.appendChild(li);
         };
         menu.appendChild(li);
     });
 }
 
-function addAllEvents() {}
+function addAllEvents() {
+    insertLogoutLi();
+    insertMyPageLi();
+    insertAdminLi();
+    insertCategoryLi();
+    insertProductLi();
+    insertOrderLi();
+}
