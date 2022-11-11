@@ -53,6 +53,7 @@ function renderOrderList(
         0
       );
       const ship = total >= 30000 ? "무료" : "3,000원";
+      const O_id = _id;
       return list
         .map(({ amount, product: { name, images, price, _id } }, index) => {
           const productPrice = (amount * price).toLocaleString();
@@ -69,7 +70,9 @@ function renderOrderList(
           </td>
           <td class="product-info" align="center">
             <div class="product-image-wrapper">
-              <img class="product-image" src="${images[0]}" alt="상품 이미지" />
+              <img class="product-image" src="../../../${
+                images[0]
+              }" alt="상품 이미지" />
             </div>
             <div class="product-name-wrapper">
               <p class="product-name">
@@ -91,7 +94,7 @@ function renderOrderList(
           <td rowspan="${list.length}" align="center">
             <button class="order-cancel" ${
               process === "CANCEL" && "disabled"
-            } data-id="${_id}"}>${
+            } data-id="${O_id}"}>${
                 process === "CANCEL" ? "취소 완료" : "주문 취소"
               }</button>
           </td>
@@ -266,6 +269,7 @@ $table.addEventListener("click", async (e) => {
   switch (target.className) {
     case "order-cancel":
       const id = target.dataset.id;
+      console.log(target);
       const response = await Api.post(`/api/orderstate/${id}`, {
         process: "CANCEL",
       });

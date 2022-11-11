@@ -5,16 +5,38 @@
  * @description 장바구니 데이터를 불러와 주문자 정보를 입력하고 결제를 수행하는 파일입니다.
  */
 
+import {
+  insertLogoutLi,
+  insertMyPageLi,
+  insertAdminLi,
+  insertCategoryLi,
+  insertProductLi,
+  insertOrderLi,
+  addAllEvents,
+} from "../home/nav.js";
 import * as Api from "../api.js";
 import * as Storage from "../storage.js";
 
+addAllElements();
+addAllEvents();
+async function addAllElements() {
+  insertLogoutLi();
+  insertMyPageLi();
+  insertAdminLi();
+  insertCategoryLi();
+  insertProductLi();
+  insertOrderLi();
+}
+
+const PORT = 3000;
 const pg_token = new URLSearchParams(location.search).get("pg_token");
 const result = new URLSearchParams(location.search).get("result");
 
 if (pg_token) {
-  Api.post("/api/order/register", Storage.get("order"));
+  console.log(pg_token);
+  Api.post(`http://localhost:${PORT}/api/order/register`, Storage.get("order"));
   Storage.clear("order");
-  window.location.replace("/order/result");
+  // window.location.replace("/order/result");
 } else if (result) {
   Storage.clear("order");
 }
@@ -123,7 +145,7 @@ function makePopUp(x, y) {
 }
 
 async function getData() {
-  let data = await Api.get("http://localhost:3000", "api/cart");
+  let data = await Api.get(`http://localhost:3000`, "api/cart");
 
   renderProductsList(data.list);
 
@@ -188,8 +210,8 @@ function purchase(type, total, id) {
           pg: "inicis",
           pay_method: "card",
           merchant_uid: uid,
-          name: "결제테스트",
-          amount: 1, // total
+          name: "결제테스트2",
+          amount: 100, // total
           buyer_email: "test@test.com", // 구매자 이메일
           buyer_name: "엘리스", // 구매자 이름
           buyer_tel: "010-1111-1111", // 구매자 전화번호
@@ -198,7 +220,7 @@ function purchase(type, total, id) {
         },
         (res) => {
           if (res.success) {
-            Api.post("/api/order/register", formData);
+            Api.post(`http://localhost:3000/api/order/register`, formData);
             window.location.replace("/order/result");
           } else {
             alert("결제 실패");
