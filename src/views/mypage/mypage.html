@@ -22,6 +22,7 @@
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="../CSS/styles.css" />
     <script src="mypage.js" type="module" defer></script>
+    <script src="mypage2.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -160,6 +161,45 @@
         <button id="users-info-button" style="display: none">
           유저정보 콘솔로 불러오기
         </button>
+      </div>
+    </section>
+    <section>
+      <div class="my-shopping">
+        <div class="my-shopping-title-wrapper">
+          <h3 class="my-shopping-title">나의 쇼핑</h3>
+        </div>
+        <ul class="my-order-menu-list">
+          <li class="my-order-menu-wrapper active" data-type="getInfo">
+            <div class="event-ignore">
+              <div class="my-order-menu-title">주문 · 배송</div>
+              <div class="my-order-menu-icon-wrapper">
+                <img class="my-order-menu-icon" src="" alt="" />
+              </div>
+            </div>
+          </li>
+          <li class="my-order-menu-wrapper" data-type="changeInfo">
+            <div class="event-ignore">
+              <div class="my-order-menu-title">주문 수정</div>
+              <div class="my-order-menu-icon-wrapper">
+                <img class="my-order-menu-icon" src="" alt="" />
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="display-order-info">
+        <div class="display-order-title-wrapper">
+          <h2 class="display-order-title">나의 쇼핑</h2>
+        </div>
+        <div class="display">
+          <div class="no-data">
+            <span>주문 및 배송조회 가능한 내역이 없습니다.</span>
+          </div>
+          <div class="order-data hidden">
+            <table border="1" class="order-table"></table>
+            <ul id="page-btn"></ul>
+          </div>
+        </div>
       </div>
     </section>
     <!-- Site footer -->

@@ -59,6 +59,7 @@ export function loginLogoutHandler(event) {
       break;
     case "navbar__menu":
       document.location.href = "/menu";
+      break;
   }
 }
 

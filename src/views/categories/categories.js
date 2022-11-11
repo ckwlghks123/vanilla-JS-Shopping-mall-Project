@@ -1,4 +1,12 @@
 import * as Api from '/api.js';
+import {
+    insertLogoutLi,
+    insertMyPageLi,
+    insertAdminLi,
+    insertCategoryLi,
+    insertProductLi,
+    insertOrderLi,
+} from '../home/nav.js';
 
 const categoryAddBtn = document.querySelector('#category-add-btn');
 const categoryInput = document.querySelector('#category-name');
@@ -19,7 +27,7 @@ async function loadCategories() {
         li.textContent = categoryName;
 
         const delBtn = document.createElement('button');
-        delBtn.textContent = '삭제';
+        delBtn.textContent = '❌';
 
         delBtn.onclick = () => {
             if (confirm(`[${categoryName}] 해당 카테고리를 삭제하시겠습니까?`)) {
@@ -70,5 +78,11 @@ function handleCreate(e) {
 }
 
 function addAllEvents() {
+    insertLogoutLi();
+    insertMyPageLi();
+    insertAdminLi();
+    insertCategoryLi();
+    insertProductLi();
+    insertOrderLi();
     categoryAddBtn.addEventListener('click', handleCreate);
 }

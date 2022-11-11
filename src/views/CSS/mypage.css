@@ -1,0 +1,19 @@
+.clicked {
+  text-decoration: underline;
+}
+
+#page-btn {
+  display: flex;
+}
+
+#page-btn a {
+  color: black;
+}
+
+.hidden {
+  display: none;
+}
+
+.event-ignore {
+  pointer-events: none;
+}
