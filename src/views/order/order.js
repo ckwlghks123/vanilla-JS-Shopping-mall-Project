@@ -69,6 +69,7 @@ function renderProductsList(products) {
       const $price = document.createElement("strong");
       const $productInner = document.createElement("div");
 
+      $productInner.classList.add("product-inner-box");
       $li.classList.add("product-wrapper");
       $imgWrapper.classList.add("product-img-wrapper");
       $info.classList.add("product-info");
@@ -77,7 +78,6 @@ function renderProductsList(products) {
       $quantity.classList.add("product-quantity");
       $priceWrapper.classList.add("product-price-wrapper");
       $price.classList.add("product-price");
-      $productInner.classList.add("product-inner-box");
 
       $img.setAttribute("src", `../../../${product.images[0]}`);
       $li.setAttribute("id", _id);
