@@ -52,14 +52,17 @@ async function loadProduct() {
     const products = await Api.get('/api/products');
 
     products.map(
-        ({
-            _id: productId,
-            name,
-            price,
-            description,
-            images,
-            category: { _id: ctgId, name: categoryName },
-        }) => {
+        (
+            {
+                _id: productId,
+                name,
+                price,
+                description,
+                images,
+                category: { _id: ctgId, name: categoryName },
+            },
+            idx
+        ) => {
             const li = document.createElement('li');
             const form = document.createElement('form');
             form.className = 'li-form';
@@ -120,22 +123,23 @@ async function loadProduct() {
             liUploadName.id = 'li-upload-name';
             liUploadName.value = '첨부파일';
             liUploadName.placeholder = '첨부파일';
+            liUploadName.dataset.idx = idx;
 
             const liProductLabel = document.createElement('label');
             liProductLabel.id = 'li-product-image-label';
-            liProductLabel.htmlFor = 'li-product-image';
+            liProductLabel.htmlFor = `li-product-image${idx.toString()}`;
+            liProductLabel.className = 'li-product-image-label';
             liProductLabel.innerHTML = '<span>추가</span>';
 
             const imgInput = document.createElement('input');
             imgInput.type = 'file';
-            imgInput.id = 'li-product-image';
+            imgInput.id = `li-product-image${idx.toString()}`;
+            imgInput.className = 'li-product-image';
             let productFile;
             imgInput.addEventListener('change', (e) => {
                 e.preventDefault();
-
                 const fileName = imgInput.value;
                 liUploadName.value = fileName;
-
                 productFile = e.target.files[0];
             });
 
