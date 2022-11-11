@@ -1,3 +1,9 @@
+:root {
+  /* color */
+  --cart-none-color: #808080;
+  --border-color: rgba(128, 128, 128, 0.2);
+}
+
 .main-content {
   min-height: 57.4vh;
   padding: 30px 70px;
@@ -7,7 +13,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
-  border-bottom: 2px solid rgba(128, 128, 128, 0.3);
+  border-bottom: 2px solid var(--border-color);
   height: 50px;
 }
 
@@ -44,15 +50,119 @@
 
 .cart-none span {
   font-size: 28px;
-  color: #808080;
+  color: var(--cart-none-color);
 }
 
 .cart-none span.cart-image {
   width: 150px;
-  fill: #808080;
+  fill: var(--cart-none-color);
 }
+
 .cart-in {
-  /* border-top: 2px solid rgba(128, 128, 128, 0.3); */
+  padding: 0 11vw;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.product-list {
+  min-width: 1200px;
+}
+
+.product {
+  display: flex;
+  border-top: 1px solid var(--border-color);
+}
+
+.product > :last-child {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.product-section {
+  border-right: 1px solid var(--border-color);
+  padding: 10px;
+  display: flex;
+  width: 50%;
+}
+
+.product-section img {
+  margin: 10px;
+  width: 100px;
+  height: 100px;
+  border-radius: 15px;
+}
+
+.product-section .product-description {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  font-size: 18px;
+  padding: 15px;
+}
+
+.product-name {
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+
+.product-stock {
+  font-size: 15px;
+  color: #00a000;
+  font-weight: 300;
+}
+
+.product-amount {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  border-right: 1px solid var(--border-color);
+}
+
+.product-amount > div {
+  display: flex;
+  border-radius: 4px;
+  border: 2px solid var(--border-color);
+}
+
+.product-amount .amount,
+.product-amount button {
+  width: 30px;
+  height: 30px;
+}
+
+.product-amount .amount {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 2px solid var(--border-color);
+  border-left: 2px solid var(--border-color);
+}
+
+.product-amount button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  border-radius: 50%;
+  transition: background-color 10ms cubic-bezier(0.4, 0, 0.2, 1) 10ms;
+}
+
+.product-amount button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.product-total {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  font-weight: bold;
+}
+
+.section-button {
+  flex-grow: 1;
 }
 
 .hidden {

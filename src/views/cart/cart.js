@@ -78,18 +78,22 @@ function renderProductsList(list) {
       ({ product: { _id, name, price, images }, amount }) => `
        <div class="product" id="${_id}">
          <div class="product-section">
-           <img src="../../../${
-             images[0]
-           }" alt="이미지" class="product-image" />
-           <div class="product-name">${name}</div>
-           <div class="product-stock">재고 있음</div>
+           <img src="${images[0]}" alt="이미지" class="product-image" />
+           <div class="product-description">
+              <div class="product-name">${name}</div>
+              <div class="product-stock">재고 있음</div>
+           </div>
          </div>
          <div class="product-amount">
-           <button class="decrease" ${amount === 1 && "disabled"}>-</button>
-           <div class="amount">${amount}</div>
-           <button class="increase">+</button>
+           <div>
+             <button class="decrease" ${amount === 1 && "disabled"}>-</button>
+             <div class="amount">${amount}</div>
+             <button class="increase">+</button>
+           </div>
          </div>
-         <div class="product-total">${(price * amount).toLocaleString()}원</div>
+         <div class="product-total">${(
+           price * amount
+         ).toLocaleString()}<span>원</span></div>
          <div class="section-button">
            <button class="delete">삭제</button>
          </div>
@@ -139,9 +143,9 @@ async function memberCart(type) {
 
   $cartMain.addEventListener("click", ({ target }) => {
     const parent = target.parentNode.parentNode;
-    const id = parent.id;
+    const id = parent.parentNode.id;
     const decrease = target.parentNode.querySelector(".decrease");
-    const $productTotal = parent.querySelector(".product-total");
+    const $productTotal = parent.parentNode.querySelector(".product-total");
     const productData = data.find((e) => e.product._id === id);
 
     switch (target.className) {
