@@ -190,6 +190,7 @@ $userAddress.addEventListener("click", (e) => {
       },
       onclose: () => {
         $postCode.style.display = "none";
+        $postWrap.style.display = "none";
       },
       width: "100%",
       height: "100%",
