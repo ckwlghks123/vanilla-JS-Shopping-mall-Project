@@ -80,87 +80,74 @@
     <section class="main-container">
       <div class="user-info-container">
         <p id="user-admin" style="display: none">관리자</p>
+        <label for="">이름</label>
+        <input
+          type="text"
+          id="user-name"
+          name="userName"
+          placeholder="유저이름"
+          class="user-info__input"
+        />
+        <label for="">이메일</label>
+        <input
+          type="text"
+          id="user-email"
+          name="userEmail"
+          placeholder="이메일"
+          readonly
+          class="user-info__input"
+        />
+        <label for="">현재 비밀번호</label>
+        <input
+          type="password"
+          id="user-current-password"
+          name="userCurrentPassword"
+          class="user-info__input"
+        />
+        <label for="">새 비밀번호</label>
+        <input
+          type="password"
+          id="user-new-password"
+          name="userNewPassword"
+          class="user-info__input"
+        />
+        <label for="">우편번호</label>
         <div>
-          <label for="">이름</label>
-          <input
-            type="text"
-            id="user-name"
-            name="userName"
-            placeholder="유저이름"
-            style="width: 200px"
-          />
-        </div>
-        <div>
-          <label for="">이메일</label>
-          <input
-            type="text"
-            id="user-email"
-            name="userEmail"
-            placeholder="이메일"
-            readonly
-            style="width: 200px"
-          />
-        </div>
-        <div>
-          <label for="">현재 비밀번호</label>
-          <input
-            type="password"
-            id="user-current-password"
-            name="userCurrentPassword"
-            style="width: 200px"
-          />
-        </div>
-        <div>
-          <label for="">새 비밀번호</label>
-          <input
-            type="password"
-            id="user-new-password"
-            name="userNewPassword"
-            style="width: 200px"
-          />
-        </div>
-        <div>
-          <label for="">우편번호</label>
           <input
             type="number"
             id="user-postcode"
             name="userPostcode"
             placeholder="06279"
+            class="user-info__input"
             style="width: 200px"
           />
           <input
             id="postCodeSearchButton"
             type="button"
             value="우편번호 찾기"
+            class="postcodeBtn"
           />
         </div>
-        <div>
-          <label for="">주소</label>
-          <input
-            type="text"
-            id="user-address"
-            name="userAddress"
-            placeholder="주소"
-            style="width: 200px"
-          />
-        </div>
-        <div>
-          <label for="">상세주소</label>
-          <input
-            type="text"
-            id="user-detail-address"
-            name="userDetailAddress"
-            placeholder="상세주소"
-            style="width: 200px"
-          />
-        </div>
-        <div>
+        <label for="">주소</label>
+        <input
+          type="text"
+          id="user-address"
+          name="userAddress"
+          placeholder="주소"
+          class="user-info__input"
+        />
+        <label for="">상세주소</label>
+        <input
+          type="text"
+          id="user-detail-address"
+          name="userDetailAddress"
+          placeholder="상세주소"
+          class="user-info__input"
+        />
+        <div class="user-info__bottom-buttons">
           <button id="user-info-edit-button">유저 정보 변경</button>
+          <button id="user-withdraw-button">회원탈퇴</button>
         </div>
-        <button id="user-withdraw-button">회원탈퇴</button>
-        <button id="users-info-button" style="display: none">
-          유저정보 콘솔로 불러오기
-        </button>
       </div>
     </section>
     <section>
