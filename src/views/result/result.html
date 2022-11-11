@@ -4,14 +4,15 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/CSS/styles.css" />
         <!-- 아이콘 -->
         <link rel="icon" type="image/png" sizes="16x16" href="/no-sleep-rabbit-favicon.png" />
         <!-- 폰트 어썸: 아이콘 -->
         <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
         <!-- 다음 주소 API -->
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script src="result.js" type="module" defer></script>
         <title>결제완료</title>
-        <link rel="stylesheet" href="../CSS/styles.css" />
     </head>
     <body>
         <!-- 헤더 -->
@@ -63,23 +64,14 @@
                 </div>
             </div>
         </nav>
-
         <div class="resultbox">
             <div class="notice">
                 <div class="noticeimg"></div>
-                <div class="noticetext">결제가 완료되었습니다</div>
+                <div class="noticetext">주문이 완료되었습니다 ✋</div>
             </div>
-            <div class="info">
-                <div>결제 상품</div>
-                <div class="item product">ㅇㅇㅇㅇ</div>
-                <div>결제 금액</div>
-                <div class="item price">ㅇㅇㅇㅇ</div>
-                <div>배송지</div>
-                <div class="item address">ㅇㅇㅇㅇ</div>
-            </div>
-            <div class="checkBtn"><button>확인</button></div>
-        </div>
 
+            <div class="checkBtn"><button>홈으로</button></div>
+        </div>
         <!-- Site footer -->
         <footer class="site-footer">
             <div class="container">
@@ -105,7 +97,7 @@
                                     class="notion"
                                     href="https://www.notion.so/elice/e4a5fa484abe445898f5e39870e257be"
                                     target="_blank"
-                                    ><i class="fa-solid fa-notice"></i
+                                    ><i class="fa-solid fa-info"></i
                                 ></a>
                             </li>
                         </ul>
