@@ -241,7 +241,7 @@ function pagenation(page, perPage, totalPage, totalCount) {
 $ul.addEventListener("click", (e) => {
   e.preventDefault();
   const target = e.target;
-  const $active = document.querySelector(".active");
+  const $active = document.querySelector(".active-new");
   const type = $active.dataset.type;
   if (target.dataset.page) {
     getOrderInfoData(target.dataset.page, type);
@@ -282,12 +282,12 @@ $table.addEventListener("click", async (e) => {
 });
 
 $menu.addEventListener("click", ({ target }) => {
-  if (!target.classList.contains("active")) {
+  if (!target.classList.contains("active-new")) {
     if (target.tagName === "LI") {
-      const $active = $menu.querySelector(".active");
+      const $active = $menu.querySelector(".active-new");
       console.log($active);
-      $active.classList.remove("active");
-      target.classList.add("active");
+      $active.classList.remove("active-new");
+      target.classList.add("active-new");
       getOrderInfoData(1, target.dataset.type);
     }
   }
