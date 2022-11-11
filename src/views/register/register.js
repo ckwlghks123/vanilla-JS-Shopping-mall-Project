@@ -102,12 +102,12 @@ async function handleSubmit(e) {
 
 async function handleEmailCheck(e) {
   e.preventDefault();
+  const email = emailInput.value;
   const isEmailValid = validateEmail(email);
   if (!isEmailValid) {
     return alert("이메일 형식이 맞지 않습니다.");
   }
   try {
-    const email = emailInput.value;
     const { isExist } = await Api.get(`/api/email/${email}`);
     if (isExist) {
       emailInput.value = "";

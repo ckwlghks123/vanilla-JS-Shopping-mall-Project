@@ -1,16 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta
-      charset="utf-8"
-    />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1"
-    />
-    <title>
-      쇼핑-데모
-    </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>쇼핑-데모</title>
     <!-- 아이콘 -->
     <link
       rel="icon"
@@ -44,160 +37,61 @@
     <!-- 다음 주소 API -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- 커스텀 css, js -->
-    <link
-      rel="stylesheet"
-      href="../CSS/styles.css"
-    />
-    <link
-      rel="stylesheet"
-      href="../CSS/register-social.css"
-    />
-    <script
-      src="register-social.js"
-      type="module"
-      defer
-    ></script>
+    <link rel="stylesheet" href="../CSS/styles.css" />
+    <link rel="stylesheet" href="../CSS/register-social.css" />
+    <script src="register-social.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
-    <nav
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <div
-        class="nav-frame"
-      >
-        <div
-          class="nav-logo-box"
-        >
+    <nav role="navigation" aria-label="main navigation">
+      <div class="nav-frame">
+        <div class="nav-logo-box">
           <!-- <img src="/elice-rabbit.png" width="30" height="30" /> -->
-          <a
-            href="/"
-          >
-            <i
-              class="fas fa-cat"
-            ></i>
-            <span
-              class=""
-              >Pet
-              Shop</span
-            >
+          <a href="/">
+            <i class="fas fa-cat"></i>
+            <span class="">Pet Shop</span>
           </a>
         </div>
 
-        <div
-          class="github-link"
-        >
+        <div class="github-link">
           <a
             href="https://github.com/Elice-SW-Engineer-Project"
             target="_blank"
           >
-            <i
-              class="fa-brands fa-github fa-lg"
-            ></i>
-            Github
-            Organization
+            <i class="fa-brands fa-github fa-lg"></i>
+            Github Organization
           </a>
         </div>
 
-        <div
-          class="nav-link-box-frame"
-        >
-          <ul
-            class="nav-link-box"
-            id="navbar"
-          >
-            <li
-              id="navbar__menu"
-            >
-              <a
-                href="#"
-                >메뉴</a
-              >
+        <div class="nav-link-box-frame">
+          <ul class="nav-link-box" id="navbar">
+            <li id="navbar__menu">
+              <a href="#">메뉴</a>
             </li>
-            <li
-              id="navbar__category"
-              style="
-                display: none;
-              "
-            >
-              <a
-                href="#"
-                >카테고리
-                관리</a
-              >
+            <li id="navbar__category" style="display: none">
+              <a href="#">카테고리 관리</a>
             </li>
-            <li
-              id="navbar__product"
-              style="
-                display: none;
-              "
-            >
-              <a
-                href="#"
-                >상품
-                관리</a
-              >
+            <li id="navbar__product" style="display: none">
+              <a href="#">상품 관리</a>
             </li>
-            <li
-              id="navbar__order"
-              style="
-                display: none;
-              "
-            >
-              <a
-                href="#"
-                >주문
-                관리</a
-              >
+            <li id="navbar__order" style="display: none">
+              <a href="#">주문 관리</a>
             </li>
-            <li
-              id="navbar__admin"
-              style="
-                display: none;
-              "
-            >
-              <a
-                href="#"
-                >관리자</a
-              >
+            <li id="navbar__admin" style="display: none">
+              <a href="#">관리자</a>
             </li>
-            <li
-              id="navbar__mypage"
-              style="
-                display: none;
-              "
-            >
-              <a
-                href="/mypage"
-                >마이페이지</a
-              >
+            <li id="navbar__mypage" style="display: none">
+              <a href="/mypage">마이페이지</a>
             </li>
-            <li
-              id="navbar__login"
-            >
-              <a
-                href="/login"
-                >로그인</a
-              >
+            <li id="navbar__login">
+              <a href="/login">로그인</a>
             </li>
-            <li
-              id="navbar__register"
-            >
-              <a
-                href="/register"
-                >회원가입</a
-              >
+            <li id="navbar__register">
+              <a href="/register">회원가입</a>
             </li>
             <li>
-              <a
-                href="cart"
-                id="navbar__cart"
-                aria-current="page"
-              >
-                <i
-                  class="fas fa-shopping-cart"
-                ></i>
+              <a href="cart" id="navbar__cart" aria-current="page">
+                <i class="fas fa-shopping-cart"></i>
               </a>
             </li>
           </ul>
@@ -205,28 +99,13 @@
       </div>
     </nav>
     <!-- 회원가입 폼(Form) -->
-    <div
-      class="container"
-    >
-      <form
-        class="signUpForm"
-        id="registerUserForm"
-      >
-        <div
-          class="field"
-        >
-          <label
-            class="signUpLabel"
-            for="fullNameInput"
-            >이름
-            <span
-              class="star"
-              >*</span
-            ></label
+    <div class="container">
+      <form class="signUpForm" id="registerUserForm">
+        <div class="field">
+          <label class="signUpLabel" for="fullNameInput"
+            >이름 <span class="star">*</span></label
           >
-          <div
-            class="control"
-          >
+          <div class="control">
             <input
               class="signUpInput"
               id="fullNameInput"
@@ -237,21 +116,11 @@
           </div>
         </div>
 
-        <div
-          class="field"
-        >
-          <label
-            class="signUpLabel"
-            for="postCodeInput"
-            >우편번호
-            <span
-              class="star"
-              >*</span
-            ></label
+        <div class="field">
+          <label class="signUpLabel" for="postCodeInput"
+            >우편번호 <span class="star">*</span></label
           >
-          <div
-            class="inputContainer"
-          >
+          <div class="inputContainer">
             <input
               class="signUpInput"
               id="postCodeInput"
@@ -268,21 +137,11 @@
           </div>
         </div>
 
-        <div
-          class="field"
-        >
-          <label
-            class="signUpLabel"
-            for="addressInput"
-            >주소
-            <span
-              class="star"
-              >*</span
-            ></label
+        <div class="field">
+          <label class="signUpLabel" for="addressInput"
+            >주소 <span class="star">*</span></label
           >
-          <div
-            class="control"
-          >
+          <div class="control">
             <input
               class="signUpInput"
               id="addressInput"
@@ -293,21 +152,12 @@
           </div>
         </div>
 
-        <div
-          class="field"
-        >
-          <label
-            class="signUpLabel"
-            for="detailAddressInput"
+        <div class="field">
+          <label class="signUpLabel" for="detailAddressInput"
             >상세주소
-            <span
-              class="star"
-              >*</span
-            >
+            <span class="star">*</span>
           </label>
-          <div
-            class="control"
-          >
+          <div class="control">
             <input
               class="signUpInput"
               id="detailAddressInput"
@@ -318,111 +168,52 @@
           </div>
         </div>
 
-        <button
-          class="signUpBtn"
-          id="submitButton"
-        >
-          회원가입하기
-        </button>
+        <button class="signUpBtn" id="submitButton">회원가입하기</button>
       </form>
     </div>
     <!-- 네이버 로그인을 위한 코드 -->
-    <script
-      type="text/javascript"
-    >
-      var naver_id_login =
-        new naver_id_login(
-          'JcFN_8sJzeQtma1R9tY7',
-          'http://localhost:4000/register-social'
-        )
+    <script type="text/javascript">
+      var naver_id_login = new naver_id_login(
+        "JcFN_8sJzeQtma1R9tY7",
+        "http://localhost:4000/register-social"
+      );
       localStorage.setItem(
-        'NaverToken',
-        naver_id_login
-          .oauthParams
-          .access_token
-      )
+        "NaverToken",
+        naver_id_login.oauthParams.access_token
+      );
       // 네이버 사용자 프로필 조회
-      naver_id_login.get_naver_userprofile(
-        'naverSignInCallback()'
-      )
+      naver_id_login.get_naver_userprofile("naverSignInCallback()");
       // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
       function naverSignInCallback() {
-        const email =
-          naver_id_login.getProfileData(
-            'email'
-          )
-        localStorage.setItem(
-          'email',
-          email
-        )
+        const email = naver_id_login.getProfileData("email");
+        localStorage.setItem("email", email);
       }
     </script>
-    <footer
-      class="site-footer"
-    >
-      <div
-        class="container"
-      >
-        <div
-          class="row"
-        >
-          <div
-            class="col-sm-12 col-md-6 text-team-name"
-          >
-            <h3>
-              🐰
-              무수면
-              토끼
-            </h3>
-            <span
-              >김동한</span
-            >
-            <span
-              >차지환</span
-            >
-            <span
-              >손병진</span
-            >
-            <span
-              >김채현</span
-            >
-            <span
-              >김상현</span
-            >
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-6 text-team-name">
+            <h3>🐰 무수면 토끼</h3>
+            <span>김동한</span>
+            <span>차지환</span>
+            <span>손병진</span>
+            <span>김채현</span>
+            <span>김상현</span>
           </div>
         </div>
         <hr />
       </div>
-      <div
-        class="container"
-      >
-        <div
-          class="row"
-        >
-          <div
-            class="col-md-8 col-sm-6 col-xs-12 icon-parent"
-          >
-            <p
-              class="copyright-text"
-            >
-              엘리스
-              웹
-              서비스
-              팀프로젝트
-              팀
-              페이지
-            </p>
-            <ul
-              class="social-icons"
-            >
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-sm-6 col-xs-12 icon-parent">
+            <p class="copyright-text">엘리스 웹 서비스 팀프로젝트 팀 페이지</p>
+            <ul class="social-icons">
               <li>
                 <a
                   class="notion"
                   href="https://www.notion.so/elice/e4a5fa484abe445898f5e39870e257be"
                   target="_blank"
-                  ><i
-                    class="fa-solid fa-info"
-                  ></i
+                  ><i class="fa-solid fa-info"></i
                 ></a>
               </li>
             </ul>
