@@ -181,7 +181,18 @@
     border-radius: 6px;
 }
 
-#li-product-image {
+.li-upload-name {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 78%;
+    color: #999999;
+    border-radius: 6px;
+}
+
+.li-product-image {
     position: absolute;
     width: 0;
     height: 0;
@@ -190,7 +201,7 @@
     border: 0;
 }
 
-#li-product-image-label {
+.li-product-image-label {
     width: 50px;
     height: 50px;
     display: inline-block;
