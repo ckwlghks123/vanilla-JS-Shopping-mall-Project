@@ -140,8 +140,6 @@ async function memberCart(type) {
 
   let data = await memType[type]();
 
-  console.log(data);
-
   if (!data) {
     emptyCart();
     return;
@@ -213,9 +211,11 @@ async function memberCart(type) {
 
       case "delete":
         $list.removeChild(parent);
+
         const deleteId = parent.id;
+
         data = data.filter((e) => e.product._id !== deleteId);
-        console.log(deleteId);
+
         totalPrice(data);
 
         token

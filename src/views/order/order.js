@@ -33,7 +33,6 @@ const pg_token = new URLSearchParams(location.search).get("pg_token");
 const result = new URLSearchParams(location.search).get("result");
 
 if (pg_token) {
-  console.log(pg_token);
   Api.post(
     `${location.protocol}//${location.host}/api/order/register`,
     Storage.get("order")
@@ -78,6 +77,7 @@ function renderProductsList(products) {
       $quantity.classList.add("product-quantity");
       $priceWrapper.classList.add("product-price-wrapper");
       $price.classList.add("product-price");
+      $productInner.classList.add("product-inner-box");
 
       $img.setAttribute("src", `../../../${product.images[0]}`);
       $li.setAttribute("id", _id);

@@ -283,10 +283,13 @@ $table.addEventListener("click", async (e) => {
 
 $menu.addEventListener("click", ({ target }) => {
   if (!target.classList.contains("active")) {
-    const $active = $menu.querySelector(".active");
-    $active.classList.remove("active");
-    target.classList.add("active");
-    getOrderInfoData(1, target.dataset.type);
+    if (target.tagName === "LI") {
+      const $active = $menu.querySelector(".active");
+      console.log($active);
+      $active.classList.remove("active");
+      target.classList.add("active");
+      getOrderInfoData(1, target.dataset.type);
+    }
   }
 });
 

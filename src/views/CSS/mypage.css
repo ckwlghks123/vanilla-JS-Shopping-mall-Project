@@ -71,3 +71,7 @@
   color: #fff;
   cursor: pointer;
 }
+
+.client-order-info {
+  display: flex;
+}
