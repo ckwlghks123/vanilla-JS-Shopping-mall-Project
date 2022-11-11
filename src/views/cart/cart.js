@@ -33,6 +33,7 @@ const $cartIn = document.querySelector(".cart-in");
 const $cartNone = document.querySelector(".cart-none");
 const $title = document.querySelector(".title");
 const $list = document.querySelector(".product-list");
+const $footTotal = document.querySelector(".foot-total");
 
 const PORT = 3000;
 
@@ -42,6 +43,7 @@ const token = Storage.get("token", false);
 // 데이터가 비었을때 빈 장바구니 템플릿 생성하는 함수
 function emptyCart() {
   $cartIn.classList.add("hidden");
+  $footTotal.classList.add("hidden");
   $cartNone.classList.remove("hidden");
 }
 
@@ -78,7 +80,9 @@ function renderProductsList(list) {
       ({ product: { _id, name, price, images }, amount }) => `
        <div class="product" id="${_id}">
          <div class="product-section">
-           <img src="${images[0]}" alt="이미지" class="product-image" />
+           <img src="../../../${
+             images[0]
+           }" alt="이미지" class="product-image" />
            <div class="product-description">
               <div class="product-name">${name}</div>
               <div class="product-stock">재고 있음</div>
@@ -140,6 +144,7 @@ async function memberCart(type) {
   totalPrice(data);
 
   $cartIn.classList.remove("hidden");
+  $footTotal.classList.remove("hidden");
 
   $cartMain.addEventListener("click", ({ target }) => {
     const parent = target.parentNode.parentNode;
