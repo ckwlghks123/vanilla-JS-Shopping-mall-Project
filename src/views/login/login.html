@@ -1,139 +1,177 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>쇼핑-데모</title>
-    <!-- 아이콘 -->
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/elice-rabbit-favicon.png"
-    />
-    <!-- bulma css 관련 -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
-    <!-- 폰트 어썸: 아이콘 -->
-    <script
-      defer
-      src="https://kit.fontawesome.com/9daa42bcef.js"
-      crossorigin="anonymous"
-    ></script>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>로그인</title>
+        <!-- 아이콘 -->
+        <link rel="icon" type="image/png" sizes="16x16" href="/no-sleep-rabbit-favicon.png" />
+        <!-- 폰트 어썸: 아이콘 -->
+        <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+        <!-- 커스텀 css, js -->
+        <link rel="stylesheet" href="../CSS/styles.css" />
+        <script src="login.js" type="module" defer></script>
 
-    <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="login.css" />
-    <script src="login.js" type="module" defer></script>
-  </head>
-  <body>
-    <!-- 헤더 -->
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="container mt-3">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="/">
-            <img src="/elice-rabbit.png" width="30" height="30" />
-            <span class="has-text-link">쇼핑-데모</span>
-          </a>
+        <!-- 네이버 OAuth -->
+        <script
+            type="text/javascript"
+            src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+            charset="utf-8"
+        ></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    </head>
+    <body>
+        <!-- 헤더 -->
+        <nav role="navigation" aria-label="main navigation">
+            <div class="nav-frame">
+                <div class="nav-logo-box">
+                    <!-- <img src="/elice-rabbit.png" width="30" height="30" /> -->
+                    <a href="/">
+                        <i class="fas fa-cat"></i>
+                        <span class="">Pet Shop</span>
+                    </a>
+                </div>
 
-          <a
-            role="button"
-            class="navbar-burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
+                <div class="github-link">
+                    <a href="https://github.com/Elice-SW-Engineer-Project" target="_blank">
+                        <i class="fa-brands fa-github fa-lg"></i>
+                        Github Organization
+                    </a>
+                </div>
 
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
-            <ul id="navbar">
-              <li><a href="/register">회원가입</a></li>
-              <li>
-                <a href="/cart" aria-current="page">
-                  <span class="icon">
-                    <i class="fas fa-cart-shopping"></i>
-                  </span>
-                  <span>카트</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </nav>
+                <div class="nav-link-box-frame">
+                    <ul class="nav-link-box" id="navbar">
+                        <li id="navbar__menu">
+                            <a href="#">메뉴</a>
+                        </li>
+                        <li id="navbar__category" style="display: none">
+                            <a href="#">카테고리 관리</a>
+                        </li>
+                        <li id="navbar__product" style="display: none">
+                            <a href="#">상품 관리</a>
+                        </li>
+                        <li id="navbar__order" style="display: none">
+                            <a href="#">주문 관리</a>
+                        </li>
+                        <li id="navbar__admin" style="display: none">
+                            <a href="#">관리자</a>
+                        </li>
+                        <li id="navbar__mypage" style="display: none">
+                            <a href="/mypage">마이페이지</a>
+                        </li>
+                        <li id="navbar__login">
+                            <a href="/login">로그인</a>
+                        </li>
+                        <li id="navbar__register">
+                            <a href="/register">회원가입</a>
+                        </li>
+                        <li>
+                            <a href="cart" id="navbar__cart" aria-current="page">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
-    <!-- 로그인 폼(Form) -->
-    <div class="login-form-container">
-      <form class="box login-form-box" id="loginForm">
-        <p class="title is-5 has-text-info">어서오세요!</p>
-        <div class="field">
-          <label class="label" for="emailInput">이메일</label>
-          <div class="control">
-            <input
-              class="input"
-              id="emailInput"
-              type="email"
-              placeholder="abc@example.com"
-              autocomplete="on"
-            />
-          </div>
-        </div>
+        <section class="main-container">
+            <!-- 로그인 폼(Form) -->
+            <div class="login-form-container">
+                <form class="box login-form-box" id="loginForm">
+                    <div class="logo-box">
+                        <i class="fas fa-cat"></i>
+                        <span class="">Pet Shop</span>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <input
+                                class="loginInput"
+                                id="emailInput"
+                                type="email"
+                                placeholder="아이디 또는 이메일을 입력해주세요."
+                                autocomplete="on"
+                            />
+                        </div>
+                    </div>
 
-        <div class="field mb-5">
-          <label class="label" for="passwordInput">비밀번호</label>
-          <div class="control">
-            <input
-              class="input"
-              id="passwordInput"
-              type="password"
-              placeholder="********"
-              autocomplete="on"
-            />
-          </div>
-        </div>
+                    <div class="field mb-5">
+                        <div class="control">
+                            <input
+                                class="loginInput"
+                                id="passwordInput"
+                                type="password"
+                                placeholder="비밀번호를 입력해주세요."
+                                autocomplete="on"
+                            />
+                        </div>
+                    </div>
+                    <div className="loginBtns">
+                        <a class="mainSignInBtn" id="submitButton">로그인</a>
+                        <a href="/register/" class="mainSignUpBtn" id="submitButton"> 회원가입 </a>
+                        <!-- 카카오 로그인을 위한 코드 -->
+                        <div class="socialLoginButtonContainer">
+                            <a id="kakaoLoginButton" class="loginBtn kakao"
+                                ><img
+                                    src="https://www.gb.go.kr/Main/Images/ko/member/certi_kakao_login.png"
+                                    alt="카카오로그인"
+                            /></a>
+                            <!-- 네이버 로그인을 버튼 위치 -->
+                            <div id="naver_id_login" class="loginBtn"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
 
-        <button class="button is-info is-fullwidth" id="submitButton">
-          로그인하기
-        </button>
-        <!-- 아래 부터 카카오 로그인을 위한 코드 -->
-        <a href="javascript:kakaoLogin();"
-          ><img
-            src="https://www.gb.go.kr/Main/Images/ko/member/certi_kakao_login.png"
-            alt="카카오로그인"
-            style="height: 60px; width: auto"
-        /></a>
-      </form>
-    </div>
-    <!-- 카카오 로그인을 위한 script -->
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <script>
-      window.Kakao.init("de945249a2674c6c7c7b4c6b90c0ba7d");
+        <!-- Site footer -->
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 text-team-name">
+                        <h3>🐰 무수면 토끼</h3>
+                        <span>김동한</span>
+                        <span>차지환</span>
+                        <span>손병진</span>
+                        <span>김채현</span>
+                        <span>김상현</span>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-sm-6 col-xs-12 icon-parent">
+                        <p class="copyright-text">엘리스 웹 서비스 팀프로젝트 팀 페이지</p>
+                        <ul class="social-icons">
+                            <li>
+                                <a
+                                    class="notion"
+                                    href="https://www.notion.so/elice/e4a5fa484abe445898f5e39870e257be"
+                                    target="_blank"
+                                    ><i class="fa-solid fa-info"></i
+                                ></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
-      function kakaoLogin() {
-        window.Kakao.Auth.login({
-          scope: "profile_nickname, account_email",
-          success: function (authObj) {
-            localStorage.setItem("token", authObj.access_token);
-            window.Kakao.API.request({
-              url: "/v2/user/me",
-              success: (res) => {
-                const kakao_account = res.kakao_account;
-                const fullName = kakao_account.profile.nickname;
-                const email = kakao_account.email;
-                localStorage.setItem("fullName", fullName);
-                localStorage.setItem("email", email);
-                window.location.href = "/register-kakao";
-              },
-            });
-          },
-        });
-      }
-    </script>
-  </body>
+        <!-- 카카오 로그인을 위한 script -->
+        <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+        <!-- 네이버 로그인을 위한 script -->
+        <script type="text/javascript">
+            var naver_id_login = new naver_id_login(
+                'JcFN_8sJzeQtma1R9tY7',
+                'http://kdt-sw3-team10.elicecoding.com/register-social'
+            );
+            var state = naver_id_login.getUniqState();
+            naver_id_login.setButton('green', 3, 60);
+            naver_id_login.setDomain('http://kdt-sw3-team10.elicecoding.com');
+            naver_id_login.setState(state);
+            naver_id_login.init_naver_id_login();
+            localStorage.setItem('loginMethod', 'NAVER');
+        </script>
+    </body>
 </html>

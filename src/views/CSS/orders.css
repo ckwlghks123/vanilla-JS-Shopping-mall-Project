@@ -6,14 +6,23 @@ body{
 .box{
     margin: 5% 15%;
 }
+.mainName{
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3%;
+}
 .orderList{
     display: none;
 }
 
 .orderList.on{
     display : grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 0.5fr 0.5fr;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.5fr 0.5fr;
     grid-auto-rows: minmax(50px, auto);
+    text-align: center;
+
 }
 .orderList.on.menu{
     background-color: #FBA7A7;
@@ -32,12 +41,11 @@ body{
 }
 
 
-
-
 #deleteBtn{
     display: none;
 }
 #deleteBtn.on{
     display: block;
+
 }
 

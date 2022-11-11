@@ -1,13 +1,44 @@
-import * as Api from "../api.js";
-import * as Storage from "../../utils/storage.js";
+/**
+ * @fileName order.js
+ * @author 차지환
+ * @date 2022-11-07
+ * @description 장바구니 데이터를 불러와 주문자 정보를 입력하고 결제를 수행하는 파일입니다.
+ */
 
+import {
+  insertLogoutLi,
+  insertMyPageLi,
+  insertAdminLi,
+  insertCategoryLi,
+  insertProductLi,
+  insertOrderLi,
+  addAllEvents,
+} from "../home/nav.js";
+import * as Api from "../api.js";
+import * as Storage from "../storage.js";
+
+addAllElements();
+addAllEvents();
+async function addAllElements() {
+  insertLogoutLi();
+  insertMyPageLi();
+  insertAdminLi();
+  insertCategoryLi();
+  insertProductLi();
+  insertOrderLi();
+}
+
+const PORT = 3000;
 const pg_token = new URLSearchParams(location.search).get("pg_token");
 const result = new URLSearchParams(location.search).get("result");
 
 if (pg_token) {
-  Api.post("/api/order/register", Storage.get("order"));
+  Api.post(
+    `${location.protocol}//${location.host}/api/order/register`,
+    Storage.get("order")
+  );
   Storage.clear("order");
-  window.location.replace("/order/result");
+  // window.location.replace("/order/result");
 } else if (result) {
   Storage.clear("order");
 }
@@ -25,46 +56,51 @@ const $kakao = document.querySelector("#kakao");
 const $orderInfo = document.querySelector(".order-info");
 
 function renderProductsList(products) {
-  products.forEach(({ amount, product, _id }) => {
-    const $li = document.createElement("li");
-    const $imgWrapper = document.createElement("div");
-    const $img = document.createElement("img");
-    const $info = document.createElement("div");
-    const $titleWrapper = document.createElement("div");
-    const $title = document.createElement("h3");
-    const $quantity = document.createElement("div");
-    const $priceWrapper = document.createElement("div");
-    const $price = document.createElement("strong");
-    const $productInner = document.createElement("div");
+  try {
+    products.forEach(({ amount, product, _id }) => {
+      const $li = document.createElement("li");
+      const $imgWrapper = document.createElement("div");
+      const $img = document.createElement("img");
+      const $info = document.createElement("div");
+      const $titleWrapper = document.createElement("div");
+      const $title = document.createElement("h3");
+      const $quantity = document.createElement("div");
+      const $priceWrapper = document.createElement("div");
+      const $price = document.createElement("strong");
+      const $productInner = document.createElement("div");
 
-    $li.classList.add("product-wrapper");
-    $imgWrapper.classList.add("product-img-wrapper");
-    $info.classList.add("product-info");
-    $titleWrapper.classList.add("product-capa-wrapper");
-    $title.classList.add("product-capa");
-    $quantity.classList.add("product-quantity");
-    $priceWrapper.classList.add("product-price-wrapper");
-    $price.classList.add("product-price");
+      $productInner.classList.add("product-inner-box");
+      $li.classList.add("product-wrapper");
+      $imgWrapper.classList.add("product-img-wrapper");
+      $info.classList.add("product-info");
+      $titleWrapper.classList.add("product-capa-wrapper");
+      $title.classList.add("product-capa");
+      $quantity.classList.add("product-quantity");
+      $priceWrapper.classList.add("product-price-wrapper");
+      $price.classList.add("product-price");
 
-    $img.setAttribute("src", product.images[0]);
-    $li.setAttribute("id", _id);
-    $quantity.innerText = `수량 : ${amount}개`;
-    $title.innerText = product.name;
-    $price.innerHTML = `${(
-      product.price * amount
-    ).toLocaleString()}<span>원</span>`;
+      $img.setAttribute("src", `../../../${product.images[0]}`);
+      $li.setAttribute("id", _id);
+      $quantity.innerText = `수량 : ${amount}개`;
+      $title.innerText = product.name;
+      $price.innerHTML = `${(
+        product.price * amount
+      ).toLocaleString()}<span>원</span>`;
 
-    $priceWrapper.appendChild($price);
-    $titleWrapper.appendChild($title);
-    $titleWrapper.appendChild($quantity);
-    $info.appendChild($titleWrapper);
-    $info.appendChild($priceWrapper);
-    $imgWrapper.appendChild($img);
-    $li.appendChild($productInner);
-    $productInner.appendChild($imgWrapper);
-    $productInner.appendChild($info);
-    $productsList.appendChild($li);
-  });
+      $priceWrapper.appendChild($price);
+      $titleWrapper.appendChild($title);
+      $titleWrapper.appendChild($quantity);
+      $info.appendChild($titleWrapper);
+      $info.appendChild($priceWrapper);
+      $imgWrapper.appendChild($img);
+      $li.appendChild($productInner);
+      $productInner.appendChild($imgWrapper);
+      $productInner.appendChild($info);
+      $productsList.appendChild($li);
+    });
+  } catch (e) {
+    alert(e.message);
+  }
 }
 
 function updateTotalPrice(price) {
@@ -85,10 +121,17 @@ function updateTotalPrice(price) {
 }
 
 function getTotalPrice(data) {
-  return data.reduce(
-    (price, { amount, product }) => price + amount * product.price,
-    0
-  );
+  let total;
+  try {
+    total = data.reduce(
+      (price, { amount, product }) => price + amount * product.price,
+      0
+    );
+  } catch (e) {
+    alert(e.message);
+  }
+
+  return total;
 }
 
 function makePopUp(x, y) {
@@ -105,8 +148,10 @@ function makePopUp(x, y) {
 }
 
 async function getData() {
-  let data = await Api.get("http://localhost:3000", "api/cart");
-  // let data = await Api.get(".", "test.json");
+  let data = await Api.get(
+    `${location.protocol}//${location.host}`,
+    "api/cart"
+  );
 
   renderProductsList(data.list);
 
@@ -171,8 +216,8 @@ function purchase(type, total, id) {
           pg: "inicis",
           pay_method: "card",
           merchant_uid: uid,
-          name: "결제테스트",
-          amount: 1, // total
+          name: "결제테스트2",
+          amount: 100, // total
           buyer_email: "test@test.com", // 구매자 이메일
           buyer_name: "엘리스", // 구매자 이름
           buyer_tel: "010-1111-1111", // 구매자 전화번호
@@ -181,7 +226,10 @@ function purchase(type, total, id) {
         },
         (res) => {
           if (res.success) {
-            Api.post("/api/order/register", formData);
+            Api.post(
+              `${location.protocol}//${location.host}/api/order/register`,
+              formData
+            );
             window.location.replace("/order/result");
           } else {
             alert("결제 실패");
@@ -202,11 +250,17 @@ function purchase(type, total, id) {
       urlencoded.append("quantity", "1");
       urlencoded.append("total_amount", "100");
       urlencoded.append("tax_free_amount", "0");
-      urlencoded.append("approval_url", `http://127.0.0.1:3000/order`);
-      urlencoded.append("fail_url", "http://127.0.0.1:3000/order?result=fail");
+      urlencoded.append(
+        "approval_url",
+        `${location.protocol}//${location.host}/order`
+      );
+      urlencoded.append(
+        "fail_url",
+        `${location.protocol}//${location.host}/order?result=fail`
+      );
       urlencoded.append(
         "cancel_url",
-        "http://127.0.0.1:3000/order?result=cancel"
+        `${location.protocol}//${location.host}/order`
       );
 
       const requestOptions = {

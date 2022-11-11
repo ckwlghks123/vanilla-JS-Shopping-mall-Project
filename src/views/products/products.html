@@ -2,32 +2,130 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="../CSS/styles.css" rel="stylesheet" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/no-sleep-rabbit-favicon.png" />
+        <!-- 폰트 어썸: 아이콘 -->
+        <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
         <script src="products.js" type="module" defer></script>
         <title>상품 관리</title>
     </head>
     <body>
-        <div id="productBox">
-            <form style="display: flex; flex-direction: column">
-                <label>상품명</label>
-                <input type="text" id="product-name" name="productName" style="width: 200px" />
-                <label>가격</label>
-                <input type="number" id="product-price" name="price" style="width: 200px" />
-                <label>카테고리</label>
-                <select id="product-category" style="width: 200px">
-                    <option value="none">Select Category</option>
-                </select>
-                <label>설명</label>
-                <textarea id="product-description" name="description" style="width: 200px"></textarea>
-                <label>파일</label>
-                <input type="file" id="product-image" multiple />
-                <button id="file-reset-btn" style="width: 200px">파일 초기화</button>
-                <button id="product-create-btn" style="width: 200px">추가</button>
-            </form>
+        <!-- 헤더 -->
+        <nav role="navigation" aria-label="main navigation">
+            <div class="nav-frame">
+                <div class="nav-logo-box">
+                    <!-- <img src="/elice-rabbit.png" width="30" height="30" /> -->
+                    <a href="/">
+                        <i class="fas fa-cat"></i>
+                        <span class="">Pet Shop</span>
+                    </a>
+                </div>
+
+                <div class="github-link">
+                    <a href="https://github.com/Elice-SW-Engineer-Project" target="_blank">
+                        <i class="fa-brands fa-github fa-lg"></i>
+                        Github Organization
+                    </a>
+                </div>
+
+                <div class="nav-link-box-frame">
+                    <ul class="nav-link-box" id="navbar">
+                        <li id="navbar__menu">
+                            <a href="#">메뉴</a>
+                        </li>
+                        <li id="navbar__category" style="display: none">
+                            <a href="#">카테고리 관리</a>
+                        </li>
+                        <li id="navbar__product" style="display: none">
+                            <a href="#">상품 관리</a>
+                        </li>
+                        <li id="navbar__order" style="display: none">
+                            <a href="#">주문 관리</a>
+                        </li>
+                        <li id="navbar__admin" style="display: none">
+                            <a href="#">관리자</a>
+                        </li>
+                        <li id="navbar__mypage" style="display: none">
+                            <a href="/mypage">마이페이지</a>
+                        </li>
+                        <li id="navbar__login"><a href="/login">로그인</a></li>
+                        <li id="navbar__register"><a href="/register">회원가입</a></li>
+                        <li>
+                            <a href="cart" id="navbar__cart" aria-current="page">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="product-frame">
+            <div id="productBox">
+                <form id="product-form">
+                    <label>상품명</label>
+                    <input
+                        type="text"
+                        id="product-name"
+                        name="productName"
+                        placeholder="상품명을 입력하세요"
+                    />
+                    <label>가격</label>
+                    <input type="number" id="product-price" name="price" placeholder="가격을 입력하세요" />
+                    <label>카테고리</label>
+                    <select id="product-category">
+                        <option value="none">카테고리를 선택하세요</option>
+                    </select>
+                    <label>설명</label>
+                    <textarea
+                        id="product-description"
+                        name="description"
+                        placeholder="상품설명을 입력하세요"
+                    ></textarea>
+                    <div id="file-box">
+                        <input id="upload-name" value="첨부파일" placeholder="첨부파일" />
+                        <label id="product-image-label" for="product-image"><span>추가</span></label>
+                        <input type="file" id="product-image" />
+                    </div>
+                    <button id="product-create-btn">상품 생성</button>
+                </form>
+            </div>
+            <div>
+                <ul id="product-lists"></ul>
+            </div>
         </div>
-        <div>
-            <ul id="product-lists"></ul>
-        </div>
+        <!-- Site footer -->
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 text-team-name">
+                        <h3>🐰 무수면 토끼</h3>
+                        <span>김동한</span>
+                        <span>차지환</span>
+                        <span>손병진</span>
+                        <span>김채현</span>
+                        <span>김상현</span>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-sm-6 col-xs-12 icon-parent">
+                        <p class="copyright-text">엘리스 웹 서비스 팀프로젝트 팀 페이지</p>
+                        <ul class="social-icons">
+                            <li>
+                                <a
+                                    class="notion"
+                                    href="https://www.notion.so/elice/e4a5fa484abe445898f5e39870e257be"
+                                    target="_blank"
+                                    ><i class="fa-solid fa-info"></i
+                                ></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </body>
 </html>

@@ -10,41 +10,26 @@ export class OrderModel {
   }
 
   async findByOrderId(orderId) {
-    const order = await Order.findById({ _id: orderId })
-      .populate("user")
-      .populate({
-        path: "list",
-        populate: {
-          path: "product",
-        },
-      });
+    const order = await Order.findById({ _id: orderId });
     return order;
   }
 
   async findAll() {
-    const orders = await Order.find({})
-      .populate("user")
-      .populate({
-        path: "list",
-        populate: {
-          path: "product",
-        },
-      })
-      .sort({ createdAt: -1 });
+    const orders = await Order.find({}).sort({ createdAt: -1 });
     return orders;
   }
 
-  async findByUserId(userId) {
-    const orders = await Order.find({ user: userId })
-      .populate("user")
-      .populate({
-        path: "list",
-        populate: {
-          path: "product",
-        },
-      })
-      .sort({ createdAt: -1 });
-    return orders;
+  async findByUserId(userId, page, perPage) {
+    const [total, orders] = await Promise.all([
+      Order.countDocuments({ "user._id": userId }),
+      Order.find({ "user._id": userId })
+        .skip(perPage * (page - 1))
+        .limit(perPage)
+        .sort({ createdAt: -1 }),
+    ]);
+
+    const totalPage = Math.ceil(total / perPage);
+    return { orders, page, perPage, totalPage, totalCount: total };
   }
 
   async deleteById(orderId) {
@@ -54,15 +39,8 @@ export class OrderModel {
 
   async update(orderId, update) {
     const filter = { _id: orderId };
-    const option = { returnOriginal: false };
-    const updatedOrder = await Order.findOneAndUpdate(filter, update, option)
-      .populate("user")
-      .populate({
-        path: "list",
-        populate: {
-          path: "product",
-        },
-      });
+    const option = { returnOriginal: false, runValidators: true };
+    const updatedOrder = await Order.findOneAndUpdate(filter, update, option);
     return updatedOrder;
   }
 }

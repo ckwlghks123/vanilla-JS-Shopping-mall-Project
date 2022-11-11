@@ -9,12 +9,7 @@
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="/elice-rabbit-favicon.png"
-    />
-    <!-- bulma css -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+      href="/no-sleep-rabbit-favicon.png"
     />
     <!-- 폰트 어썸: 아이콘 -->
     <script
@@ -22,22 +17,210 @@
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
+    <!-- 다음 주소 API -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="mypage.css" />
+    <link rel="stylesheet" href="../CSS/styles.css" />
     <script src="mypage.js" type="module" defer></script>
+    <script src="mypage2.js" type="module" defer></script>
   </head>
   <body>
-    <p id="user-admin" style="display: none">관리자</p>
-    <p id="user-name">유저이름</p>
-    <button id="user-name-button">이름변경</button>
-    <p id="user-email">이메일</p>
-    <button id="user-password-button">비밀번호 변경</button>
-    <p id="user-postcode">00000</p>
-    <p id="user-address">주소</p>
-    <button id="user-address-button">주소변경</button>
-    <button id="user-withdraw-button">회원탈퇴</button>
-    <button id="users-info-button" style="display: none">
-      유저정보 콘솔로 불러오기
-    </button>
+    <!-- 헤더 -->
+    <nav role="navigation" aria-label="main navigation">
+      <div class="nav-frame">
+        <div class="nav-logo-box">
+          <!-- <img src="/elice-rabbit.png" width="30" height="30" /> -->
+          <a href="/">
+            <i class="fas fa-cat"></i>
+            <span class="">Pet Shop</span>
+          </a>
+        </div>
+
+        <div class="github-link">
+          <a
+            href="https://github.com/Elice-SW-Engineer-Project"
+            target="_blank"
+          >
+            <i class="fa-brands fa-github fa-lg"></i>
+            Github Organization
+          </a>
+        </div>
+
+        <div class="nav-link-box-frame">
+          <ul class="nav-link-box" id="navbar">
+            <li id="navbar__menu">
+              <a href="#">메뉴</a>
+            </li>
+            <li id="navbar__category" style="display: none">
+              <a href="#">카테고리 관리</a>
+            </li>
+            <li id="navbar__product" style="display: none">
+              <a href="#">상품 관리</a>
+            </li>
+            <li id="navbar__order" style="display: none">
+              <a href="#">주문 관리</a>
+            </li>
+            <li id="navbar__admin" style="display: none">
+              <a href="#">관리자</a>
+            </li>
+            <li id="navbar__mypage" style="display: none">
+              <a href="/mypage">마이페이지</a>
+            </li>
+            <li id="navbar__login"><a href="/login">로그인</a></li>
+            <li id="navbar__register"><a href="/register">회원가입</a></li>
+            <li>
+              <a href="cart" id="navbar__cart" aria-current="page">
+                <i class="fas fa-shopping-cart"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <section class="main-container">
+      <div class="user-info-container">
+        <p id="user-admin" style="display: none">관리자</p>
+        <label for="">이름</label>
+        <input
+          type="text"
+          id="user-name"
+          name="userName"
+          placeholder="유저이름"
+          class="user-info__input"
+        />
+        <label for="">이메일</label>
+        <input
+          type="text"
+          id="user-email"
+          name="userEmail"
+          placeholder="이메일"
+          readonly
+          class="user-info__input"
+        />
+        <label for="">현재 비밀번호</label>
+        <input
+          type="password"
+          id="user-current-password"
+          name="userCurrentPassword"
+          class="user-info__input"
+        />
+        <label for="">새 비밀번호</label>
+        <input
+          type="password"
+          id="user-new-password"
+          name="userNewPassword"
+          class="user-info__input"
+        />
+        <label for="">우편번호</label>
+        <div>
+          <input
+            type="number"
+            id="user-postcode"
+            name="userPostcode"
+            placeholder="06279"
+            class="user-info__input"
+            style="width: 200px"
+          />
+          <input
+            id="postCodeSearchButton"
+            type="button"
+            value="우편번호 찾기"
+            class="postcodeBtn"
+          />
+        </div>
+        <label for="">주소</label>
+        <input
+          type="text"
+          id="user-address"
+          name="userAddress"
+          placeholder="주소"
+          class="user-info__input"
+        />
+        <label for="">상세주소</label>
+        <input
+          type="text"
+          id="user-detail-address"
+          name="userDetailAddress"
+          placeholder="상세주소"
+          class="user-info__input"
+        />
+        <div class="user-info__bottom-buttons">
+          <button id="user-info-edit-button">유저 정보 변경</button>
+          <button id="user-withdraw-button">회원탈퇴</button>
+        </div>
+      </div>
+    </section>
+    <section class="client-order-info">
+      <div class="my-shopping">
+        <div class="my-shopping-title-wrapper">
+          <h3 class="my-shopping-title">나의 쇼핑</h3>
+        </div>
+        <ul class="my-order-menu-list">
+          <li class="my-order-menu-wrapper active-new" data-type="getInfo">
+            <div class="event-ignore">
+              <div class="my-order-menu-title">주문 · 배송</div>
+              <div class="my-order-menu-icon-wrapper">
+                <img class="my-order-menu-icon" src="" alt="" />
+              </div>
+            </div>
+          </li>
+          <li class="my-order-menu-wrapper" data-type="changeInfo">
+            <div class="event-ignore">
+              <div class="my-order-menu-title">주문 수정</div>
+              <div class="my-order-menu-icon-wrapper">
+                <img class="my-order-menu-icon" src="" alt="" />
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="display-order-info">
+        <!-- <div class="display-order-title-wrapper">
+                    <h2 class="display-order-title">나의 쇼핑</h2>
+                </div> -->
+        <div class="display">
+          <div class="no-data">
+            <span>주문 및 배송조회 가능한 내역이 없습니다.</span>
+          </div>
+          <div class="order-data hidden">
+            <table border="1" class="order-table"></table>
+            <ul id="page-btn"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Site footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-6 text-team-name">
+            <h3>🐰 무수면 토끼</h3>
+            <span>김동한</span>
+            <span>차지환</span>
+            <span>손병진</span>
+            <span>김채현</span>
+            <span>김상현</span>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-sm-6 col-xs-12 icon-parent">
+            <p class="copyright-text">엘리스 웹 서비스 팀프로젝트 팀 페이지</p>
+            <ul class="social-icons">
+              <li>
+                <a
+                  class="notion"
+                  href="https://www.notion.so/elice/e4a5fa484abe445898f5e39870e257be"
+                  target="_blank"
+                  ><i class="fa-solid fa-info"></i
+                ></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

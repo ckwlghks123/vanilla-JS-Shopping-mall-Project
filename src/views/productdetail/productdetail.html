@@ -4,24 +4,70 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script src="productdetial.js" type="module" defer></script>
-        <title>product-detail</title>
+        <!-- 폰트 어썸: 아이콘 -->
+        <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+        <!-- 커스텀 css, js -->
+        <link rel="icon" type="image/png" sizes="16x16" href="/no-sleep-rabbit-favicon.png" />
+        <link rel="stylesheet" href="/CSS/styles.css" />
+        <script src="productdetail.js" type="module" defer></script>
+        <title>제품상세</title>
     </head>
     <body>
-        <div id="product-frame">
-            <img id="product-image" alt="상품 사진" />
-            <div id="product-category">
-                <span id="ctg"></span>
+        <!-- 헤더 -->
+        <nav role="navigation" aria-label="main navigation">
+            <div class="nav-frame">
+                <div class="nav-logo-box">
+                    <!-- <img src="/elice-rabbit.png" width="30" height="30" /> -->
+                    <a href="/">
+                        <i class="fas fa-cat"></i>
+                        <span class="">Pet Shop</span>
+                    </a>
+                </div>
+
+                <div class="github-link">
+                    <a href="https://github.com/Elice-SW-Engineer-Project" target="_blank">
+                        <i class="fa-brands fa-github fa-lg"></i>
+                        Github Organization
+                    </a>
+                </div>
+
+                <div class="nav-link-box-frame">
+                    <ul class="nav-link-box" id="navbar">
+                        <li id="navbar__menu">
+                            <a href="#">메뉴</a>
+                        </li>
+                        <li id="navbar__category" style="display: none">
+                            <a href="#">카테고리 관리</a>
+                        </li>
+                        <li id="navbar__product" style="display: none">
+                            <a href="#">상품 관리</a>
+                        </li>
+                        <li id="navbar__order" style="display: none">
+                            <a href="#">주문 관리</a>
+                        </li>
+                        <li id="navbar__admin" style="display: none">
+                            <a href="#">관리자</a>
+                        </li>
+                        <li id="navbar__mypage" style="display: none">
+                            <a href="/mypage">마이페이지</a>
+                        </li>
+                        <li id="navbar__login"><a href="/login">로그인</a></li>
+                        <li id="navbar__register"><a href="/register">회원가입</a></li>
+                        <li>
+                            <a href="cart" id="navbar__cart" aria-current="page">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div id="product-title">
-                <span id="title"></span>
-            </div>
-            <div id="product-price">
-                <span id="price"></span>
-            </div>
-            <div id="product-description">
-                <span id="description"></span>
-            </div>
+        </nav>
+        <div id="product-frame-detail" class="framebox">
+            <img id="product-image-detail" alt="상품 사진" />
+            <div id="product-category-detail"></div>
+            <div id="product-title-detail"></div>
+            <div id="product-price-detail"></div>
+            <div id="product-description-detail"></div>
             <div id="amoutnBtn">
                 <button id="minusBtn">-</button>
                 <input id="amountInput" type="number" value="1" />

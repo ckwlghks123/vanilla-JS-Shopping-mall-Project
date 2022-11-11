@@ -1,187 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="order.css" />
-    <script src="order.js" type="module" defer></script>
-    <script
-      type="text/javascript"
-      src="https://code.jquery.com/jquery-1.12.4.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"
-    ></script>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="order.css" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/no-sleep-rabbit-favicon.png" />
+        <!-- 폰트 어썸: 아이콘 -->
+        <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+        <!-- 커스텀 css, js -->
+        <link rel="stylesheet" href="../CSS/styles.css" />
+        <script src="order.js" type="module" defer></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="order-container">
-      <div class="top-bar">
-        <h1>주문결제</h1>
-        <ul class="status-bar">
-          <li>01 장바구니</li>
-          &nbsp;>&nbsp;
-          <li>02 주문결제</li>
-          &nbsp;>&nbsp;
-          <li>03 결제완료</li>
-        </ul>
-      </div>
-      <section class="order-detail">
-        <h2>배송정보</h2>
-        <form class="order-info">
-          <div>
-            <label for="receiver">받는 사람</label>
-            <input
-              type="text"
-              id="receiver"
-              placeholder="받으시는 분의 성함을 입력하세요."
-            />
-          </div>
-          <div>
-            <label for="phone">휴대전화</label>
-            <input
-              type="text"
-              id="phone"
-              placeholder="휴대전화 번호를 입력하세요."
-            />
-          </div>
-          <div class="user-address">
-            <div class="zip-address-wrapper">
-              <div>
-                <label for="zip-code">배송지 주소</label>
-                <input
-                  type="text"
-                  id="zip-code"
-                  disabled
-                  placeholder="우편번호를 입력하세요."
-                />
-                <button>우편번호</button>
-              </div>
-            </div>
-            <div class="zip-address-wrapper">
-              <div>
-                <input
-                  type="text"
-                  id="address"
-                  disabled
-                  placeholder="주소를 입력하세요."
-                />
-              </div>
-            </div>
-            <div>
-              <input
-                type="text"
-                id="detailed-address"
-                placeholder="상세주소를 입력하세요."
-              />
-            </div>
-            <div>
-              <label for="requirements">배송 요청사항</label>
-              <select id="requirements">
-                <option value="배송 전 연락 바랍니다.">
-                  배송 전 연락 바랍니다.
-                </option>
-                <option value="부재시 휴대전화로 연락주세요.">
-                  부재시 휴대전화로 연락주세요.
-                </option>
-                <option value="부재시 경비실에 맡겨주세요.">
-                  부재시 경비실에 맡겨주세요.
-                </option>
-                <option value="부재시 문앞에 놓아주세요.">
-                  부재시 문앞에 놓아주세요.
-                </option>
-                <option value="직접 입력">직접 입력</option>
-              </select>
-            </div>
-          </div>
-        </form>
-      </section>
-      <section>
-        <div>
-          <h2>주문상품</h2>
-        </div>
-        <div class="shipping-status">
-          <div>엘리스배송</div>
-          <div>
-            <div><span>발송일 : </span><span>오늘</span></div>
-            <div class="product-ship">배송비 무료</div>
-          </div>
-        </div>
-        <div class="products">
-          <!-- 카트 물건 스크립트로 생성 -->
-          <ul class="products-list">
-            <li class="product-wrapper">
-              <div class="product-img-wrapper">
-                <img src="" alt="이미지" />
-              </div>
-              <div class="product-info">
-                <div class="product-title-wrapper">
-                  <h3 class="product-title">사료 150g</h3>
-                  <div class="product-quantity">수량 : 4개</div>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <title>주문결제</title>
+    </head>
+    <body>
+        <!-- 헤더 -->
+        <nav role="navigation" aria-label="main navigation">
+            <div class="nav-frame">
+                <div class="nav-logo-box">
+                    <!-- <img src="/elice-rabbit.png" width="30" height="30" /> -->
+                    <a href="/">
+                        <i class="fas fa-cat"></i>
+                        <span class="">Pet Shop</span>
+                    </a>
                 </div>
-                <div class="product-price-wrapper">
-                  <strong class="product-price"> 10000<span>원</span> </strong>
+
+                <div class="github-link">
+                    <a href="https://github.com/Elice-SW-Engineer-Project" target="_blank">
+                        <i class="fa-brands fa-github fa-lg"></i>
+                        Github Organization
+                    </a>
                 </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </section>
-      <section>
-        <div>
-          <h2>최종 결제금액</h2>
-        </div>
-        <div>
-          <dl>
-            <dt>총 상품 금액</dt>
-            <dd class="total-price">10000원</dd>
-          </dl>
-          <dl>
-            <dt>배송비</dt>
-            <dd class="total-ship">3000원</dd>
-          </dl>
-          <dl>
-            <dt>총 결제금액</dt>
-            <dd class="total-payment">13000원</dd>
-          </dl>
-        </div>
-      </section>
-      <section class="payment">
-        <div>
-          <h2>결제방법</h2>
-        </div>
-        <div class="payment-list">
-          <div class="payment-list-inner">
-            <div class="payment-method">
-              <label>
-                <input type="radio" name="payment-method" value="CARD" />
-                <div>
-                  <img src="" alt="" />
-                  <span>신용카드</span>
+                <div class="nav-link-box-frame">
+                    <ul class="nav-link-box" id="navbar">
+                        <li id="navbar__menu">
+                            <a href="#">메뉴</a>
+                        </li>
+                        <li id="navbar__category" style="display: none">
+                            <a href="#">카테고리 관리</a>
+                        </li>
+                        <li id="navbar__product" style="display: none">
+                            <a href="#">상품 관리</a>
+                        </li>
+                        <li id="navbar__order" style="display: none">
+                            <a href="#">주문 관리</a>
+                        </li>
+                        <li id="navbar__admin" style="display: none">
+                            <a href="#">관리자</a>
+                        </li>
+                        <li id="navbar__mypage" style="display: none">
+                            <a href="/mypage">마이페이지</a>
+                        </li>
+                        <li id="navbar__login"><a href="/login">로그인</a></li>
+                        <li id="navbar__register"><a href="/register">회원가입</a></li>
+                        <li>
+                            <a href="cart" id="navbar__cart" aria-current="page">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-              </label>
             </div>
-            <div class="payment-method">
-              <label>
-                <input type="radio" name="payment-method" value="KAKAO" />
-                <div>
-                  <img src="" alt="" />
-                  <span>카카오 페이</span>
-                </div>
-              </label>
+        </nav>
+        <div class="order-container">
+            <div class="top-bar">
+                <h1>주문결제</h1>
+                <ul class="status-bar">
+                    <li class="status-cart">01 장바구니</li>
+                    &nbsp;>&nbsp;
+                    <li class="status-order">02 주문결제</li>
+                    &nbsp;>&nbsp;
+                    <li>03 결제완료</li>
+                </ul>
             </div>
-          </div>
+            <div class="order-wrapper">
+                <section class="order-detail">
+                    <h2>배송정보</h2>
+                    <div class="order-info-wrapper">
+                        <form class="order-info">
+                            <div>
+                                <label for="receiver">받는 사람</label>
+                                <input
+                                    type="text"
+                                    id="receiver"
+                                    placeholder="받으시는 분의 성함을 입력하세요."
+                                />
+                            </div>
+                            <div>
+                                <label for="phone">휴대전화</label>
+                                <input type="text" id="phone" placeholder="휴대전화 번호를 입력하세요." />
+                            </div>
+                            <div class="user-address">
+                                <div class="zip-address-wrapper">
+                                    <div>
+                                        <label for="zip-code">배송지 주소</label>
+                                        <input
+                                            type="text"
+                                            id="zip-code"
+                                            disabled
+                                            placeholder="우편번호를 입력하세요."
+                                        />
+                                        <button>우편번호</button>
+                                    </div>
+                                </div>
+                                <div class="zip-address-wrapper">
+                                    <div>
+                                        <input
+                                            type="text"
+                                            id="address"
+                                            disabled
+                                            placeholder="주소를 입력하세요."
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <input
+                                        type="text"
+                                        id="detailed-address"
+                                        placeholder="상세주소를 입력하세요."
+                                    />
+                                </div>
+                                <div>
+                                    <label for="requirements">배송 요청사항</label>
+                                    <select id="requirements">
+                                        <option value="배송 전 연락 바랍니다.">배송 전 연락 바랍니다.</option>
+                                        <option value="부재시 휴대전화로 연락주세요.">
+                                            부재시 휴대전화로 연락주세요.
+                                        </option>
+                                        <option value="부재시 경비실에 맡겨주세요.">
+                                            부재시 경비실에 맡겨주세요.
+                                        </option>
+                                        <option value="부재시 문앞에 놓아주세요.">
+                                            부재시 문앞에 놓아주세요.
+                                        </option>
+                                        <option value="직접 입력">직접 입력</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+                <section id="order-product">
+                    <div>
+                        <h2>주문상품</h2>
+                    </div>
+                    <div class="shipping-status">
+                        <div id="elice-shipping">엘리스배송</div>
+                        <div>
+                            <div id="shipping-date"><span>발송일 : </span><span>오늘</span></div>
+                            <div class="product-ship">배송비 무료</div>
+                        </div>
+                    </div>
+                    <div class="products">
+                        <!-- 카트 물건 스크립트로 생성 -->
+                        <ul class="products-list"></ul>
+                    </div>
+                </section>
+                <section id="order-payment-info">
+                    <div>
+                        <h2>최종 결제금액</h2>
+                    </div>
+                    <div>
+                        <dl>
+                            <dt>총 상품 금액 |</dt>
+                            <dd class="total-price">10000원</dd>
+                        </dl>
+                        <dl>
+                            <dt>배송비 |</dt>
+                            <dd class="total-ship">3000원</dd>
+                        </dl>
+                        <dl>
+                            <dt>총 결제금액 |</dt>
+                            <dd class="total-payment">13000원</dd>
+                        </dl>
+                    </div>
+                </section>
+                <section class="payment">
+                    <div>
+                        <h2>결제방법</h2>
+                    </div>
+                    <div class="payment-list">
+                        <div class="payment-list-inner">
+                            <div class="payment-method">
+                                <label>
+                                    <input type="radio" name="payment-method" value="CARD" />
+                                    <div>
+                                        <img src="" alt="" />
+                                        <span>신용카드</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <!-- <div class="payment-method">
+                                <label>
+                                    <input type="radio" name="payment-method" value="KAKAO" />
+                                    <div>
+                                        <img src="" alt="" />
+                                        <span>카카오 페이</span>
+                                    </div>
+                                </label>
+                            </div> -->
+                        </div>
+                    </div>
+                </section>
+                <section id="payment-section">
+                    <button id="payment-btn">결제하기</button>
+                </section>
+            </div>
         </div>
-      </section>
-      <section>
-        <p>위 주문 내용을 확인하였으며 결제에 동의합니다.</p>
-        <button id="payment-btn">결제하기</button>
-      </section>
-    </div>
-    <div id="postcode" style="display: none"></div>
-  </body>
+        <div id="postcode" style="display: none"></div>
+        <!-- Site footer -->
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 text-team-name">
+                        <h3>🐰 무수면 토끼</h3>
+                        <span>김동한</span>
+                        <span>차지환</span>
+                        <span>손병진</span>
+                        <span>김채현</span>
+                        <span>김상현</span>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-sm-6 col-xs-12 icon-parent">
+                        <p class="copyright-text">엘리스 웹 서비스 팀프로젝트 팀 페이지</p>
+                        <ul class="social-icons">
+                            <li>
+                                <a
+                                    class="notion"
+                                    href="https://www.notion.so/elice/e4a5fa484abe445898f5e39870e257be"
+                                    target="_blank"
+                                    ><i class="fa-solid fa-info"></i
+                                ></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
 </html>

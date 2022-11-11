@@ -1,0 +1,52 @@
+
+body {
+    padding: 0;
+    margin: 0;
+
+}
+  
+.errorcontainer{
+    height: 80vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 0.2fr 0.2fr;
+    margin: 0% 10% 0% 10%;
+    text-align: center;
+}
+.item{
+    display: flex;
+    justify-content: center;
+    align-items:  flex-end;
+}
+.item .dogimg{
+    width :500px;
+    height: 500px;
+    border-radius: 50%;
+    background-image: url("http://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg");
+    background-size: cover;
+    box-shadow: 0 1em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+}
+.item.notice{
+    align-items: flex-end;
+    font-size: 20px;
+}
+.item.gohome{
+    align-items: flex-start;
+}
+.item .homeBtn{
+    width :200px;
+    height: 60px;
+    border-radius: 30px;
+    border-width: 2px;
+    background-color: #FBA7A7;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 32px;
+}
+
+.item .homeBtn:hover{
+    background-color: #c0aaaa;
+}

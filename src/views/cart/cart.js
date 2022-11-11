@@ -5,23 +5,45 @@
  * @description 장바구니 데이터를 불러와 화면을 구성하는 파일입니다.
  */
 
+import {
+  insertLogoutLi,
+  insertMyPageLi,
+  insertAdminLi,
+  insertCategoryLi,
+  insertProductLi,
+  insertOrderLi,
+  addAllEvents,
+} from "../home/nav.js";
 import * as Api from "../api.js";
-import * as Storage from "../../utils/storage.js";
+import * as Storage from "../storage.js";
+
+addAllElements();
+addAllEvents();
+async function addAllElements() {
+  insertLogoutLi();
+  insertMyPageLi();
+  insertAdminLi();
+  insertCategoryLi();
+  insertProductLi();
+  insertOrderLi();
+}
 
 const $cartMain = document.querySelector(".cart-main");
 const $cartIn = document.querySelector(".cart-in");
 const $cartNone = document.querySelector(".cart-none");
 const $title = document.querySelector(".title");
 const $list = document.querySelector(".product-list");
+const $footTotal = document.querySelector(".foot-total");
 
 const PORT = 3000;
 
 let timer;
-const token = Storage.get("token");
+const token = Storage.get("token", false);
 
 // 데이터가 비었을때 빈 장바구니 템플릿 생성하는 함수
 function emptyCart() {
   $cartIn.classList.add("hidden");
+  $footTotal.classList.add("hidden");
   $cartNone.classList.remove("hidden");
 }
 
@@ -56,22 +78,30 @@ function renderProductsList(list) {
   const items = list
     .map(
       ({ product: { _id, name, price, images }, amount }) => `
-      <div class="product" id="${_id}">
-        <div class="product-section">
-          <img src="${images[0]}" alt="이미지" class="product-image" />
-          <div class="product-name">${name}</div>
-          <div class="product-stock">재고 있음</div>
-        </div>
-        <div class="product-amount">
-          <button class="decrease" ${amount === 1 && "disabled"}>-</button>
-          <div class="amount">${amount}</div>
-          <button class="increase">+</button>
-        </div>
-        <div class="product-total">${(price * amount).toLocaleString()}원</div>
-        <div class="section-button">
-          <button class="delete">삭제</button>
-        </div>
-      </div>`
+       <div class="product" id="${_id}">
+         <div class="product-section">
+           <img src="../../../${
+             images[0]
+           }" alt="이미지" class="product-image" />
+           <div class="product-description">
+              <div class="product-name">${name}</div>
+              <div class="product-stock">재고 있음</div>
+           </div>
+         </div>
+         <div class="product-amount">
+           <div>
+             <button class="decrease" ${amount === 1 && "disabled"}>-</button>
+             <div class="amount">${amount}</div>
+             <button class="increase">+</button>
+           </div>
+         </div>
+         <div class="product-total">${(
+           price * amount
+         ).toLocaleString()}<span>원</span></div>
+         <div class="section-button">
+           <button class="delete">삭제</button>
+         </div>
+       </div>`
     )
     .join("");
   $list.innerHTML = items;
@@ -91,16 +121,24 @@ async function memberCart(type) {
         }));
         await Promise.all(
           postBody.map(
-            async (e) => await Api.post(`http://localhost:${PORT}/api/cart`, e)
+            async (e) =>
+              await Api.post(
+                `${location.protocol}//${location.host}/api/cart`,
+                e
+              )
           )
         );
         Storage.clear("cart");
       }
-      return Api.get(`http://localhost:${PORT}`, "api/cart");
+      const data = await Api.get(
+        `${location.protocol}//${location.host}`,
+        "api/cart"
+      );
+      return data?.list;
     },
   };
 
-  let data = (await memType[type]())?.list;
+  let data = await memType[type]();
 
   if (!data) {
     emptyCart();
@@ -111,12 +149,13 @@ async function memberCart(type) {
   totalPrice(data);
 
   $cartIn.classList.remove("hidden");
+  $footTotal.classList.remove("hidden");
 
   $cartMain.addEventListener("click", ({ target }) => {
     const parent = target.parentNode.parentNode;
-    const id = parent.id;
+    const id = parent.parentNode.id;
     const decrease = target.parentNode.querySelector(".decrease");
-    const $productTotal = parent.querySelector(".product-total");
+    const $productTotal = parent.parentNode.querySelector(".product-total");
     const productData = data.find((e) => e.product._id === id);
 
     switch (target.className) {
@@ -136,12 +175,13 @@ async function memberCart(type) {
 
         debounce(() => {
           token
-            ? Api.post(`http://localhost:${PORT}/api/cart`, {
+            ? Api.post(`${location.protocol}//${location.host}/api/cart`, {
                 productId: id,
                 amount: numAdd,
               })
             : Storage.set("cart", data);
         });
+
         break;
 
       case "decrease":
@@ -160,26 +200,30 @@ async function memberCart(type) {
 
         debounce(() => {
           token
-            ? Api.post(`http://localhost:${PORT}/api/cart`, {
+            ? Api.post(`${location.protocol}//${location.host}/api/cart`, {
                 productId: id,
                 amount: numSub,
               })
             : Storage.set("cart", data);
         });
+
         break;
 
       case "delete":
         $list.removeChild(parent);
 
-        data = data.filter((e) => e.product._id !== id);
+        const deleteId = parent.id;
+
+        data = data.filter((e) => e.product._id !== deleteId);
 
         totalPrice(data);
 
         token
-          ? Api.delete(`http://localhost:${PORT}`, "api/cart", {
-              productId: id,
+          ? Api.delete(`${location.protocol}//${location.host}`, "api/cart", {
+              productId: deleteId,
             })
           : Storage.set("cart", data);
+
         break;
 
       case "purchase-btn":
@@ -187,6 +231,9 @@ async function memberCart(type) {
           ? window.location.replace("/order")
           : window.location.replace("/login");
         break;
+
+      case "product-image":
+        location.replace(`/products/${id}`);
 
       default:
         return;
@@ -207,6 +254,18 @@ function getData(data, id, num) {
 
 function getProductPrice(data, num) {
   return `${(data.product.price * num).toLocaleString()}원`;
+}
+
+function getStorage(name, parse = true) {
+  let item = null;
+  try {
+    item = parse
+      ? JSON.parse(localStorage.getItem(name))
+      : localStorage.getItem(name);
+  } catch (e) {
+    console.log(e);
+  }
+  return item;
 }
 
 token ? memberCart("mem") : memberCart("nonMem");

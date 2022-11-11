@@ -1,62 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cart</title>
-    <link rel="stylesheet" href="cart.css" />
-    <script src="cart.js" type="module" defer></script>
-  </head>
-  <body>
-    <div class="top-bar">
-      <h1>장바구니</h1>
-      <ul class="status-bar">
-        <li>01 장바구니</li>
-        &nbsp;>&nbsp;
-        <li>02 주문결제</li>
-        &nbsp;>&nbsp;
-        <li>03 결제완료</li>
-      </ul>
-    </div>
-    <main class="cart-main">
-      <div class="cart-none hidden">
-        <img src="" alt="카트이미지" class="cart-image" />
-        <span>장바구니에 담긴 상품이 없습니다.</span>
-      </div>
-      <div class="cart-in hidden">
-        <h2 class="title">엘리스배송</h2>
-        <div class="product-list"></div>
-        <div class="shipping-cost">
-          <div class="price">
-            <span>상품금액</span>
-            <strong class="product-price">10000원</strong>
-          </div>
-          <div class="shipping">
-            <span>배송비(30,000원 이상 무료)</span>
-            <strong class="ship">무료</strong>
-          </div>
-          <div class="total">
-            <span>주문금액</span>
-            <strong class="total-price">10000원</strong>
-          </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>장바구니</title>
+        <link rel="stylesheet" href="../CSS/styles.css" />
+        <!-- 아이콘 -->
+        <link rel="icon" type="image/png" sizes="16x16" href="/no-sleep-rabbit-favicon.png" />
+        <script src="cart.js" type="module" defer></script>
+        <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <!-- 헤더 -->
+        <nav role="navigation" aria-label="main navigation">
+            <div class="nav-frame">
+                <div class="nav-logo-box">
+                    <!-- <img src="/elice-rabbit.png" width="30" height="30" /> -->
+                    <a href="/">
+                        <i class="fas fa-cat"></i>
+                        <span class="">Pet Shop</span>
+                    </a>
+                </div>
+
+                <div class="github-link">
+                    <a href="https://github.com/Elice-SW-Engineer-Project" target="_blank">
+                        <i class="fa-brands fa-github fa-lg"></i>
+                        Github Organization
+                    </a>
+                </div>
+
+                <div class="nav-link-box-frame">
+                    <ul class="nav-link-box" id="navbar">
+                        <li id="navbar__menu">
+                            <a href="#">메뉴</a>
+                        </li>
+                        <li id="navbar__category" style="display: none">
+                            <a href="#">카테고리 관리</a>
+                        </li>
+                        <li id="navbar__product" style="display: none">
+                            <a href="#">상품 관리</a>
+                        </li>
+                        <li id="navbar__order" style="display: none">
+                            <a href="#">주문 관리</a>
+                        </li>
+                        <li id="navbar__admin" style="display: none">
+                            <a href="#">관리자</a>
+                        </li>
+                        <li id="navbar__mypage" style="display: none">
+                            <a href="/mypage">마이페이지</a>
+                        </li>
+                        <li id="navbar__login"><a href="/login">로그인</a></li>
+                        <li id="navbar__register"><a href="/register">회원가입</a></li>
+                        <li>
+                            <a href="cart" id="navbar__cart" aria-current="page">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- 헤더 끝 -->
+        <div class="main-content">
+            <div class="top-bar">
+                <h1>장바구니</h1>
+                <ul class="status-bar">
+                    <li>01 장바구니</li>
+                    &nbsp;>&nbsp;
+                    <li>02 주문결제</li>
+                    &nbsp;>&nbsp;
+                    <li>03 결제완료</li>
+                </ul>
+            </div>
+            <main class="cart-main">
+                <div class="cart-none hidden">
+                    <div>
+                        <span src="" alt="카트이미지" class="cart-image">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path
+                                    d="M 10.457031 1.0429688 L 9.0429688 2.4570312 L 11.585938 5 L 9 7.5859375 L 10.414062 9 L 13 6.4140625 L 15.585938 9 L 17 7.5859375 L 14.414062 5 L 16.957031 2.4570312 L 15.542969 1.0429688 L 13 3.5859375 L 10.457031 1.0429688 z M 2 3 L 2 5 L 4 5 L 7.2910156 11.765625 L 6.1816406 13.994141 C 5.7486406 14.600141 5.7301562 15.412047 6.0351562 15.998047 C 6.3401562 16.585047 6.9838437 17 7.7148438 17 L 20 17 L 20 15 C 20 15 7.99 15.013 8 15 L 9 13 L 18 13 C 18.377 13 18.759516 12.816453 18.853516 12.439453 L 21.785156 6.4433594 C 22.108156 5.7823594 21.630531 5.0089063 20.894531 5.0039062 L 20.353516 5 L 17.363281 11 L 9 11 L 5.3554688 3 L 2 3 z M 8 18 A 2 2 0 0 0 6 20 A 2 2 0 0 0 8 22 A 2 2 0 0 0 10 20 A 2 2 0 0 0 8 18 z M 18 18 A 2 2 0 0 0 16 20 A 2 2 0 0 0 18 22 A 2 2 0 0 0 20 20 A 2 2 0 0 0 18 18 z"
+                                />
+                            </svg>
+                        </span>
+                        <span>장바구니에 담긴 상품이 없습니다.</span>
+                    </div>
+                </div>
+                <div class="cart-in hidden">
+                    <h2 class="title">엘리스배송</h2>
+                    <div class="product-list">
+                        <!-- 물건 목록 -->
+                    </div>
+                    <div class="shipping-cost">
+                        <div class="price-wrapper">
+                            <div class="price">
+                                <span>상품금액</span>
+                                <strong class="product-price">10000원</strong>
+                            </div>
+                            <div class="plus">+</div>
+                            <div class="shipping">
+                                <span>배송비(30,000원 이상 무료)</span>
+                                <strong class="ship">무료</strong>
+                            </div>
+                        </div>
+                        <div class="equal">=</div>
+                        <div class="total">
+                            <span>주문금액</span>
+                            <strong class="total-price">10000원</strong>
+                        </div>
+                    </div>
+                </div>
+                <section class="foot-total">
+                    <div class="footer-price">
+                        <span>총 상품금액</span>
+                        <strong class="product-price">10000원</strong>
+                    </div>
+                    <div class="footer-shipping">
+                        <span>총 배송비</span>
+                        <strong class="ship">무료</strong>
+                    </div>
+                    <div class="footer-total">
+                        <span>결제금액&nbsp;</span>
+                        <strong class="total-price">10000원</strong>
+                        <button class="purchase-btn">구매하기</button>
+                    </div>
+                </section>
+            </main>
         </div>
-        <footer>
-          <div class="footer-price">
-            <span>총 상품금액</span>
-            <strong class="product-price">10000원</strong>
-          </div>
-          <div class="footer-shipping">
-            <span>총 배송비</span>
-            <strong class="ship">무료</strong>
-          </div>
-          <div class="footer-total">
-            <span>결제금액</span>
-            <strong class="total-price">10000원</strong>
-            <button class="purchase-btn">구매하기</button>
-          </div>
+        <!-- Site footer -->
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 text-team-name">
+                        <h3>🐰 무수면 토끼</h3>
+                        <span>김동한</span>
+                        <span>차지환</span>
+                        <span>손병진</span>
+                        <span>김채현</span>
+                        <span>김상현</span>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-sm-6 col-xs-12 icon-parent">
+                        <p class="copyright-text">엘리스 웹 서비스 팀프로젝트 팀 페이지</p>
+                        <ul class="social-icons">
+                            <li>
+                                <a
+                                    class="notion"
+                                    href="https://www.notion.so/elice/e4a5fa484abe445898f5e39870e257be"
+                                    target="_blank"
+                                    ><i class="fa-solid fa-info"></i
+                                ></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </footer>
-      </div>
-    </main>
-  </body>
+    </body>
 </html>

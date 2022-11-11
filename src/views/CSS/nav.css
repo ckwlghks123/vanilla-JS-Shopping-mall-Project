@@ -1,0 +1,95 @@
+body {
+    padding-top: 80px;
+}
+
+.nav-frame {
+    background-color: #ff7675;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    z-index: 10;
+}
+
+.github-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 230px;
+    height: 40px;
+    background-color: #ff5656;
+    border-radius: 20px;
+}
+
+.nav-logo-box {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 32px;
+}
+
+.nav-logo-box span {
+    margin-left: 15px;
+}
+
+.nav-link-box-frame {
+    margin-right: 20px;
+}
+
+.nav-link-box {
+    display: flex;
+}
+
+.nav-link-box li {
+    margin-right: 15px;
+    font-size: 16px;
+}
+
+.nav-link-box li::after {
+    content: '|';
+    float: right;
+    color: #fff;
+    margin-right: -10px;
+}
+
+.nav-link-box li:last-child::after {
+    content: '';
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+@media (max-width: 764px) {
+    .nav-frame {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        color: #fff;
+        font-size: 32px;
+        height: 500px;
+        font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    }
+
+    .nav-link-box {
+        padding-top: 70px;
+        flex-direction: column;
+    }
+
+    .nav-link-box li {
+        margin-bottom: 20px;
+    }
+
+    .nav-logo-box {
+        padding-top: 20px;
+        margin-left: -12px;
+    }
+}

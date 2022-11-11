@@ -9,6 +9,7 @@ import {
     productDetailRouter,
     orderRouter,
     orderlistRouter,
+    orderStateRouter,
     cartRouter,
 } from './routers';
 import { errorHandler } from './middlewares';
@@ -35,11 +36,12 @@ app.use('/api/categories', categoryRouter);
 app.use('/api/productdetail', productDetailRouter);
 app.use('/api/menu', menuRouter);
 app.use('/api/order', orderRouter);
+app.use('/api/orderstate', orderStateRouter);
 app.use('/api/orderlist', orderlistRouter);
 app.use('/api/cart', cartRouter);
 
 app.use(function (req, res, next) {
-    res.status(404).json({ result: 'error', reason: 'page not found' });
+    res.redirect("/error")
 });
 
 //  next(error) 했을 때 여기로 오게 됨
