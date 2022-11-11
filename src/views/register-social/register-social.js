@@ -4,6 +4,14 @@
  * @detail: 카카오를 통한 첫 로그인 시도 시 회원가입을 위한 추가 정보 입력 페이지
  */
 import * as Api from "/api.js";
+import {
+  insertLogoutLi,
+  insertMyPageLi,
+  insertAdminLi,
+  insertCategoryLi,
+  insertProductLi,
+  insertOrderLi,
+} from "../home/nav.js";
 
 // 요소(element), input 혹은 상수
 const fullNameInput = document.querySelector("#fullNameInput");
@@ -18,7 +26,14 @@ addAllElements(await redirectNaverLogin());
 addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-async function addAllElements() {}
+async function addAllElements() {
+  insertLogoutLi();
+  insertMyPageLi();
+  insertAdminLi();
+  insertCategoryLi();
+  insertProductLi();
+  insertOrderLi();
+}
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
