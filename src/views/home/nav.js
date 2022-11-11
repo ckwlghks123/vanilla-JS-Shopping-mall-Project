@@ -56,8 +56,10 @@ export function loginLogoutHandler(event) {
             break;
         case 'navbar__cart':
             document.location.href = '/cart';
+            break;
         case 'navbar__menu':
             document.location.href = '/menu';
+            break;
     }
 }
 
