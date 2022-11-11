@@ -22,7 +22,7 @@ async function addAllElements() {
 //get
 //데이터 갯수 만큼 노드 복제
 const testDiv = document.querySelector("#template");
-const [WAIT, INPROGRESS, COMPLETED] = ["WAIT", "INPROGRESS", "COMPLETED"];
+const [WAIT, INPROGRESS, COMPLETED] = ["WAIT", "INPROGRESS", "COMPLETED","CANCEL"];
 async function loadOrderList() {
   let idNum = 0;
 
@@ -66,7 +66,7 @@ async function loadOrderList() {
         select.selected = true;
       }
     });
-    if (item.process !== COMPLETED) {
+    if (item.process !== COMPLETED ||item.process!==CANCEL) {//배송완료와 취소가 아니면 삭제버튼 끄기
       document.querySelector("#deleteBtn").classList.remove("on");
 
     }
@@ -102,6 +102,9 @@ async function loadOrderList() {
               break;
             case "배송완료":
               changeProcess = COMPLETED;
+            case "주문취소":
+              changeProcess = CANCEL;
+              break;
               e.target.parentElement.parentElement.querySelector("#deleteBtn").classList.add("on");
               break;
           }
