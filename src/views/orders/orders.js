@@ -67,8 +67,8 @@ async function loadOrderList() {
         select.selected = true;
       }
     });
-    if (item.process !== WAIT || item.process !== INPROGRESS) {
-      //배송완료와 취소가 아니면 삭제버튼 끄기
+    if (item.process === WAIT || item.process === INPROGRESS) {
+      //배송완료와 취소가 아니면 삭제버튼 지움
       document.querySelector("#deleteBtn").classList.remove("on");
     }
 
